@@ -1,5 +1,13 @@
 # @osuki-dev/skia-diagrams
 
+## 0.1.1
+
+### Patch Changes
+
+- [#5](https://github.com/osuki-dev/skia-diagrams/pull/5) [`4c2d96f`](https://github.com/osuki-dev/skia-diagrams/commit/4c2d96fc38c5a73f44f6c48224f535f085978627) Thanks [@ryuhzk](https://github.com/ryuhzk)! - Reduce native rendering overhead by removing unnecessary offscreen compositing layers and sharing deferred diagram preparation across instances. Add an `active` prop to suspend native recordings for offscreen diagrams while preserving their measured height, and cancel viewer animations and stale completion callbacks during teardown.
+  
+  Allow hosts to localize the fullscreen viewer controls through `labels`.
+
 ## 0.1.0
 
 ### Minor Changes
