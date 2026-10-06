@@ -1,0 +1,8 @@
+node_modules/
+lib/
+*.tgz
+dist/
+.agent-device/
+.expo/
+.review-evidence/
+/design/theme-studio

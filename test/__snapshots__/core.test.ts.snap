@@ -1,0 +1,628 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`M0–M5 type fixtures class parses, serializes, lays out and exports 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "TB",
+    "edges": [
+      {
+        "dashed": false,
+        "end": "none",
+        "from": "Animal",
+        "label": "",
+        "start": "hollow-triangle",
+        "to": "Dog",
+      },
+    ],
+    "events": [],
+    "nodes": [
+      {
+        "id": "Animal",
+        "label": 
+"Animal
++name: string
++walk()"
+,
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "Dog",
+        "label": "Dog",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "class",
+}
+`;
+
+exports[`M0–M5 type fixtures er parses, serializes, lays out and exports 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "TB",
+    "edges": [
+      {
+        "dashed": false,
+        "end": "er-zero-many",
+        "from": "CUSTOMER",
+        "label": "places",
+        "start": "er-one",
+        "to": "ORDER",
+      },
+    ],
+    "events": [],
+    "nodes": [
+      {
+        "attributes": [
+          {
+            "comment": "",
+            "key": "",
+            "name": "name",
+            "type": "string",
+          },
+        ],
+        "id": "CUSTOMER",
+        "label": 
+"CUSTOMER
+string name"
+,
+        "metadata": {
+          "headerLabel": "CUSTOMER",
+        },
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "ORDER",
+        "label": "ORDER",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "er",
+}
+`;
+
+exports[`M0–M5 type fixtures flowchart parses, serializes, lays out and exports 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "TB",
+    "edges": [
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "A",
+        "label": "yes",
+        "start": "none",
+        "thick": false,
+        "to": "B",
+      },
+      {
+        "dashed": true,
+        "end": "arrow",
+        "from": "B",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "C",
+      },
+    ],
+    "events": [],
+    "nodes": [
+      {
+        "id": "A",
+        "label": "Start",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "B",
+        "label": "Ready",
+        "parent": undefined,
+        "shape": "diamond",
+      },
+      {
+        "id": "C",
+        "label": "Done",
+        "parent": undefined,
+        "shape": "circle",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`M0–M5 type fixtures gantt parses, serializes, lays out and exports 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "TB",
+    "edges": [],
+    "events": [
+      {
+        "end": 1767398400000,
+        "flags": [
+          "done",
+        ],
+        "from": "p",
+        "label": "Parse",
+        "section": "Build",
+        "start": 1767225600000,
+        "type": "task",
+      },
+      {
+        "end": 1767657600000,
+        "flags": [
+          "crit",
+        ],
+        "from": "r",
+        "label": "Render",
+        "section": "Build",
+        "start": 1767398400000,
+        "type": "task",
+      },
+    ],
+    "gantt": {
+      "axisFormat": "%Y-%m-%d",
+      "dateFormat": "YYYY-MM-DD",
+    },
+    "nodes": [],
+  },
+  "kind": "gantt",
+}
+`;
+
+exports[`M0–M5 type fixtures gitgraph parses, serializes, lays out and exports 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "data": {
+      "gitBranchDeclarations": [
+        "main",
+        "feature",
+      ],
+      "gitBranchStarts": {
+        "feature": "first",
+      },
+    },
+    "direction": "TB",
+    "edges": [
+      {
+        "end": "none",
+        "from": "first",
+        "label": "",
+        "start": "none",
+        "to": "second",
+      },
+      {
+        "end": "none",
+        "from": "first",
+        "label": "",
+        "start": "none",
+        "to": "commit-2",
+      },
+      {
+        "end": "none",
+        "from": "second",
+        "label": "merge",
+        "start": "none",
+        "to": "commit-2",
+      },
+    ],
+    "events": [
+      {
+        "from": "main",
+        "label": "first",
+        "type": "commit",
+      },
+      {
+        "from": "feature",
+        "label": "second",
+        "type": "commit",
+      },
+      {
+        "from": "main",
+        "label": "commit-2",
+        "type": "commit",
+      },
+    ],
+    "nodes": [
+      {
+        "id": "first",
+        "label": "first",
+        "parent": "main",
+        "shape": "circle",
+      },
+      {
+        "id": "second",
+        "label": "second",
+        "parent": "feature",
+        "shape": "circle",
+      },
+      {
+        "id": "commit-2",
+        "label": "commit-2",
+        "parent": "main",
+        "shape": "circle",
+      },
+    ],
+  },
+  "kind": "gitgraph",
+}
+`;
+
+exports[`M0–M5 type fixtures journey parses, serializes, lays out and exports 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "TB",
+    "edges": [],
+    "events": [
+      {
+        "actors": [
+          "Me",
+        ],
+        "label": "Coffee",
+        "section": "Morning",
+        "type": "step",
+        "value": 5,
+      },
+      {
+        "actors": [
+          "Me",
+          "Team",
+        ],
+        "label": "Work",
+        "section": "Morning",
+        "type": "step",
+        "value": 3,
+      },
+    ],
+    "nodes": [],
+  },
+  "kind": "journey",
+}
+`;
+
+exports[`M0–M5 type fixtures mindmap parses, serializes, lays out and exports 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "TB",
+    "edges": [
+      {
+        "end": "none",
+        "from": "node-0",
+        "label": "",
+        "start": "none",
+        "to": "node-1",
+      },
+      {
+        "end": "none",
+        "from": "node-1",
+        "label": "",
+        "start": "none",
+        "to": "node-2",
+      },
+      {
+        "end": "none",
+        "from": "node-0",
+        "label": "",
+        "start": "none",
+        "to": "node-3",
+      },
+    ],
+    "events": [],
+    "nodes": [
+      {
+        "id": "node-0",
+        "label": "Root",
+        "parent": undefined,
+        "shape": "circle",
+      },
+      {
+        "id": "node-1",
+        "label": "Alpha",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "node-2",
+        "label": "B",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "node-3",
+        "label": "C",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "mindmap",
+}
+`;
+
+exports[`M0–M5 type fixtures pie parses, serializes, lays out and exports 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "TB",
+    "edges": [],
+    "events": [
+      {
+        "label": "Cats",
+        "type": "slice",
+        "value": 10,
+      },
+      {
+        "label": "Dogs",
+        "type": "slice",
+        "value": 20,
+      },
+    ],
+    "nodes": [],
+  },
+  "kind": "pie",
+}
+`;
+
+exports[`M0–M5 type fixtures quadrant parses, serializes, lays out and exports 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "TB",
+    "edges": [],
+    "events": [
+      {
+        "label": "x-axis Low --> High",
+        "type": "axis-label",
+      },
+      {
+        "label": "quadrant-1 Great",
+        "type": "axis-label",
+      },
+      {
+        "label": "Alpha",
+        "type": "point",
+        "values": [
+          0.3,
+          0.7,
+        ],
+      },
+    ],
+    "nodes": [],
+  },
+  "kind": "quadrant",
+}
+`;
+
+exports[`M0–M5 type fixtures sequence parses, serializes, lays out and exports 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "TB",
+    "edges": [],
+    "events": [
+      {
+        "depth": 1,
+        "flags": [
+          "loop",
+          "",
+        ],
+        "label": "loop repeat",
+        "type": "frame",
+      },
+      {
+        "flags": [
+          "message",
+        ],
+        "from": "B",
+        "label": "",
+        "type": "activate",
+      },
+      {
+        "flags": [
+          "->>",
+        ],
+        "from": "A",
+        "label": "1. Hello",
+        "to": "B",
+        "type": "message",
+      },
+      {
+        "flags": [
+          "over",
+        ],
+        "from": "A",
+        "label": "中文",
+        "to": "B",
+        "type": "note",
+      },
+      {
+        "flags": [
+          "-->>",
+        ],
+        "from": "B",
+        "label": "2. Reply",
+        "to": "A",
+        "type": "message",
+      },
+      {
+        "from": "B",
+        "label": "",
+        "type": "deactivate",
+      },
+      {
+        "depth": 1,
+        "label": "",
+        "type": "end",
+      },
+    ],
+    "nodes": [
+      {
+        "id": "A",
+        "label": "Alice",
+        "parent": undefined,
+        "shape": "circle",
+      },
+      {
+        "id": "B",
+        "label": "Bob",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "sequence",
+}
+`;
+
+exports[`M0–M5 type fixtures state parses, serializes, lays out and exports 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "TB",
+    "edges": [
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "start-0",
+        "label": "",
+        "start": "none",
+        "to": "Idle",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "Idle",
+        "label": "start",
+        "start": "none",
+        "to": "Active",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "Active",
+        "label": "",
+        "start": "none",
+        "to": "end-1",
+      },
+    ],
+    "events": [],
+    "nodes": [
+      {
+        "id": "start-0",
+        "label": "",
+        "parent": undefined,
+        "role": "start",
+        "shape": "circle",
+      },
+      {
+        "id": "Idle",
+        "label": "Idle",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "Active",
+        "label": "Active",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "end-1",
+        "label": "",
+        "parent": undefined,
+        "role": "end",
+        "shape": "doublecircle",
+      },
+    ],
+  },
+  "kind": "state",
+}
+`;
+
+exports[`M0–M5 type fixtures timeline parses, serializes, lays out and exports 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "TB",
+    "edges": [],
+    "events": [
+      {
+        "label": 
+"2020
+Started
+Grew"
+,
+        "section": "",
+        "type": "period",
+      },
+      {
+        "label": 
+"2021
+Shipped"
+,
+        "section": "",
+        "type": "period",
+      },
+    ],
+    "nodes": [],
+    "title": "History",
+  },
+  "kind": "timeline",
+}
+`;
+
+exports[`M0–M5 type fixtures xychart parses, serializes, lays out and exports 1`] = `
+{
+  "ir": {
+    "axis": {
+      "explicitY": true,
+      "labels": [
+        "Jan",
+        "Feb",
+        "Mar",
+      ],
+      "max": 100,
+      "min": 0,
+      "xTitle": undefined,
+      "yTitle": undefined,
+    },
+    "clusters": [],
+    "direction": "TB",
+    "edges": [],
+    "events": [
+      {
+        "label": "",
+        "type": "bar",
+        "values": [
+          20,
+          40,
+          80,
+        ],
+      },
+      {
+        "label": "",
+        "type": "line",
+        "values": [
+          30,
+          60,
+          90,
+        ],
+      },
+    ],
+    "nodes": [],
+  },
+  "kind": "xychart",
+}
+`;

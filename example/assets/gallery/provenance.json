@@ -1,0 +1,98 @@
+{
+  "purpose": "Static navigation previews of the approved Osuki design; not native pixel parity evidence.",
+  "generation": "bun scripts/capture-design.ts design/theme-studio/implemented --thumbnails; production drawScene with frozen QA fonts; 240x144; light theme.",
+  "fixtureSha256": "9b33d78a6d3320825db6e49bef0bb97b00bafc600c3baa9d4d4c666751d660b9",
+  "records": [
+    {
+      "type": "Class",
+      "source": "example/design-fixtures.ts",
+      "thumbnail": "Class.png",
+      "thumbnailSha256": "c8831ee75ca4b735ee684bef287981139f2d8ddfe1c46d55472edee0583596a9",
+      "bytes": 4570
+    },
+    {
+      "type": "ER",
+      "source": "example/design-fixtures.ts",
+      "thumbnail": "ER.png",
+      "thumbnailSha256": "27fb581894536e67f5818b82b88466d017f54880acab5387e45f813ea04a6127",
+      "bytes": 6228
+    },
+    {
+      "type": "Flowchart",
+      "source": "example/design-fixtures.ts",
+      "thumbnail": "Flowchart.png",
+      "thumbnailSha256": "2fb447d2fdfc434e7597e995d205a4554d1515727e5fbe2b7d8bed78338e6930",
+      "bytes": 4682
+    },
+    {
+      "type": "Gantt",
+      "source": "example/design-fixtures.ts",
+      "thumbnail": "Gantt.png",
+      "thumbnailSha256": "08342af0c16a79d761db34a603bd8e3cdd0f41365571e6df9deeacea8fd7e7c0",
+      "bytes": 4237
+    },
+    {
+      "type": "GitGraph",
+      "source": "example/design-fixtures.ts",
+      "thumbnail": "GitGraph.png",
+      "thumbnailSha256": "54fd27f35394b9bd064e45c70e4b6bb881b1bc6a918139767e5de34021fafa99",
+      "bytes": 5156
+    },
+    {
+      "type": "Journey",
+      "source": "example/design-fixtures.ts",
+      "thumbnail": "Journey.png",
+      "thumbnailSha256": "aa2cad4ecf572bb3c762b78d808a53cec38dcf16535c587fac93655a1c291221",
+      "bytes": 6804
+    },
+    {
+      "type": "Mindmap",
+      "source": "example/design-fixtures.ts",
+      "thumbnail": "Mindmap.png",
+      "thumbnailSha256": "01dcbe21faf249746d0ad9d73a18bb261027e4e55fd058a20aec6a809affac41",
+      "bytes": 6373
+    },
+    {
+      "type": "Pie",
+      "source": "example/design-fixtures.ts",
+      "thumbnail": "Pie.png",
+      "thumbnailSha256": "47839cf4509b61289db63e2ec86a942b3d484b18b8328c7059e5f9fa843bd2be",
+      "bytes": 8841
+    },
+    {
+      "type": "Quadrant",
+      "source": "example/design-fixtures.ts",
+      "thumbnail": "Quadrant.png",
+      "thumbnailSha256": "f71d3b5cba6c8c8ed9e8562c0e997d77ed110ce12ec660c9ef51e657b79a5598",
+      "bytes": 3547
+    },
+    {
+      "type": "Sequence",
+      "source": "example/design-fixtures.ts",
+      "thumbnail": "Sequence.png",
+      "thumbnailSha256": "eae8ed459747fe084bedcf10d78f4811e29c858d15fbd7308347677d468307e8",
+      "bytes": 5908
+    },
+    {
+      "type": "State",
+      "source": "example/design-fixtures.ts",
+      "thumbnail": "State.png",
+      "thumbnailSha256": "f45abbc5db0205f879b729edcb9ad01c1281941d66303476582b66c0295e0faa",
+      "bytes": 4511
+    },
+    {
+      "type": "Timeline",
+      "source": "example/design-fixtures.ts",
+      "thumbnail": "Timeline.png",
+      "thumbnailSha256": "89beedbe6b2138feed05254d9ae7206d07c41e04191c9e16fccabc28178c6d82",
+      "bytes": 4345
+    },
+    {
+      "type": "XY",
+      "source": "example/design-fixtures.ts",
+      "thumbnail": "XY.png",
+      "thumbnailSha256": "7fed3b0a585b2a8434e8e25bfee820cecd690d42e7e792f88566979bef2e3a10",
+      "bytes": 6393
+    }
+  ]
+}

@@ -1,0 +1,4197 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`official subset flowchart-1 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "LR",
+    "edges": [],
+    "events": [],
+    "nodes": [
+      {
+        "id": "id",
+        "label": "id",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-2 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "LR",
+    "edges": [],
+    "events": [],
+    "nodes": [
+      {
+        "id": "id1",
+        "label": "This is the text in the box",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-3 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "LR",
+    "edges": [],
+    "events": [],
+    "nodes": [
+      {
+        "id": "id",
+        "label": "This ❤ Unicode",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-4 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "data": {
+      "config": {
+        "flowchart": {
+          "htmlLabels": false,
+        },
+      },
+    },
+    "direction": "LR",
+    "edges": [
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "markdown",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "newLines",
+      },
+    ],
+    "events": [],
+    "nodes": [
+      {
+        "id": "markdown",
+        "label": "This **is** _Markdown_",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "newLines",
+        "label": 
+"Line1
+    Line 2
+    Line 3"
+,
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-5 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "TB",
+    "edges": [
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "Start",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "Stop",
+      },
+    ],
+    "events": [],
+    "nodes": [
+      {
+        "id": "Start",
+        "label": "Start",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "Stop",
+        "label": "Stop",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-6 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "LR",
+    "edges": [
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "Start",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "Stop",
+      },
+    ],
+    "events": [],
+    "nodes": [
+      {
+        "id": "Start",
+        "label": "Start",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "Stop",
+        "label": "Stop",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-7 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "LR",
+    "edges": [],
+    "events": [],
+    "nodes": [
+      {
+        "id": "id1",
+        "label": "This is the text in the box",
+        "parent": undefined,
+        "shape": "round",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-8 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "LR",
+    "edges": [],
+    "events": [],
+    "nodes": [
+      {
+        "id": "id1",
+        "label": "This is the text in the box",
+        "parent": undefined,
+        "shape": "stadium",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-9 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "LR",
+    "edges": [],
+    "events": [],
+    "nodes": [
+      {
+        "id": "id1",
+        "label": "This is the text in the box",
+        "parent": undefined,
+        "shape": "subroutine",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-10 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "LR",
+    "edges": [],
+    "events": [],
+    "nodes": [
+      {
+        "id": "id1",
+        "label": "Database",
+        "parent": undefined,
+        "shape": "cylinder",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-11 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "LR",
+    "edges": [],
+    "events": [],
+    "nodes": [
+      {
+        "id": "id1",
+        "label": "This is the text in the circle",
+        "parent": undefined,
+        "shape": "circle",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-12 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "LR",
+    "edges": [],
+    "events": [],
+    "nodes": [
+      {
+        "id": "id1",
+        "label": "This is the text in the box",
+        "parent": undefined,
+        "shape": "flag",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-13 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "LR",
+    "edges": [],
+    "events": [],
+    "nodes": [
+      {
+        "id": "id1",
+        "label": "This is the text in the box",
+        "parent": undefined,
+        "shape": "diamond",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-14 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "LR",
+    "edges": [],
+    "events": [],
+    "nodes": [
+      {
+        "id": "id1",
+        "label": "This is the text in the box",
+        "parent": undefined,
+        "shape": "hexagon",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-15 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "TB",
+    "edges": [],
+    "events": [],
+    "nodes": [
+      {
+        "id": "id1",
+        "label": "This is the text in the box",
+        "parent": undefined,
+        "shape": "parallelogram",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-16 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "TB",
+    "edges": [],
+    "events": [],
+    "nodes": [
+      {
+        "id": "id1",
+        "label": "This is the text in the box",
+        "parent": undefined,
+        "shape": "reverse-parallelogram",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-17 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "TB",
+    "edges": [],
+    "events": [],
+    "nodes": [
+      {
+        "id": "A",
+        "label": "Christmas",
+        "parent": undefined,
+        "shape": "trapezoid",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-18 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "TB",
+    "edges": [],
+    "events": [],
+    "nodes": [
+      {
+        "id": "B",
+        "label": "Go shopping",
+        "parent": undefined,
+        "shape": "reverse-trapezoid",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-19 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "TB",
+    "edges": [],
+    "events": [],
+    "nodes": [
+      {
+        "id": "id1",
+        "label": "This is the text in the circle",
+        "parent": undefined,
+        "shape": "doublecircle",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-68 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "LR",
+    "edges": [
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "A",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "B",
+      },
+    ],
+    "events": [],
+    "nodes": [
+      {
+        "id": "A",
+        "label": "A",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "B",
+        "label": "B",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-69 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "LR",
+    "edges": [
+      {
+        "dashed": false,
+        "end": "none",
+        "from": "A",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "B",
+      },
+    ],
+    "events": [],
+    "nodes": [
+      {
+        "id": "A",
+        "label": "A",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "B",
+        "label": "B",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-70 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "LR",
+    "edges": [
+      {
+        "dashed": false,
+        "end": "none",
+        "from": "A",
+        "label": "This is the text!",
+        "start": "none",
+        "thick": false,
+        "to": "B",
+      },
+    ],
+    "events": [],
+    "nodes": [
+      {
+        "id": "A",
+        "label": "A",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "B",
+        "label": "B",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-71 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "LR",
+    "edges": [
+      {
+        "dashed": false,
+        "end": "none",
+        "from": "A",
+        "label": "This is the text",
+        "start": "none",
+        "thick": false,
+        "to": "B",
+      },
+    ],
+    "events": [],
+    "nodes": [
+      {
+        "id": "A",
+        "label": "A",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "B",
+        "label": "B",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-72 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "LR",
+    "edges": [
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "A",
+        "label": "text",
+        "start": "none",
+        "thick": false,
+        "to": "B",
+      },
+    ],
+    "events": [],
+    "nodes": [
+      {
+        "id": "A",
+        "label": "A",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "B",
+        "label": "B",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-73 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "LR",
+    "edges": [
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "A",
+        "label": "text",
+        "start": "none",
+        "thick": false,
+        "to": "B",
+      },
+    ],
+    "events": [],
+    "nodes": [
+      {
+        "id": "A",
+        "label": "A",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "B",
+        "label": "B",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-74 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "LR",
+    "edges": [
+      {
+        "dashed": true,
+        "end": "arrow",
+        "from": "A",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "B",
+      },
+    ],
+    "events": [],
+    "nodes": [
+      {
+        "id": "A",
+        "label": "A",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "B",
+        "label": "B",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-75 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "LR",
+    "edges": [
+      {
+        "dashed": true,
+        "end": "arrow",
+        "from": "A",
+        "label": "text",
+        "start": "none",
+        "thick": false,
+        "to": "B",
+      },
+    ],
+    "events": [],
+    "nodes": [
+      {
+        "id": "A",
+        "label": "A",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "B",
+        "label": "B",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-76 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "LR",
+    "edges": [
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "A",
+        "label": "",
+        "start": "none",
+        "thick": true,
+        "to": "B",
+      },
+    ],
+    "events": [],
+    "nodes": [
+      {
+        "id": "A",
+        "label": "A",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "B",
+        "label": "B",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-77 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "LR",
+    "edges": [
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "A",
+        "label": "text",
+        "start": "none",
+        "thick": true,
+        "to": "B",
+      },
+    ],
+    "events": [],
+    "nodes": [
+      {
+        "id": "A",
+        "label": "A",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "B",
+        "label": "B",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-79 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "LR",
+    "edges": [
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "A",
+        "label": "text",
+        "start": "none",
+        "thick": false,
+        "to": "B",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "B",
+        "label": "text2",
+        "start": "none",
+        "thick": false,
+        "to": "C",
+      },
+    ],
+    "events": [],
+    "nodes": [
+      {
+        "id": "A",
+        "label": "A",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "B",
+        "label": "B",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "C",
+        "label": "C",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-80 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "LR",
+    "edges": [
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "a",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "b",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "a",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "c",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "b",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "d",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "c",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "d",
+      },
+    ],
+    "events": [],
+    "nodes": [
+      {
+        "id": "a",
+        "label": "a",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "b",
+        "label": "b",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "c",
+        "label": "c",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "d",
+        "label": "d",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-81 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "TB",
+    "edges": [
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "A",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "C",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "A",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "D",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "B",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "C",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "B",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "D",
+      },
+    ],
+    "events": [],
+    "nodes": [
+      {
+        "id": "A",
+        "label": "A",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "B",
+        "label": "B",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "C",
+        "label": "C",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "D",
+        "label": "D",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-82 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "TB",
+    "edges": [
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "A",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "C",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "A",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "D",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "B",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "C",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "B",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "D",
+      },
+    ],
+    "events": [],
+    "nodes": [
+      {
+        "id": "A",
+        "label": "A",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "C",
+        "label": "C",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "D",
+        "label": "D",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "B",
+        "label": "B",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-83 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "LR",
+    "edges": [
+      {
+        "dashed": false,
+        "end": "circle",
+        "from": "A",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "B",
+      },
+    ],
+    "events": [],
+    "nodes": [
+      {
+        "id": "A",
+        "label": "A",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "B",
+        "label": "B",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-84 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "LR",
+    "edges": [
+      {
+        "dashed": false,
+        "end": "cross",
+        "from": "A",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "B",
+      },
+    ],
+    "events": [],
+    "nodes": [
+      {
+        "id": "A",
+        "label": "A",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "B",
+        "label": "B",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-85 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "LR",
+    "edges": [
+      {
+        "dashed": false,
+        "end": "circle",
+        "from": "A",
+        "label": "",
+        "start": "circle",
+        "thick": false,
+        "to": "B",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "B",
+        "label": "",
+        "start": "arrow",
+        "thick": false,
+        "to": "C",
+      },
+      {
+        "dashed": false,
+        "end": "cross",
+        "from": "C",
+        "label": "",
+        "start": "cross",
+        "thick": false,
+        "to": "D",
+      },
+    ],
+    "events": [],
+    "nodes": [
+      {
+        "id": "A",
+        "label": "A",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "B",
+        "label": "B",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "C",
+        "label": "C",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "D",
+        "label": "D",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-86 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "TB",
+    "edges": [
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "A",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "B",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "B",
+        "label": "Yes",
+        "start": "none",
+        "thick": false,
+        "to": "C",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "C",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "D",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "D",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "B",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "B",
+        "label": "No",
+        "minLength": 3,
+        "start": "none",
+        "thick": false,
+        "to": "E",
+      },
+    ],
+    "events": [],
+    "nodes": [
+      {
+        "id": "A",
+        "label": "Start",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "B",
+        "label": "Is it?",
+        "parent": undefined,
+        "shape": "diamond",
+      },
+      {
+        "id": "C",
+        "label": "OK",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "D",
+        "label": "Rethink",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "E",
+        "label": "End",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-87 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "TB",
+    "edges": [
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "A",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "B",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "B",
+        "label": "Yes",
+        "start": "none",
+        "thick": false,
+        "to": "C",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "C",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "D",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "D",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "B",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "B",
+        "label": "No",
+        "minLength": 3,
+        "start": "none",
+        "thick": false,
+        "to": "E",
+      },
+    ],
+    "events": [],
+    "nodes": [
+      {
+        "id": "A",
+        "label": "Start",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "B",
+        "label": "Is it?",
+        "parent": undefined,
+        "shape": "diamond",
+      },
+      {
+        "id": "C",
+        "label": "OK",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "D",
+        "label": "Rethink",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "E",
+        "label": "End",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-88 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "LR",
+    "edges": [],
+    "events": [],
+    "nodes": [
+      {
+        "id": "id1",
+        "label": "This is the (text) in the box",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-89 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "LR",
+    "edges": [
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "A",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "B",
+      },
+    ],
+    "events": [],
+    "nodes": [
+      {
+        "id": "A",
+        "label": "A double quote:"",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "B",
+        "label": "A dec char:♥",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-90 1`] = `
+{
+  "ir": {
+    "clusters": [
+      {
+        "id": "one",
+        "label": "one",
+        "parent": undefined,
+      },
+      {
+        "id": "two",
+        "label": "two",
+        "parent": undefined,
+      },
+      {
+        "id": "three",
+        "label": "three",
+        "parent": undefined,
+      },
+    ],
+    "direction": "TB",
+    "edges": [
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "c1",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "a2",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "a1",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "a2",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "b1",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "b2",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "c1",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "c2",
+      },
+    ],
+    "events": [],
+    "nodes": [
+      {
+        "id": "c1",
+        "label": "c1",
+        "parent": "three",
+        "shape": "rect",
+      },
+      {
+        "id": "a2",
+        "label": "a2",
+        "parent": "one",
+        "shape": "rect",
+      },
+      {
+        "id": "a1",
+        "label": "a1",
+        "parent": "one",
+        "shape": "rect",
+      },
+      {
+        "id": "b1",
+        "label": "b1",
+        "parent": "two",
+        "shape": "rect",
+      },
+      {
+        "id": "b2",
+        "label": "b2",
+        "parent": "two",
+        "shape": "rect",
+      },
+      {
+        "id": "c2",
+        "label": "c2",
+        "parent": "three",
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-91 1`] = `
+{
+  "ir": {
+    "clusters": [
+      {
+        "id": "ide1",
+        "label": "one",
+        "parent": undefined,
+      },
+    ],
+    "direction": "TB",
+    "edges": [
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "c1",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "a2",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "a1",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "a2",
+      },
+    ],
+    "events": [],
+    "nodes": [
+      {
+        "id": "c1",
+        "label": "c1",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "a2",
+        "label": "a2",
+        "parent": "ide1",
+        "shape": "rect",
+      },
+      {
+        "id": "a1",
+        "label": "a1",
+        "parent": "ide1",
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-92 1`] = `
+{
+  "ir": {
+    "clusters": [
+      {
+        "id": "one",
+        "label": "one",
+        "parent": undefined,
+      },
+      {
+        "id": "two",
+        "label": "two",
+        "parent": undefined,
+      },
+      {
+        "id": "three",
+        "label": "three",
+        "parent": undefined,
+      },
+    ],
+    "direction": "TB",
+    "edges": [
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "c1",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "a2",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "a1",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "a2",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "b1",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "b2",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "c1",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "c2",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "one",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "two",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "three",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "two",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "two",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "c2",
+      },
+    ],
+    "events": [],
+    "nodes": [
+      {
+        "id": "c1",
+        "label": "c1",
+        "parent": "three",
+        "shape": "rect",
+      },
+      {
+        "id": "a2",
+        "label": "a2",
+        "parent": "one",
+        "shape": "rect",
+      },
+      {
+        "id": "a1",
+        "label": "a1",
+        "parent": "one",
+        "shape": "rect",
+      },
+      {
+        "id": "b1",
+        "label": "b1",
+        "parent": "two",
+        "shape": "rect",
+      },
+      {
+        "id": "b2",
+        "label": "b2",
+        "parent": "two",
+        "shape": "rect",
+      },
+      {
+        "id": "c2",
+        "label": "c2",
+        "parent": "three",
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-93 1`] = `
+{
+  "ir": {
+    "clusters": [
+      {
+        "direction": "TB",
+        "id": "TOP",
+        "label": "TOP",
+        "parent": undefined,
+      },
+      {
+        "direction": "RL",
+        "id": "B1",
+        "label": "B1",
+        "parent": "TOP",
+      },
+      {
+        "direction": "BT",
+        "id": "B2",
+        "label": "B2",
+        "parent": "TOP",
+      },
+    ],
+    "direction": "LR",
+    "edges": [
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "i1",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "f1",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "i2",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "f2",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "A",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "TOP",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "TOP",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "B",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "B1",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "B2",
+      },
+    ],
+    "events": [],
+    "nodes": [
+      {
+        "id": "i1",
+        "label": "i1",
+        "parent": "B1",
+        "shape": "rect",
+      },
+      {
+        "id": "f1",
+        "label": "f1",
+        "parent": "B1",
+        "shape": "rect",
+      },
+      {
+        "id": "i2",
+        "label": "i2",
+        "parent": "B2",
+        "shape": "rect",
+      },
+      {
+        "id": "f2",
+        "label": "f2",
+        "parent": "B2",
+        "shape": "rect",
+      },
+      {
+        "id": "A",
+        "label": "A",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "B",
+        "label": "B",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-94 1`] = `
+{
+  "ir": {
+    "clusters": [
+      {
+        "direction": "TB",
+        "id": "subgraph1",
+        "label": "subgraph1",
+        "parent": undefined,
+      },
+      {
+        "direction": "TB",
+        "id": "subgraph2",
+        "label": "subgraph2",
+        "parent": undefined,
+      },
+    ],
+    "direction": "LR",
+    "edges": [
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "top1",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "bottom1",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "top2",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "bottom2",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "outside",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "subgraph1",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "outside",
+        "label": "",
+        "minLength": 2,
+        "start": "none",
+        "thick": false,
+        "to": "top2",
+      },
+    ],
+    "events": [],
+    "nodes": [
+      {
+        "id": "top1",
+        "label": "top",
+        "parent": "subgraph1",
+        "shape": "rect",
+      },
+      {
+        "id": "bottom1",
+        "label": "bottom",
+        "parent": "subgraph1",
+        "shape": "rect",
+      },
+      {
+        "id": "top2",
+        "label": "top",
+        "parent": "subgraph2",
+        "shape": "rect",
+      },
+      {
+        "id": "bottom2",
+        "label": "bottom",
+        "parent": "subgraph2",
+        "shape": "rect",
+      },
+      {
+        "id": "outside",
+        "label": "outside",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-95 1`] = `
+{
+  "ir": {
+    "clusters": [
+      {
+        "id": "subgraph-0",
+        "label": "One",
+        "parent": undefined,
+      },
+      {
+        "id": "subgraph-1",
+        "label": "**Two**",
+        "parent": undefined,
+      },
+    ],
+    "data": {
+      "config": {
+        "flowchart": {
+          "htmlLabels": false,
+        },
+      },
+    },
+    "direction": "LR",
+    "edges": [
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "a",
+        "label": "edge label",
+        "start": "none",
+        "thick": false,
+        "to": "b",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "c",
+        "label": "Bold **edge label**",
+        "start": "none",
+        "thick": false,
+        "to": "d",
+      },
+    ],
+    "events": [],
+    "nodes": [
+      {
+        "id": "a",
+        "label": 
+"The **cat**
+  in the hat"
+,
+        "parent": "subgraph-0",
+        "shape": "round",
+      },
+      {
+        "id": "b",
+        "label": "The **dog** in the hog",
+        "parent": "subgraph-0",
+        "shape": "hexagon",
+      },
+      {
+        "id": "c",
+        "label": 
+"The **cat**
+  in the hat"
+,
+        "parent": "subgraph-1",
+        "shape": "round",
+      },
+      {
+        "id": "d",
+        "label": "The dog in the hog",
+        "parent": "subgraph-1",
+        "shape": "round",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-96 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "LR",
+    "edges": [
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "A",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "B",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "B",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "C",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "C",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "D",
+      },
+    ],
+    "events": [],
+    "nodes": [
+      {
+        "id": "A",
+        "interaction": {
+          "kind": "callback",
+          "target": "callback",
+          "tooltip": "Tooltip for a callback",
+        },
+        "label": "A",
+        "metadata": {
+          "interaction": {
+            "callback": "callback",
+            "tooltip": "Tooltip for a callback",
+            "type": "callback",
+          },
+        },
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "B",
+        "interaction": {
+          "kind": "link",
+          "target": "https://www.github.com",
+          "tooltip": "This is a tooltip for a link",
+        },
+        "label": "B",
+        "metadata": {
+          "interaction": {
+            "href": "https://www.github.com",
+            "tooltip": "This is a tooltip for a link",
+            "type": "link",
+          },
+        },
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "C",
+        "interaction": {
+          "kind": "callback",
+          "target": "callback",
+          "tooltip": "Tooltip for a callback",
+        },
+        "label": "C",
+        "metadata": {
+          "interaction": {
+            "callback": "callback",
+            "tooltip": "Tooltip for a callback",
+            "type": "callback",
+          },
+        },
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "D",
+        "interaction": {
+          "kind": "link",
+          "target": "https://www.github.com",
+          "tooltip": "This is a tooltip for a link",
+        },
+        "label": "D",
+        "metadata": {
+          "interaction": {
+            "href": "https://www.github.com",
+            "tooltip": "This is a tooltip for a link",
+            "type": "link",
+          },
+        },
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-97 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "LR",
+    "edges": [
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "A",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "B",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "B",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "C",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "C",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "D",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "D",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "E",
+      },
+    ],
+    "events": [],
+    "nodes": [
+      {
+        "id": "A",
+        "interaction": {
+          "kind": "link",
+          "target": "https://www.github.com",
+        },
+        "label": "A",
+        "metadata": {
+          "interaction": {
+            "href": "https://www.github.com",
+            "target": "_blank",
+            "type": "link",
+          },
+        },
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "B",
+        "interaction": {
+          "kind": "link",
+          "target": "https://www.github.com",
+          "tooltip": "Open this in a new tab",
+        },
+        "label": "B",
+        "metadata": {
+          "interaction": {
+            "href": "https://www.github.com",
+            "target": "_blank",
+            "tooltip": "Open this in a new tab",
+            "type": "link",
+          },
+        },
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "C",
+        "interaction": {
+          "kind": "link",
+          "target": "https://www.github.com",
+        },
+        "label": "C",
+        "metadata": {
+          "interaction": {
+            "href": "https://www.github.com",
+            "target": "_blank",
+            "type": "link",
+          },
+        },
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "D",
+        "interaction": {
+          "kind": "link",
+          "target": "https://www.github.com",
+          "tooltip": "Open this in a new tab",
+        },
+        "label": "D",
+        "metadata": {
+          "interaction": {
+            "href": "https://www.github.com",
+            "target": "_blank",
+            "tooltip": "Open this in a new tab",
+            "type": "link",
+          },
+        },
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "E",
+        "label": "E",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-98 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "LR",
+    "edges": [
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "A",
+        "label": "text",
+        "start": "none",
+        "thick": false,
+        "to": "B",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "B",
+        "label": "text2",
+        "start": "none",
+        "thick": false,
+        "to": "C",
+      },
+    ],
+    "events": [],
+    "nodes": [
+      {
+        "id": "A",
+        "label": "A",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "B",
+        "label": "B",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "C",
+        "label": "C",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-99 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "LR",
+    "edges": [
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "id1",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "id2",
+      },
+    ],
+    "events": [],
+    "nodes": [
+      {
+        "id": "id1",
+        "label": "Start",
+        "parent": undefined,
+        "shape": "round",
+        "style": {
+          "fill": "#f9f",
+          "stroke": "#333",
+          "strokeWidth": 4,
+        },
+      },
+      {
+        "id": "id2",
+        "label": "Stop",
+        "parent": undefined,
+        "shape": "round",
+        "style": {
+          "color": "#fff",
+          "dash": [
+            5,
+            5,
+          ],
+          "fill": "#bbf",
+          "stroke": "#f66",
+          "strokeWidth": 2,
+        },
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-100 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "LR",
+    "edges": [
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "A",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "B",
+      },
+    ],
+    "events": [],
+    "nodes": [
+      {
+        "id": "A",
+        "label": "A",
+        "parent": undefined,
+        "shape": "rect",
+        "style": {
+          "fill": "#f96",
+        },
+      },
+      {
+        "id": "B",
+        "label": "B",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-101 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "LR",
+    "edges": [
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "A",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "C",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "B",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "C",
+      },
+    ],
+    "events": [],
+    "nodes": [
+      {
+        "id": "A",
+        "label": "A",
+        "parent": undefined,
+        "shape": "rect",
+        "style": {
+          "stroke": "#f00",
+        },
+      },
+      {
+        "id": "B",
+        "label": "B",
+        "parent": undefined,
+        "shape": "rect",
+        "style": {
+          "stroke": "#0f0",
+        },
+      },
+      {
+        "id": "C",
+        "label": "C",
+        "parent": undefined,
+        "shape": "rect",
+        "style": {
+          "stroke": "#00f",
+        },
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-102 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "LR",
+    "edges": [
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "A",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "B",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "B",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "D",
+      },
+    ],
+    "events": [],
+    "nodes": [
+      {
+        "id": "A",
+        "label": "A",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "B",
+        "label": "AAA<span>BBB</span>",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "D",
+        "label": "D",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset flowchart-105 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "LR",
+    "edges": [
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "A",
+        "label": "Link text",
+        "start": "none",
+        "thick": false,
+        "to": "B",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "B",
+        "label": "",
+        "start": "none",
+        "thick": false,
+        "to": "C",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "C",
+        "label": "One",
+        "start": "none",
+        "thick": false,
+        "to": "D",
+      },
+      {
+        "dashed": false,
+        "end": "arrow",
+        "from": "C",
+        "label": "Two",
+        "start": "none",
+        "thick": false,
+        "to": "E",
+      },
+    ],
+    "events": [],
+    "nodes": [
+      {
+        "id": "A",
+        "label": "Hard edge",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "B",
+        "label": "Round edge",
+        "parent": undefined,
+        "shape": "round",
+      },
+      {
+        "id": "C",
+        "label": "Decision",
+        "parent": undefined,
+        "shape": "diamond",
+      },
+      {
+        "id": "D",
+        "label": "Result one",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "E",
+        "label": "Result two",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "flowchart",
+}
+`;
+
+exports[`official subset sequenceDiagram-1 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "TB",
+    "edges": [],
+    "events": [
+      {
+        "flags": [
+          "->>",
+        ],
+        "from": "Alice",
+        "label": "Hello John, how are you?",
+        "to": "John",
+        "type": "message",
+      },
+      {
+        "flags": [
+          "-->>",
+        ],
+        "from": "John",
+        "label": "Great!",
+        "to": "Alice",
+        "type": "message",
+      },
+      {
+        "flags": [
+          "-)",
+        ],
+        "from": "Alice",
+        "label": "See you later!",
+        "to": "John",
+        "type": "message",
+      },
+    ],
+    "nodes": [
+      {
+        "id": "Alice",
+        "label": "Alice",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "John",
+        "label": "John",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "sequence",
+}
+`;
+
+exports[`official subset sequenceDiagram-2 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "TB",
+    "edges": [],
+    "events": [
+      {
+        "flags": [
+          "->>",
+        ],
+        "from": "Bob",
+        "label": "Hi Alice",
+        "to": "Alice",
+        "type": "message",
+      },
+      {
+        "flags": [
+          "->>",
+        ],
+        "from": "Alice",
+        "label": "Hi Bob",
+        "to": "Bob",
+        "type": "message",
+      },
+    ],
+    "nodes": [
+      {
+        "id": "Alice",
+        "label": "Alice",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "Bob",
+        "label": "Bob",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "sequence",
+}
+`;
+
+exports[`official subset sequenceDiagram-3 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "TB",
+    "edges": [],
+    "events": [
+      {
+        "flags": [
+          "->>",
+        ],
+        "from": "Alice",
+        "label": "Hi Bob",
+        "to": "Bob",
+        "type": "message",
+      },
+      {
+        "flags": [
+          "->>",
+        ],
+        "from": "Bob",
+        "label": "Hi Alice",
+        "to": "Alice",
+        "type": "message",
+      },
+    ],
+    "nodes": [
+      {
+        "id": "Alice",
+        "label": "Alice",
+        "parent": undefined,
+        "shape": "circle",
+      },
+      {
+        "id": "Bob",
+        "label": "Bob",
+        "parent": undefined,
+        "shape": "circle",
+      },
+    ],
+  },
+  "kind": "sequence",
+}
+`;
+
+exports[`official subset sequenceDiagram-4 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "TB",
+    "edges": [],
+    "events": [
+      {
+        "flags": [
+          "->>",
+        ],
+        "from": "A",
+        "label": "Hello John, how are you?",
+        "to": "J",
+        "type": "message",
+      },
+      {
+        "flags": [
+          "->>",
+        ],
+        "from": "J",
+        "label": "Great!",
+        "to": "A",
+        "type": "message",
+      },
+    ],
+    "nodes": [
+      {
+        "id": "A",
+        "label": "Alice",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "J",
+        "label": "John",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "sequence",
+}
+`;
+
+exports[`official subset sequenceDiagram-6 1`] = `
+{
+  "ir": {
+    "clusters": [
+      {
+        "id": "sequence-box-0",
+        "label": "Alice & John",
+        "parent": undefined,
+        "style": {
+          "fill": "Purple",
+        },
+      },
+      {
+        "id": "sequence-box-1",
+        "label": "Another Group",
+        "parent": undefined,
+        "style": undefined,
+      },
+    ],
+    "direction": "TB",
+    "edges": [],
+    "events": [
+      {
+        "flags": [
+          "->>",
+        ],
+        "from": "A",
+        "label": "Hello John, how are you?",
+        "to": "J",
+        "type": "message",
+      },
+      {
+        "flags": [
+          "->>",
+        ],
+        "from": "J",
+        "label": "Great!",
+        "to": "A",
+        "type": "message",
+      },
+      {
+        "flags": [
+          "->>",
+        ],
+        "from": "A",
+        "label": "Hello Bob, how is Charley?",
+        "to": "B",
+        "type": "message",
+      },
+      {
+        "flags": [
+          "->>",
+        ],
+        "from": "B",
+        "label": "Hello Charley, how are you?",
+        "to": "C",
+        "type": "message",
+      },
+    ],
+    "nodes": [
+      {
+        "id": "A",
+        "label": "A",
+        "parent": "sequence-box-0",
+        "shape": "rect",
+      },
+      {
+        "id": "J",
+        "label": "J",
+        "parent": "sequence-box-0",
+        "shape": "rect",
+      },
+      {
+        "id": "B",
+        "label": "B",
+        "parent": "sequence-box-1",
+        "shape": "rect",
+      },
+      {
+        "id": "C",
+        "label": "C",
+        "parent": "sequence-box-1",
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "sequence",
+}
+`;
+
+exports[`official subset sequenceDiagram-7 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "TB",
+    "edges": [],
+    "events": [
+      {
+        "flags": [
+          "->>",
+        ],
+        "from": "Alice",
+        "label": "Hello John, how are you?",
+        "to": "John",
+        "type": "message",
+      },
+      {
+        "from": "John",
+        "label": "",
+        "type": "activate",
+      },
+      {
+        "flags": [
+          "-->>",
+        ],
+        "from": "John",
+        "label": "Great!",
+        "to": "Alice",
+        "type": "message",
+      },
+      {
+        "from": "John",
+        "label": "",
+        "type": "deactivate",
+      },
+    ],
+    "nodes": [
+      {
+        "id": "Alice",
+        "label": "Alice",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "John",
+        "label": "John",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "sequence",
+}
+`;
+
+exports[`official subset sequenceDiagram-8 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "TB",
+    "edges": [],
+    "events": [
+      {
+        "flags": [
+          "message",
+        ],
+        "from": "John",
+        "label": "",
+        "type": "activate",
+      },
+      {
+        "flags": [
+          "->>",
+        ],
+        "from": "Alice",
+        "label": "Hello John, how are you?",
+        "to": "John",
+        "type": "message",
+      },
+      {
+        "flags": [
+          "-->>",
+        ],
+        "from": "John",
+        "label": "Great!",
+        "to": "Alice",
+        "type": "message",
+      },
+      {
+        "from": "John",
+        "label": "",
+        "type": "deactivate",
+      },
+    ],
+    "nodes": [
+      {
+        "id": "Alice",
+        "label": "Alice",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "John",
+        "label": "John",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "sequence",
+}
+`;
+
+exports[`official subset sequenceDiagram-9 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "TB",
+    "edges": [],
+    "events": [
+      {
+        "flags": [
+          "message",
+        ],
+        "from": "John",
+        "label": "",
+        "type": "activate",
+      },
+      {
+        "flags": [
+          "->>",
+        ],
+        "from": "Alice",
+        "label": "Hello John, how are you?",
+        "to": "John",
+        "type": "message",
+      },
+      {
+        "flags": [
+          "message",
+        ],
+        "from": "John",
+        "label": "",
+        "type": "activate",
+      },
+      {
+        "flags": [
+          "->>",
+        ],
+        "from": "Alice",
+        "label": "John, can you hear me?",
+        "to": "John",
+        "type": "message",
+      },
+      {
+        "flags": [
+          "-->>",
+        ],
+        "from": "John",
+        "label": "Hi Alice, I can hear you!",
+        "to": "Alice",
+        "type": "message",
+      },
+      {
+        "from": "John",
+        "label": "",
+        "type": "deactivate",
+      },
+      {
+        "flags": [
+          "-->>",
+        ],
+        "from": "John",
+        "label": "I feel great!",
+        "to": "Alice",
+        "type": "message",
+      },
+      {
+        "from": "John",
+        "label": "",
+        "type": "deactivate",
+      },
+    ],
+    "nodes": [
+      {
+        "id": "Alice",
+        "label": "Alice",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "John",
+        "label": "John",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "sequence",
+}
+`;
+
+exports[`official subset sequenceDiagram-10 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "TB",
+    "edges": [],
+    "events": [
+      {
+        "flags": [
+          "right of",
+        ],
+        "from": "John",
+        "label": "Text in note",
+        "to": "John",
+        "type": "note",
+      },
+    ],
+    "nodes": [
+      {
+        "id": "John",
+        "label": "John",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "sequence",
+}
+`;
+
+exports[`official subset sequenceDiagram-11 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "TB",
+    "edges": [],
+    "events": [
+      {
+        "flags": [
+          "->",
+        ],
+        "from": "Alice",
+        "label": "Hello John, how are you?",
+        "to": "John",
+        "type": "message",
+      },
+      {
+        "flags": [
+          "over",
+        ],
+        "from": "Alice",
+        "label": "A typical interaction",
+        "to": "John",
+        "type": "note",
+      },
+    ],
+    "nodes": [
+      {
+        "id": "Alice",
+        "label": "Alice",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "John",
+        "label": "John",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "sequence",
+}
+`;
+
+exports[`official subset sequenceDiagram-12 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "TB",
+    "edges": [],
+    "events": [
+      {
+        "flags": [
+          "->",
+        ],
+        "from": "Alice",
+        "label": 
+"Hello John,
+how are you?"
+,
+        "to": "John",
+        "type": "message",
+      },
+      {
+        "flags": [
+          "over",
+        ],
+        "from": "Alice",
+        "label": 
+"A typical interaction
+But now in two lines"
+,
+        "to": "John",
+        "type": "note",
+      },
+    ],
+    "nodes": [
+      {
+        "id": "Alice",
+        "label": "Alice",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "John",
+        "label": "John",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "sequence",
+}
+`;
+
+exports[`official subset sequenceDiagram-13 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "TB",
+    "edges": [],
+    "events": [
+      {
+        "flags": [
+          "->",
+        ],
+        "from": "Alice",
+        "label": 
+"Hello John,
+how are you?"
+,
+        "to": "John",
+        "type": "message",
+      },
+      {
+        "flags": [
+          "over",
+        ],
+        "from": "Alice",
+        "label": 
+"A typical interaction
+But now in two lines"
+,
+        "to": "John",
+        "type": "note",
+      },
+    ],
+    "nodes": [
+      {
+        "id": "Alice",
+        "label": 
+"Alice
+Johnson"
+,
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "John",
+        "label": "John",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "sequence",
+}
+`;
+
+exports[`official subset sequenceDiagram-14 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "TB",
+    "edges": [],
+    "events": [
+      {
+        "flags": [
+          "->",
+        ],
+        "from": "Alice",
+        "label": "Hello John, how are you?",
+        "to": "John",
+        "type": "message",
+      },
+      {
+        "depth": 1,
+        "flags": [
+          "loop",
+          "",
+        ],
+        "label": "loop Every minute",
+        "type": "frame",
+      },
+      {
+        "flags": [
+          "-->",
+        ],
+        "from": "John",
+        "label": "Great!",
+        "to": "Alice",
+        "type": "message",
+      },
+      {
+        "depth": 1,
+        "label": "",
+        "type": "end",
+      },
+    ],
+    "nodes": [
+      {
+        "id": "Alice",
+        "label": "Alice",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "John",
+        "label": "John",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "sequence",
+}
+`;
+
+exports[`official subset sequenceDiagram-15 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "TB",
+    "edges": [],
+    "events": [
+      {
+        "flags": [
+          "->>",
+        ],
+        "from": "Alice",
+        "label": "Hello Bob, how are you?",
+        "to": "Bob",
+        "type": "message",
+      },
+      {
+        "depth": 1,
+        "flags": [
+          "alt",
+          "",
+        ],
+        "label": "alt is sick",
+        "type": "frame",
+      },
+      {
+        "flags": [
+          "->>",
+        ],
+        "from": "Bob",
+        "label": "Not so good :(",
+        "to": "Alice",
+        "type": "message",
+      },
+      {
+        "depth": 1,
+        "label": "else is well",
+        "type": "separator",
+      },
+      {
+        "flags": [
+          "->>",
+        ],
+        "from": "Bob",
+        "label": "Feeling fresh like a daisy",
+        "to": "Alice",
+        "type": "message",
+      },
+      {
+        "depth": 1,
+        "label": "",
+        "type": "end",
+      },
+      {
+        "depth": 1,
+        "flags": [
+          "opt",
+          "",
+        ],
+        "label": "opt Extra response",
+        "type": "frame",
+      },
+      {
+        "flags": [
+          "->>",
+        ],
+        "from": "Bob",
+        "label": "Thanks for asking",
+        "to": "Alice",
+        "type": "message",
+      },
+      {
+        "depth": 1,
+        "label": "",
+        "type": "end",
+      },
+    ],
+    "nodes": [
+      {
+        "id": "Alice",
+        "label": "Alice",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "Bob",
+        "label": "Bob",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "sequence",
+}
+`;
+
+exports[`official subset sequenceDiagram-16 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "TB",
+    "edges": [],
+    "events": [
+      {
+        "depth": 1,
+        "flags": [
+          "par",
+          "",
+        ],
+        "label": "par Alice to Bob",
+        "type": "frame",
+      },
+      {
+        "flags": [
+          "->>",
+        ],
+        "from": "Alice",
+        "label": "Hello guys!",
+        "to": "Bob",
+        "type": "message",
+      },
+      {
+        "depth": 1,
+        "label": "and Alice to John",
+        "type": "separator",
+      },
+      {
+        "flags": [
+          "->>",
+        ],
+        "from": "Alice",
+        "label": "Hello guys!",
+        "to": "John",
+        "type": "message",
+      },
+      {
+        "depth": 1,
+        "label": "",
+        "type": "end",
+      },
+      {
+        "flags": [
+          "-->>",
+        ],
+        "from": "Bob",
+        "label": "Hi Alice!",
+        "to": "Alice",
+        "type": "message",
+      },
+      {
+        "flags": [
+          "-->>",
+        ],
+        "from": "John",
+        "label": "Hi Alice!",
+        "to": "Alice",
+        "type": "message",
+      },
+    ],
+    "nodes": [
+      {
+        "id": "Alice",
+        "label": "Alice",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "Bob",
+        "label": "Bob",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "John",
+        "label": "John",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "sequence",
+}
+`;
+
+exports[`official subset sequenceDiagram-17 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "TB",
+    "edges": [],
+    "events": [
+      {
+        "depth": 1,
+        "flags": [
+          "par",
+          "",
+        ],
+        "label": "par Alice to Bob",
+        "type": "frame",
+      },
+      {
+        "flags": [
+          "->>",
+        ],
+        "from": "Alice",
+        "label": "Go help John",
+        "to": "Bob",
+        "type": "message",
+      },
+      {
+        "depth": 1,
+        "label": "and Alice to John",
+        "type": "separator",
+      },
+      {
+        "flags": [
+          "->>",
+        ],
+        "from": "Alice",
+        "label": "I want this done today",
+        "to": "John",
+        "type": "message",
+      },
+      {
+        "depth": 2,
+        "flags": [
+          "par",
+          "",
+        ],
+        "label": "par John to Charlie",
+        "type": "frame",
+      },
+      {
+        "flags": [
+          "->>",
+        ],
+        "from": "John",
+        "label": "Can we do this today?",
+        "to": "Charlie",
+        "type": "message",
+      },
+      {
+        "depth": 2,
+        "label": "and John to Diana",
+        "type": "separator",
+      },
+      {
+        "flags": [
+          "->>",
+        ],
+        "from": "John",
+        "label": "Can you help us today?",
+        "to": "Diana",
+        "type": "message",
+      },
+      {
+        "depth": 2,
+        "label": "",
+        "type": "end",
+      },
+      {
+        "depth": 1,
+        "label": "",
+        "type": "end",
+      },
+    ],
+    "nodes": [
+      {
+        "id": "Alice",
+        "label": "Alice",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "Bob",
+        "label": "Bob",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "John",
+        "label": "John",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "Charlie",
+        "label": "Charlie",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "Diana",
+        "label": "Diana",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "sequence",
+}
+`;
+
+exports[`official subset sequenceDiagram-18 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "TB",
+    "edges": [],
+    "events": [
+      {
+        "depth": 1,
+        "flags": [
+          "critical",
+          "",
+        ],
+        "label": "critical Establish a connection to the DB",
+        "type": "frame",
+      },
+      {
+        "flags": [
+          "-->",
+        ],
+        "from": "Service",
+        "label": "connect",
+        "to": "DB",
+        "type": "message",
+      },
+      {
+        "depth": 1,
+        "label": "option Network timeout",
+        "type": "separator",
+      },
+      {
+        "flags": [
+          "-->",
+        ],
+        "from": "Service",
+        "label": "Log error",
+        "to": "Service",
+        "type": "message",
+      },
+      {
+        "depth": 1,
+        "label": "option Credentials rejected",
+        "type": "separator",
+      },
+      {
+        "flags": [
+          "-->",
+        ],
+        "from": "Service",
+        "label": "Log different error",
+        "to": "Service",
+        "type": "message",
+      },
+      {
+        "depth": 1,
+        "label": "",
+        "type": "end",
+      },
+    ],
+    "nodes": [
+      {
+        "id": "Service",
+        "label": "Service",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "DB",
+        "label": "DB",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "sequence",
+}
+`;
+
+exports[`official subset sequenceDiagram-19 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "TB",
+    "edges": [],
+    "events": [
+      {
+        "depth": 1,
+        "flags": [
+          "critical",
+          "",
+        ],
+        "label": "critical Establish a connection to the DB",
+        "type": "frame",
+      },
+      {
+        "flags": [
+          "-->",
+        ],
+        "from": "Service",
+        "label": "connect",
+        "to": "DB",
+        "type": "message",
+      },
+      {
+        "depth": 1,
+        "label": "",
+        "type": "end",
+      },
+    ],
+    "nodes": [
+      {
+        "id": "Service",
+        "label": "Service",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "DB",
+        "label": "DB",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "sequence",
+}
+`;
+
+exports[`official subset sequenceDiagram-20 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "TB",
+    "edges": [],
+    "events": [
+      {
+        "flags": [
+          "-->",
+        ],
+        "from": "Consumer",
+        "label": "Book something",
+        "to": "API",
+        "type": "message",
+      },
+      {
+        "flags": [
+          "-->",
+        ],
+        "from": "API",
+        "label": "Start booking process",
+        "to": "BookingService",
+        "type": "message",
+      },
+      {
+        "depth": 1,
+        "flags": [
+          "break",
+          "",
+        ],
+        "label": "break when the booking process fails",
+        "type": "frame",
+      },
+      {
+        "flags": [
+          "-->",
+        ],
+        "from": "API",
+        "label": "show failure",
+        "to": "Consumer",
+        "type": "message",
+      },
+      {
+        "depth": 1,
+        "label": "",
+        "type": "end",
+      },
+      {
+        "flags": [
+          "-->",
+        ],
+        "from": "API",
+        "label": "Start billing process",
+        "to": "BillingService",
+        "type": "message",
+      },
+    ],
+    "nodes": [
+      {
+        "id": "Consumer",
+        "label": "Consumer",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "API",
+        "label": "API",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "BookingService",
+        "label": "BookingService",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "BillingService",
+        "label": "BillingService",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "sequence",
+}
+`;
+
+exports[`official subset sequenceDiagram-21 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "TB",
+    "edges": [],
+    "events": [
+      {
+        "depth": 1,
+        "flags": [
+          "rect",
+          "rgb(191, 223, 255)",
+        ],
+        "label": "rect rgb(191, 223, 255)",
+        "type": "frame",
+      },
+      {
+        "flags": [
+          "right of",
+        ],
+        "from": "Alice",
+        "label": "Alice calls John.",
+        "to": "Alice",
+        "type": "note",
+      },
+      {
+        "flags": [
+          "message",
+        ],
+        "from": "John",
+        "label": "",
+        "type": "activate",
+      },
+      {
+        "flags": [
+          "->>",
+        ],
+        "from": "Alice",
+        "label": "Hello John, how are you?",
+        "to": "John",
+        "type": "message",
+      },
+      {
+        "depth": 2,
+        "flags": [
+          "rect",
+          "rgb(200, 150, 255)",
+        ],
+        "label": "rect rgb(200, 150, 255)",
+        "type": "frame",
+      },
+      {
+        "flags": [
+          "message",
+        ],
+        "from": "John",
+        "label": "",
+        "type": "activate",
+      },
+      {
+        "flags": [
+          "->>",
+        ],
+        "from": "Alice",
+        "label": "John, can you hear me?",
+        "to": "John",
+        "type": "message",
+      },
+      {
+        "flags": [
+          "-->>",
+        ],
+        "from": "John",
+        "label": "Hi Alice, I can hear you!",
+        "to": "Alice",
+        "type": "message",
+      },
+      {
+        "from": "John",
+        "label": "",
+        "type": "deactivate",
+      },
+      {
+        "depth": 2,
+        "label": "",
+        "type": "end",
+      },
+      {
+        "flags": [
+          "-->>",
+        ],
+        "from": "John",
+        "label": "I feel great!",
+        "to": "Alice",
+        "type": "message",
+      },
+      {
+        "from": "John",
+        "label": "",
+        "type": "deactivate",
+      },
+      {
+        "depth": 1,
+        "label": "",
+        "type": "end",
+      },
+      {
+        "flags": [
+          "message",
+        ],
+        "from": "John",
+        "label": "",
+        "type": "activate",
+      },
+      {
+        "flags": [
+          "->>",
+        ],
+        "from": "Alice",
+        "label": "Did you want to go to the game tonight?",
+        "to": "John",
+        "type": "message",
+      },
+      {
+        "flags": [
+          "-->>",
+        ],
+        "from": "John",
+        "label": "Yeah! See you there.",
+        "to": "Alice",
+        "type": "message",
+      },
+      {
+        "from": "John",
+        "label": "",
+        "type": "deactivate",
+      },
+    ],
+    "nodes": [
+      {
+        "id": "Alice",
+        "label": "Alice",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "John",
+        "label": "John",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "sequence",
+}
+`;
+
+exports[`official subset sequenceDiagram-22 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "TB",
+    "edges": [],
+    "events": [
+      {
+        "flags": [
+          "->>",
+        ],
+        "from": "Alice",
+        "label": "Hello John, how are you?",
+        "to": "John",
+        "type": "message",
+      },
+      {
+        "flags": [
+          "-->>",
+        ],
+        "from": "John",
+        "label": "Great!",
+        "to": "Alice",
+        "type": "message",
+      },
+    ],
+    "nodes": [
+      {
+        "id": "Alice",
+        "label": "Alice",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "John",
+        "label": "John",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "sequence",
+}
+`;
+
+exports[`official subset sequenceDiagram-23 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "TB",
+    "edges": [],
+    "events": [
+      {
+        "flags": [
+          "->>",
+        ],
+        "from": "A",
+        "label": "I ♥ you!",
+        "to": "B",
+        "type": "message",
+      },
+      {
+        "flags": [
+          "->>",
+        ],
+        "from": "B",
+        "label": "I ♥ you ∞ times more!",
+        "to": "A",
+        "type": "message",
+      },
+    ],
+    "nodes": [
+      {
+        "id": "A",
+        "label": "A",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "B",
+        "label": "B",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "sequence",
+}
+`;
+
+exports[`official subset sequenceDiagram-24 1`] = `
+{
+  "ir": {
+    "clusters": [],
+    "direction": "TB",
+    "edges": [],
+    "events": [
+      {
+        "flags": [
+          "->>",
+        ],
+        "from": "Alice",
+        "label": "1. Hello John, how are you?",
+        "to": "John",
+        "type": "message",
+      },
+      {
+        "depth": 1,
+        "flags": [
+          "loop",
+          "",
+        ],
+        "label": "loop HealthCheck",
+        "type": "frame",
+      },
+      {
+        "flags": [
+          "->>",
+        ],
+        "from": "John",
+        "label": "2. Fight against hypochondria",
+        "to": "John",
+        "type": "message",
+      },
+      {
+        "depth": 1,
+        "label": "",
+        "type": "end",
+      },
+      {
+        "flags": [
+          "right of",
+        ],
+        "from": "John",
+        "label": "Rational thoughts!",
+        "to": "John",
+        "type": "note",
+      },
+      {
+        "flags": [
+          "-->>",
+        ],
+        "from": "John",
+        "label": "3. Great!",
+        "to": "Alice",
+        "type": "message",
+      },
+      {
+        "flags": [
+          "->>",
+        ],
+        "from": "John",
+        "label": "4. How about you?",
+        "to": "Bob",
+        "type": "message",
+      },
+      {
+        "flags": [
+          "-->>",
+        ],
+        "from": "Bob",
+        "label": "5. Jolly good!",
+        "to": "John",
+        "type": "message",
+      },
+    ],
+    "nodes": [
+      {
+        "id": "Alice",
+        "label": "Alice",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "John",
+        "label": "John",
+        "parent": undefined,
+        "shape": "rect",
+      },
+      {
+        "id": "Bob",
+        "label": "Bob",
+        "parent": undefined,
+        "shape": "rect",
+      },
+    ],
+  },
+  "kind": "sequence",
+}
+`;

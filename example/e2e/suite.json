@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "flows": [
+    {
+      "name": "home-system-back-navigation",
+      "program": "home-system-back.ad",
+      "tags": ["full", "diagrams"],
+      "platforms": ["android"]
+    },
+    {
+      "name": "home-all-thirteen-navigation",
+      "program": "home-collection.ad",
+      "tags": ["full", "diagrams"],
+      "platforms": ["android", "ios"]
+    },
+    {
+      "name": "standalone-gallery",
+      "program": "gallery.ad",
+      "tags": ["full", "diagrams"],
+      "platforms": ["android", "ios"]
+    },
+    {
+      "name": "bounded-inline-extremes",
+      "program": "inline-extremes.ad",
+      "tags": ["full", "diagrams"],
+      "platforms": ["android", "ios"]
+    },
+    {
+      "name": "visual-theme-studio",
+      "program": "theme-studio.ad",
+      "tags": ["full", "diagrams"],
+      "platforms": ["android", "ios"]
+    },
+    {
+      "name": "theme-live-interactions",
+      "program": "theme-interactions.ad",
+      "tags": ["full", "diagrams"],
+      "platforms": ["android"]
+    },
+    {
+      "name": "explicit-diagram-controls",
+      "program": "diagram-controls.ad",
+      "tags": ["full", "diagrams"],
+      "platforms": ["android", "ios"]
+    },
+    {
+      "name": "official-native-thirty-one-types",
+      "program": "official-native-types.ad",
+      "tags": ["full", "official", "diagrams"],
+      "platforms": ["android"]
+    }
+  ]
+}

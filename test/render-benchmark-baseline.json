@@ -1,0 +1,25 @@
+{
+  "environment": "CanvasKit 0.41.0; unscoped Skia 3.0.3 production renderer; frozen NotoSans; local Linux median after warmup; serialization is not native allocated memory",
+  "results": [
+    {
+      "name": "flowchart-20",
+      "pictureMs": 0.933138999999997,
+      "serializedBytes": 581155
+    },
+    {
+      "name": "flowchart-100",
+      "pictureMs": 3.4601470000000063,
+      "serializedBytes": 629795
+    },
+    {
+      "name": "flowchart-300",
+      "pictureMs": 8.143471999999974,
+      "serializedBytes": 752995
+    },
+    {
+      "name": "sequence-50",
+      "pictureMs": 1.3323119999999449,
+      "serializedBytes": 592378
+    }
+  ]
+}
