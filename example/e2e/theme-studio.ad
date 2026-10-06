@@ -1,0 +1,83 @@
+# Theme edit, reset, persistence and all thirteen live previews.
+open "dev.osuki.skiadiagrams.example" --relaunch
+wait id="gallery-home"
+press id="home-theme-editor"
+wait id="theme-preview-canvas"
+scroll down 0.3
+scroll down 0.3 --until id="token-accent"
+fill id="token-accent" "#3E63FF"
+keyboard enter
+press id="studio-reset"
+scroll top
+press id="studio-type"
+wait stable 500
+press id="studio-select-Flowchart"
+wait text "Flowchart · Switch type"
+wait id="theme-preview-canvas"
+press id="studio-type"
+wait stable 500
+press id="studio-select-Sequence"
+wait text "Sequence · Switch type"
+wait id="theme-preview-canvas"
+press id="studio-type"
+wait stable 500
+press id="studio-select-Class"
+wait text "Class · Switch type"
+wait id="theme-preview-canvas"
+press id="studio-type"
+wait stable 500
+press id="studio-select-State"
+wait text "State · Switch type"
+wait id="theme-preview-canvas"
+press id="studio-type"
+wait stable 500
+press id="studio-select-ER"
+wait text "ER · Switch type"
+wait id="theme-preview-canvas"
+press id="studio-type"
+wait stable 500
+press id="studio-select-Gantt"
+wait text "Gantt · Switch type"
+wait id="theme-preview-canvas"
+press id="studio-type"
+wait stable 500
+press id="studio-select-Pie"
+wait text "Pie · Switch type"
+wait id="theme-preview-canvas"
+press id="studio-type"
+wait stable 500
+press id="studio-select-GitGraph"
+wait text "GitGraph · Switch type"
+wait id="theme-preview-canvas"
+press id="studio-type"
+wait stable 500
+press id="studio-select-Mindmap"
+wait text "Mindmap · Switch type"
+wait id="theme-preview-canvas"
+press id="studio-type"
+wait stable 500
+press id="studio-select-Timeline"
+wait text "Timeline · Switch type"
+wait id="theme-preview-canvas"
+press id="studio-type"
+wait stable 500
+press id="studio-select-Journey"
+wait text "Journey · Switch type"
+wait id="theme-preview-canvas"
+press id="studio-type"
+wait stable 500
+press id="studio-select-Quadrant"
+wait text "Quadrant · Switch type"
+wait id="theme-preview-canvas"
+press id="studio-type"
+wait stable 500
+press id="studio-select-XY"
+wait text "XY · Switch type"
+wait id="theme-preview-canvas"
+press id="studio-dark"
+press id="studio-tab-Layout"
+wait text "Shared layout"
+press id="studio-reset"
+press id="theme-studio-back"
+wait id="gallery-home"
+close

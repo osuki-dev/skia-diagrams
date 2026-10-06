@@ -1,0 +1,414 @@
+# Every official category must prepare a native Picture in Hermes.
+open "dev.osuki.skiadiagrams.example" --relaunch
+wait id="gallery-home"
+scroll bottom
+wait stable 500
+press id="home-official-examples"
+# Flowchart
+scroll top
+press id="official-type-flowchart"
+scroll top
+wait stable 300
+press id="official-case-flowchart-001"
+wait text "Ready ·"
+wait id="official-diagram-canvas"
+screenshot "design/theme-studio/implemented/native-final/official-flowchart.png"
+press id="official-back"
+press id="official-back"
+# Swimlanes Diagram
+scroll top
+press id="official-type-swimlanes"
+scroll top
+wait stable 300
+press id="official-case-swimlanes-001"
+wait text "Ready ·"
+wait id="official-diagram-canvas"
+screenshot "design/theme-studio/implemented/native-final/official-swimlanes.png"
+press id="official-back"
+press id="official-back"
+# Sequence Diagram
+scroll top
+press id="official-type-sequenceDiagram"
+scroll top
+wait stable 300
+press id="official-case-sequenceDiagram-001"
+wait text "Ready ·"
+wait id="official-diagram-canvas"
+screenshot "design/theme-studio/implemented/native-final/official-sequenceDiagram.png"
+press id="official-back"
+press id="official-back"
+# Class Diagram
+scroll top
+press id="official-type-classDiagram"
+scroll top
+wait stable 300
+press id="official-case-classDiagram-001"
+wait text "Ready ·"
+wait id="official-diagram-canvas"
+screenshot "design/theme-studio/implemented/native-final/official-classDiagram.png"
+press id="official-back"
+press id="official-back"
+# State Diagram
+scroll top
+press id="official-type-stateDiagram"
+scroll top
+wait stable 300
+press id="official-case-stateDiagram-001"
+wait text "Ready ·"
+wait id="official-diagram-canvas"
+screenshot "design/theme-studio/implemented/native-final/official-stateDiagram.png"
+press id="official-back"
+press id="official-back"
+# Entity Relationship Diagram
+scroll top
+press id="official-type-entityRelationshipDiagram"
+scroll top
+wait stable 300
+press id="official-case-entityRelationshipDiagram-001"
+wait text "Ready ·"
+wait id="official-diagram-canvas"
+screenshot "design/theme-studio/implemented/native-final/official-entityRelationshipDiagram.png"
+press id="official-back"
+press id="official-back"
+# User Journey
+scroll top
+press id="official-type-userJourney"
+scroll top
+wait stable 300
+press id="official-case-userJourney-001"
+wait text "Ready ·"
+wait id="official-diagram-canvas"
+screenshot "design/theme-studio/implemented/native-final/official-userJourney.png"
+press id="official-back"
+press id="official-back"
+# Gantt
+scroll top
+press id="official-type-gantt"
+scroll top
+wait stable 300
+press id="official-case-gantt-001"
+wait text "Ready ·"
+wait id="official-diagram-canvas"
+screenshot "design/theme-studio/implemented/native-final/official-gantt.png"
+press id="official-back"
+press id="official-back"
+# Pie Chart
+scroll top
+press id="official-type-pie"
+scroll top
+wait stable 300
+press id="official-case-pie-001"
+wait text "Ready ·"
+wait id="official-diagram-canvas"
+screenshot "design/theme-studio/implemented/native-final/official-pie.png"
+press id="official-back"
+press id="official-back"
+# Quadrant Chart
+scroll top
+press id="official-type-quadrantChart"
+scroll top
+wait stable 300
+press id="official-case-quadrantChart-001"
+wait text "Ready ·"
+wait id="official-diagram-canvas"
+screenshot "design/theme-studio/implemented/native-final/official-quadrantChart.png"
+press id="official-back"
+press id="official-back"
+# Requirement Diagram
+scroll top
+scroll down 0.65
+wait stable 300
+press id="official-type-requirementDiagram"
+scroll top
+wait stable 300
+press id="official-case-requirementDiagram-001"
+wait text "Ready ·"
+wait id="official-diagram-canvas"
+screenshot "design/theme-studio/implemented/native-final/official-requirementDiagram.png"
+press id="official-back"
+press id="official-back"
+# Use Case Diagram
+scroll top
+scroll down 0.65
+wait stable 300
+press id="official-type-usecase"
+scroll top
+wait stable 300
+press id="official-case-usecase-001"
+wait text "Ready ·"
+wait id="official-diagram-canvas"
+screenshot "design/theme-studio/implemented/native-final/official-usecase.png"
+press id="official-back"
+press id="official-back"
+# GitGraph (Git) Diagram
+scroll top
+scroll down 0.65
+wait stable 300
+press id="official-type-gitgraph"
+scroll top
+wait stable 300
+press id="official-case-gitgraph-001"
+wait text "Ready ·"
+wait id="official-diagram-canvas"
+screenshot "design/theme-studio/implemented/native-final/official-gitgraph.png"
+press id="official-back"
+press id="official-back"
+# C4 Diagram
+scroll top
+scroll down 0.65
+wait stable 300
+press id="official-type-c4"
+scroll top
+wait stable 300
+press id="official-case-c4-001"
+wait text "Ready ·"
+wait id="official-diagram-canvas"
+screenshot "design/theme-studio/implemented/native-final/official-c4.png"
+press id="official-back"
+press id="official-back"
+# Mindmaps
+scroll top
+scroll down 0.65
+wait stable 300
+press id="official-type-mindmap"
+scroll top
+wait stable 300
+press id="official-case-mindmap-001"
+wait text "Ready ·"
+wait id="official-diagram-canvas"
+screenshot "design/theme-studio/implemented/native-final/official-mindmap.png"
+press id="official-back"
+press id="official-back"
+# Timeline
+scroll top
+scroll down 0.65
+wait stable 300
+press id="official-type-timeline"
+scroll top
+wait stable 300
+press id="official-case-timeline-001"
+wait text "Ready ·"
+wait id="official-diagram-canvas"
+screenshot "design/theme-studio/implemented/native-final/official-timeline.png"
+press id="official-back"
+press id="official-back"
+# ZenUML
+scroll top
+scroll down 0.65
+wait stable 300
+press id="official-type-zenuml"
+scroll top
+wait stable 300
+press id="official-case-zenuml-001"
+wait text "Ready ·"
+wait id="official-diagram-canvas"
+screenshot "design/theme-studio/implemented/native-final/official-zenuml.png"
+press id="official-back"
+press id="official-back"
+# Sankey
+scroll top
+scroll down 0.65
+wait stable 300
+press id="official-type-sankey"
+scroll top
+wait stable 300
+press id="official-case-sankey-001"
+wait text "Ready ·"
+wait id="official-diagram-canvas"
+screenshot "design/theme-studio/implemented/native-final/official-sankey.png"
+press id="official-back"
+press id="official-back"
+# XY Chart
+scroll top
+scroll down 0.65
+wait stable 300
+press id="official-type-xyChart"
+scroll top
+wait stable 300
+press id="official-case-xyChart-001"
+wait text "Ready ·"
+wait id="official-diagram-canvas"
+screenshot "design/theme-studio/implemented/native-final/official-xyChart.png"
+press id="official-back"
+press id="official-back"
+# Block Diagram
+scroll top
+scroll down 0.65
+wait stable 300
+press id="official-type-block"
+scroll top
+wait stable 300
+press id="official-case-block-001"
+wait text "Ready ·"
+wait id="official-diagram-canvas"
+screenshot "design/theme-studio/implemented/native-final/official-block.png"
+press id="official-back"
+press id="official-back"
+# Packet
+scroll top
+scroll down 0.65
+wait stable 300
+scroll down 0.65
+wait stable 300
+press id="official-type-packet"
+scroll top
+wait stable 300
+press id="official-case-packet-001"
+wait text "Ready ·"
+wait id="official-diagram-canvas"
+screenshot "design/theme-studio/implemented/native-final/official-packet.png"
+press id="official-back"
+press id="official-back"
+# Kanban
+scroll top
+scroll down 0.65
+wait stable 300
+scroll down 0.65
+wait stable 300
+press id="official-type-kanban"
+scroll top
+wait stable 300
+press id="official-case-kanban-001"
+wait text "Ready ·"
+wait id="official-diagram-canvas"
+screenshot "design/theme-studio/implemented/native-final/official-kanban.png"
+press id="official-back"
+press id="official-back"
+# Architecture
+scroll top
+scroll down 0.65
+wait stable 300
+scroll down 0.65
+wait stable 300
+press id="official-type-architecture"
+scroll top
+wait stable 300
+press id="official-case-architecture-001"
+wait text "Ready ·"
+wait id="official-diagram-canvas"
+screenshot "design/theme-studio/implemented/native-final/official-architecture.png"
+press id="official-back"
+press id="official-back"
+# Radar
+scroll top
+scroll down 0.65
+wait stable 300
+scroll down 0.65
+wait stable 300
+press id="official-type-radar"
+scroll top
+wait stable 300
+press id="official-case-radar-001"
+wait text "Ready ·"
+wait id="official-diagram-canvas"
+screenshot "design/theme-studio/implemented/native-final/official-radar.png"
+press id="official-back"
+press id="official-back"
+# Event Modeling
+scroll top
+scroll down 0.65
+wait stable 300
+scroll down 0.65
+wait stable 300
+press id="official-type-eventmodeling"
+scroll top
+wait stable 300
+press id="official-case-eventmodeling-001"
+wait text "Ready ·"
+wait id="official-diagram-canvas"
+screenshot "design/theme-studio/implemented/native-final/official-eventmodeling.png"
+press id="official-back"
+press id="official-back"
+# Treemap
+scroll top
+scroll down 0.65
+wait stable 300
+scroll down 0.65
+wait stable 300
+press id="official-type-treemap"
+scroll top
+wait stable 300
+press id="official-case-treemap-001"
+wait text "Ready ·"
+wait id="official-diagram-canvas"
+screenshot "design/theme-studio/implemented/native-final/official-treemap.png"
+press id="official-back"
+press id="official-back"
+# Venn
+scroll top
+scroll down 0.65
+wait stable 300
+scroll down 0.65
+wait stable 300
+press id="official-type-venn"
+scroll top
+wait stable 300
+press id="official-case-venn-001"
+wait text "Ready ·"
+wait id="official-diagram-canvas"
+screenshot "design/theme-studio/implemented/native-final/official-venn.png"
+press id="official-back"
+press id="official-back"
+# Ishikawa
+scroll top
+scroll down 0.65
+wait stable 300
+scroll down 0.65
+wait stable 300
+press id="official-type-ishikawa"
+scroll top
+wait stable 300
+press id="official-case-ishikawa-001"
+wait text "Ready ·"
+wait id="official-diagram-canvas"
+screenshot "design/theme-studio/implemented/native-final/official-ishikawa.png"
+press id="official-back"
+press id="official-back"
+# Wardley
+scroll top
+scroll down 0.65
+wait stable 300
+scroll down 0.65
+wait stable 300
+press id="official-type-wardley"
+scroll top
+wait stable 300
+press id="official-case-wardley-001"
+wait text "Ready ·"
+wait id="official-diagram-canvas"
+screenshot "design/theme-studio/implemented/native-final/official-wardley.png"
+press id="official-back"
+press id="official-back"
+# Cynefin
+scroll top
+scroll down 0.65
+wait stable 300
+scroll down 0.65
+wait stable 300
+press id="official-type-cynefin"
+scroll top
+wait stable 300
+press id="official-case-cynefin-001"
+wait text "Ready ·"
+wait id="official-diagram-canvas"
+screenshot "design/theme-studio/implemented/native-final/official-cynefin.png"
+press id="official-back"
+press id="official-back"
+# TreeView
+scroll top
+scroll down 0.65
+wait stable 300
+scroll down 0.65
+wait stable 300
+scroll down 0.65
+wait stable 300
+press id="official-type-treeView"
+scroll top
+wait stable 300
+press id="official-case-treeView-001"
+wait text "Ready ·"
+wait id="official-diagram-canvas"
+screenshot "design/theme-studio/implemented/native-final/official-treeView.png"
+press id="official-back"
+press id="official-back"
+close

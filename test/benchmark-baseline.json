@@ -1,0 +1,29 @@
+{
+  "environment": "Bun 1.4.2; local Linux; median of 15 after 5 warmups; sequence samples batch 200 calls; Node estimates, not device acceptance",
+  "results": [
+    {
+      "name": "flowchart-20",
+      "parseMs": 0.13193300000000363,
+      "layoutMs": 1.8427819999999997,
+      "primitives": 59
+    },
+    {
+      "name": "flowchart-100",
+      "parseMs": 0.5101369999999861,
+      "layoutMs": 14.459036999999995,
+      "primitives": 299
+    },
+    {
+      "name": "flowchart-300",
+      "parseMs": 1.5520519999998896,
+      "layoutMs": 38.98517400000003,
+      "primitives": 899
+    },
+    {
+      "name": "sequence-50",
+      "parseMs": 0.023423625000000357,
+      "layoutMs": 0.11576103999999987,
+      "primitives": 106
+    }
+  ]
+}
