@@ -1,6 +1,6 @@
 {
   "name": "@osuki-dev/skia-diagrams",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "description": "DOM-free Mermaid parsing and layout with native Graphite Skia diagrams",
   "homepage": "https://github.com/osuki-dev/skia-diagrams#readme",
   "bugs": {
@@ -41,7 +41,8 @@
     "./package.json": "./package.json"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "provenance": true
   },
   "scripts": {
     "test": "bun test test",
@@ -56,7 +57,9 @@
     "bench:render": "bun scripts/bench-render.ts",
     "bench:render:check": "bun scripts/bench-render.ts --check",
     "prepack": "bun run build",
-    "imports:check": "bun scripts/check-imports.ts"
+    "imports:check": "bun scripts/check-imports.ts",
+    "changeset": "changeset",
+    "version:packages": "changeset version && bun install --lockfile-only"
   },
   "dependencies": {
     "@dagrejs/dagre": "^3.1.1",
@@ -64,6 +67,8 @@
     "js-yaml": "5.4.3"
   },
   "devDependencies": {
+    "@changesets/changelog-github": "1.0.1",
+    "@changesets/cli": "3.0.3",
     "@types/bun": "latest",
     "@types/react": "^19.2.0",
     "canvaskit-wasm": "0.41.0",
@@ -99,5 +104,6 @@
     "react-native-gesture-handler": {
       "optional": true
     }
-  }
+  },
+  "packageManager": "bun@1.4.2"
 }

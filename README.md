@@ -16,11 +16,15 @@ The three required runtime dependencies are `@dagrejs/dagre` for graph placement
 
 ```ts
 import {
-  parseDiagramAsync, layoutDiagram, estimateText, renderToSvg, lightTheme,
-} from '@osuki-dev/skia-diagrams';
+  parseDiagramAsync,
+  layoutDiagram,
+  estimateText,
+  renderToSvg,
+  lightTheme,
+} from "@osuki-dev/skia-diagrams";
 
-const parsed = await parseDiagramAsync('flowchart LR\nA[Start] --> B[Done]');
-if (parsed.kind !== 'error' && parsed.kind !== 'unsupported') {
+const parsed = await parseDiagramAsync("flowchart LR\nA[Start] --> B[Done]");
+if (parsed.kind !== "error" && parsed.kind !== "unsupported") {
   const scene = layoutDiagram(parsed, estimateText, {
     ...lightTheme.layout,
     fontSize: lightTheme.fontSize,
@@ -37,11 +41,11 @@ if (parsed.kind !== 'error' && parsed.kind !== 'unsupported') {
 ## Native usage
 
 ```tsx
-import { Diagram, DiagramProvider, DiagramViewer } from '@osuki-dev/skia-diagrams/react';
+import { Diagram, DiagramProvider, DiagramViewer } from "@osuki-dev/skia-diagrams/react";
 
 <DiagramProvider
   fontProvider={hostFonts}
-  theme={{ fontFamily: 'HostSans,HostCJK', accent: '#FF5A4A' }}
+  theme={{ fontFamily: "HostSans,HostCJK", accent: "#FF5A4A" }}
   onInteraction={handleDiagramInteraction}
   onExpand={openViewer}
 >
@@ -91,3 +95,9 @@ The [example app](example/README.md) includes the approved thirteen-type visual 
 [Official fixture provenance](test/fixtures/official-mermaid/README.md) records unchanged sources and hashes. `bun scripts/sync-official-fixtures.ts` refreshes that pinned catalog. After generating official reference captures, `bun scripts/compare-official.ts --all --skia-only` regenerates Skia images under `design/theme-studio/official/comparison/` for comparison with the pinned official examples. Generated image artifacts are excluded from Git. Official browser rendering runs only as an offline reference tool. `scripts/generate-block-parser.ts` reproduces the vendored official Block grammar without a runtime generator dependency.
 
 Reference regeneration requires Mermaid CLI (`mmdc`) on `PATH`, or an explicit `--cli <mmdc-path>`. Run `bun scripts/compare-official.ts --all` to create both reference and Skia captures. Optional `--puppeteer <puppeteer-json>` and `--config <mermaid-json>` supply browser and Mermaid settings. The report records the actual CLI and Mermaid versions; use the pinned fixture renderer version when comparing references. `--skia-only` requires the existing reference images and their manifest in the same output directory, and then needs no Mermaid CLI installation. These tools are for offline verification and are not runtime dependencies.
+
+## Release workflow
+
+CI checks types, lint, formatting, tests, the example and the npm package on pull requests and pushes to `main`. Releases use the same Changesets v2 workflow as `osuki-dev/opencode-osuki-agent`: select a release mode, open a version PR, then verify, pack and publish the exact packed artifact through npm trusted publishing.
+
+Run `bun run changeset` for a package change and commit the generated entry. The initial minor changeset promotes the unpublished `0.0.0` placeholder to `0.1.0`; merge the version PR after native validation. GitHub Actions must be allowed to create pull requests. Configure the npm trusted publisher for organization `osuki-dev`, repository `skia-diagrams`, workflow `release.yml`. npm account/package setup and first-publication authorization are managed by the package owner; the workflow contains no npm token.
