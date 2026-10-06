@@ -1,3 +1,4 @@
+import catalog from "./fixtures/official-mermaid/catalog.json" with { type: "json" };
 import { readYaml, readYamlMapping } from "../src/parse/yaml.ts";
 import { readDiagramThemeDirective } from "../src/react/theme-directive.ts";
 import { expect, test } from "bun:test";
@@ -78,9 +79,9 @@ test("metadata keeps JSON-compatible values and ordered integer-like mapping key
 test("official multiline quoted CSS keeps Mermaid YAML4 closing-indent semantics", async () => {
   const { readFrontMatter } = await import("../src/parse/frontmatter.ts");
   const { parseDiagramAsync } = await import("../src/index.ts");
-  const source = await Bun.file(
-    "design/theme-studio/official/comparison/cases/gantt/011/source.mmd",
-  ).text();
+  const source = catalog.types
+    .find((type) => type.type === "gantt")!
+    .cases.find((fixture) => fixture.id === "gantt/011")!.source;
   const metadata = readFrontMatter(source);
   expect(metadata.config?.gantt).toEqual({
     useWidth: 400,
