@@ -1,0 +1,21 @@
+# Android hardware/system Back, not the explicit All diagrams button.
+open "dev.osuki.skiadiagrams.example" --relaunch
+wait id="gallery-home"
+press id="home-type-Flowchart"
+wait id="diagram-Flowchart"
+press id="theme-mode"
+back --system
+wait id="gallery-home"
+press id="home-type-Sequence"
+wait id="diagram-Sequence"
+press id="choose-type"
+wait id="select-Flowchart"
+back --system
+wait id="diagram-Sequence"
+press id="diagram-Sequence"
+wait id="diagram-viewer-canvas"
+back --system
+wait id="diagram-Sequence"
+back --system
+wait id="gallery-home"
+close

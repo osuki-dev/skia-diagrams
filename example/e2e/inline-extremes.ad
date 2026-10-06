@@ -1,0 +1,21 @@
+# Production bounded inline Canvas, legal 300-node sources and export guard.
+open "dev.osuki.skiadiagrams.example" --relaunch
+wait text "Skia Diagrams Gallery"
+press id="home-type-Flowchart"
+press id="theme-settings"
+scroll down 0.5 --until id="open-inline-qa"
+press id="open-inline-qa"
+wait id="extreme-inline-canvas"
+is visible id="extreme-inline-viewport"
+press id="inline-check-png"
+wait text "PNG export exceeds 8192 pixels per dimension"
+press id="inline-ExtremeWide"
+wait id="extreme-inline-canvas"
+press id="inline-check-png"
+wait text "PNG export exceeds 8192 pixels per dimension"
+press id="inline-ExtremeLabels"
+wait id="extreme-inline-canvas"
+is visible id="inline-host-after"
+press id="inline-close"
+wait text "Skia Diagrams Gallery"
+close

@@ -1,0 +1,29 @@
+[
+  {
+    "id": "mdi:skull-outline",
+    "sourcePackage": "@iconify-json/mdi",
+    "sourceVersion": "1.2.3",
+    "upstream": "https://github.com/iconify/icon-sets/tree/master/json/mdi.json",
+    "svgSha256": "ded1cead11ca4f6aeea72974412fb95ce73eed61c64244aab15fa716a7d7a9cb",
+    "pngSha256": "0f1cc69a7e85a6b03a16dc8fac88d5c1f6a026f3f057acd8f3b0f1122eacf7d8",
+    "file": "mdi_skull-outline"
+  },
+  {
+    "id": "fa:user",
+    "sourcePackage": "@fortawesome/fontawesome-free",
+    "sourceVersion": "7.3.1",
+    "upstream": "https://fontawesome.com/license/free",
+    "svgSha256": "508424ad874abbed0f9fc66580ac5c139b35c88688ff35ad9a4b26ecdd02ed11",
+    "pngSha256": "0ce5365396abcd3a8298d5390079787a0850e94733e931cdea9b52287c963b8d",
+    "file": "fa_user"
+  },
+  {
+    "id": "fa fa-book",
+    "sourcePackage": "@fortawesome/fontawesome-free",
+    "sourceVersion": "7.3.1",
+    "upstream": "https://fontawesome.com/license/free",
+    "svgSha256": "7fdc77eed29810348dd9d517fbf9244bf037e532483622cbcb7406e342b31575",
+    "pngSha256": "5bde237ffdd28fae9a1523bf37205a4b57d6e490202b993a93da090f5aa44274",
+    "file": "fa_fa-book"
+  }
+]

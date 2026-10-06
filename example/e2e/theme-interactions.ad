@@ -1,0 +1,34 @@
+# Actual viewer, palette edits and native export sheets.
+open "dev.osuki.skiadiagrams.example" --relaunch
+wait id="gallery-home"
+press id="home-theme-editor"
+wait id="theme-preview-canvas"
+press id="theme-preview"
+wait id="theme-preview-canvas"
+press id="theme-preview-expand"
+wait id="diagram-viewer-canvas"
+press id="diagram-actual-size"
+press id="diagram-fit"
+press label="Copy source"
+wait text="Copied"
+press text="OK"
+press label="Export PNG"
+wait 'label="Image preview thumbnail"'
+back
+press label="Export SVG"
+wait text "Quick Share"
+back
+press id="diagram-close"
+wait id="theme-preview-canvas"
+scroll down 0.3
+press id="palette-0"
+fill id="token-palette[0]" "#3E63FF"
+press id="palette-done"
+wait text="#3E63FF"
+press id="studio-reset"
+press id="studio-export"
+wait text="diagram-theme.json"
+back
+press id="theme-studio-back"
+wait id="gallery-home"
+close
