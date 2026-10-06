@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "Skia Diagrams Gallery",
+    "slug": "skia-diagrams-gallery",
+    "version": "0.1.0",
+    "android": { "package": "dev.osuki.skiadiagrams.example" },
+    "ios": { "bundleIdentifier": "dev.osuki.skiadiagrams.example" },
+    "plugins": [["expo-build-properties", { "android": { "minSdkVersion": 26 } }]],
+    "experiments": { "reactCompiler": true }
+  }
+}

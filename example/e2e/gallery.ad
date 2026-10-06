@@ -1,0 +1,30 @@
+# Standalone native gallery. Not executed until an exact Skia 3.0.3 build is installed.
+open "dev.osuki.skiadiagrams.example" --relaunch
+wait id="gallery-home"
+press id="home-type-Flowchart"
+scroll down 0.5 --until id="diagram-Flowchart"
+press id="diagram-Flowchart-expand"
+wait id="diagram-viewer-canvas"
+# Use the driver's viewport-centered pinch rather than assuming screen coordinates.
+gesture pinch 1.5
+is visible id="diagram-viewer-canvas"
+press id="diagram-close"
+wait id="diagram-Flowchart"
+press id="theme-settings"
+scroll down 0.5 --until id="stream-toggle"
+wait id="stream-toggle"
+press id="stream-toggle"
+wait id="streaming-diagram"
+press id="stream-toggle"
+wait id="streaming-source"
+scroll up 0.5 --until id="theme-settings"
+press id="theme-settings"
+press id="choose-type"
+scroll down 0.5 --until id="select-Unsupported"
+press id="select-Unsupported"
+scroll down 0.5 --until text="Unsupported"
+wait text "Unsupported"
+is visible text="Unsupported"
+press id="gallery-back-home"
+wait id="gallery-home"
+close

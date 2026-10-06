@@ -1,0 +1,16 @@
+# The explicit expand control lives above the canvas; tapping content keeps inline mode.
+open "dev.osuki.skiadiagrams.example" --relaunch
+wait id="gallery-home"
+press id="home-type-Pie"
+scroll down 0.5 --until id="diagram-Pie"
+wait id="diagram-Pie-content"
+press id="diagram-Pie"
+is visible id="diagram-Pie-content"
+is visible id="diagram-Pie-toolbar"
+press id="diagram-Pie-expand"
+wait id="diagram-viewer-canvas"
+press id="diagram-close"
+wait id="diagram-Pie-content"
+press id="gallery-back-home"
+wait id="gallery-home"
+close

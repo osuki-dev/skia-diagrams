@@ -1,0 +1,65 @@
+# Every collection entry opens a live diagram and returns to the static library.
+open "dev.osuki.skiadiagrams.example" --relaunch
+wait id="gallery-home"
+press id="home-type-Flowchart"
+wait id="diagram-Flowchart"
+press id="gallery-back-home"
+wait id="gallery-home"
+press id="home-type-Sequence"
+wait id="diagram-Sequence"
+press id="gallery-back-home"
+wait id="gallery-home"
+press id="home-type-Class"
+wait id="diagram-Class"
+press id="gallery-back-home"
+wait id="gallery-home"
+press id="home-type-State"
+wait id="diagram-State"
+press id="gallery-back-home"
+wait id="gallery-home"
+scroll down 0.2
+press id="home-type-ER"
+wait id="diagram-ER"
+press id="gallery-back-home"
+wait id="gallery-home"
+scroll down 0.2
+press id="home-type-Gantt"
+wait id="diagram-Gantt"
+press id="gallery-back-home"
+wait id="gallery-home"
+scroll down 0.5
+press id="home-type-Pie"
+wait id="diagram-Pie"
+press id="gallery-back-home"
+wait id="gallery-home"
+scroll down 0.5
+press id="home-type-GitGraph"
+wait id="diagram-GitGraph"
+press id="gallery-back-home"
+wait id="gallery-home"
+scroll down 0.5
+press id="home-type-Mindmap"
+wait id="diagram-Mindmap"
+press id="gallery-back-home"
+wait id="gallery-home"
+scroll down 0.5
+press id="home-type-Timeline"
+wait id="diagram-Timeline"
+press id="gallery-back-home"
+wait id="gallery-home"
+scroll bottom
+press id="home-type-Journey"
+wait id="diagram-Journey"
+press id="gallery-back-home"
+wait id="gallery-home"
+scroll bottom
+press id="home-type-Quadrant"
+wait id="diagram-Quadrant"
+press id="gallery-back-home"
+wait id="gallery-home"
+scroll bottom
+press id="home-type-XY"
+wait id="diagram-XY"
+press id="gallery-back-home"
+wait id="gallery-home"
+close

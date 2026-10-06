@@ -1,0 +1,103 @@
+{
+  "name": "@osuki-dev/skia-diagrams",
+  "version": "0.1.0",
+  "description": "DOM-free Mermaid parsing and layout with native Graphite Skia diagrams",
+  "homepage": "https://github.com/osuki-dev/skia-diagrams#readme",
+  "bugs": {
+    "url": "https://github.com/osuki-dev/skia-diagrams/issues"
+  },
+  "license": "Apache-2.0",
+  "author": "osuki-dev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/osuki-dev/skia-diagrams.git"
+  },
+  "source": "./src/index.ts",
+  "files": [
+    "src",
+    "lib",
+    "README.md",
+    "ARCHITECTURE.md",
+    "LICENSE",
+    "CUSTOMIZATION.md"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "main": "./lib/index.js",
+  "module": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "react-native": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "react-native": "./src/index.ts",
+      "import": "./lib/index.js"
+    },
+    "./react": {
+      "types": "./lib/react/index.d.ts",
+      "react-native": "./src/react/index.tsx",
+      "import": "./lib/react/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "test": "bun test test",
+    "typecheck": "tsc --noEmit",
+    "typecheck:test": "tsc --noEmit -p tsconfig.test.json",
+    "lint": "oxlint --deny-warnings src test scripts example && bun run imports:check",
+    "format": "oxfmt --write src test scripts example package.json tsconfig.json tsconfig.build.json tsconfig.test.json",
+    "format:check": "oxfmt --check src test scripts example package.json tsconfig.json tsconfig.build.json tsconfig.test.json",
+    "build": "tsc -p tsconfig.build.json",
+    "bench": "bun scripts/bench.ts",
+    "bench:check": "bun scripts/bench.ts --check",
+    "bench:render": "bun scripts/bench-render.ts",
+    "bench:render:check": "bun scripts/bench-render.ts --check",
+    "prepack": "bun run build",
+    "imports:check": "bun scripts/check-imports.ts"
+  },
+  "dependencies": {
+    "@dagrejs/dagre": "^3.1.1",
+    "@mermaid-js/parser": "2.0.1",
+    "js-yaml": "5.4.3"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/react": "^19.2.0",
+    "canvaskit-wasm": "0.41.0",
+    "oxfmt": "0.72.0",
+    "oxlint": "1.87.0",
+    "react": "19.3.0",
+    "react-native": "0.86.3",
+    "react-native-gesture-handler": "3.3.0",
+    "react-native-reanimated": "4.7.1",
+    "react-native-skia": "3.0.3",
+    "typescript": "7.0.2"
+  },
+  "peerDependencies": {
+    "react": ">=19",
+    "react-native": ">=0.83",
+    "react-native-gesture-handler": ">=3.3",
+    "react-native-reanimated": ">=4",
+    "react-native-skia": ">=3.0.3"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "react-native": {
+      "optional": true
+    },
+    "react-native-skia": {
+      "optional": true
+    },
+    "react-native-reanimated": {
+      "optional": true
+    },
+    "react-native-gesture-handler": {
+      "optional": true
+    }
+  }
+}
