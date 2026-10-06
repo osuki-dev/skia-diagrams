@@ -16,6 +16,10 @@ import { useDiagramConfiguration } from "./provider.tsx";
 import type { RecordedMotion } from "./record-motion.ts";
 import { useReducedDiagramMotion } from "./motion-preference.ts";
 
+// Intersecting an empty clip hides a branch; subtracting it preserves the
+// existing clip. Binary visibility needs no offscreen alpha-compositing target.
+const EMPTY_CLIP = { x: 0, y: 0, width: 0, height: 0 };
+
 function MotionLayer({
   layer,
   progress,
@@ -52,10 +56,16 @@ function MotionLayer({
       return [{ translateY: baseline }, { scaleY: value }, { translateY: -baseline }];
     return [];
   });
-  const markerOpacity = useDerivedValue(() => (local.get() >= 1 ? 1 : 0));
+  const visible = useDerivedValue(() => local.get() > 0);
+  const markerVisible = useDerivedValue(() => local.get() >= 1);
   const clipping = mode === "radial" || mode === "draw-x" || mode === "draw-y";
   return (
-    <Group transform={transform} layer={<Paint opacity={opacity} />}>
+    <Group
+      transform={transform}
+      clip={EMPTY_CLIP}
+      invertClip={visible}
+      layer={mode === "fade" || mode === "lift" ? <Paint opacity={opacity} /> : undefined}
+    >
       {layer.traces && <NativeTraces traces={layer.traces} progress={local} />}
       {layer.picture &&
         (clipping ? (
@@ -64,7 +74,7 @@ function MotionLayer({
           <Picture picture={layer.picture} />
         ))}
       {layer.markerPicture && (
-        <Group layer={<Paint opacity={markerOpacity} />}>
+        <Group clip={EMPTY_CLIP} invertClip={markerVisible}>
           <Picture picture={layer.markerPicture} />
         </Group>
       )}
@@ -161,6 +171,9 @@ export function MotionPicture({
   const completion = useRef(onComplete);
   useLayoutEffect(() => {
     completion.current = onComplete;
+    return () => {
+      completion.current = undefined;
+    };
   }, [onComplete]);
   const reportComplete = useCallback(() => completion.current?.(), []);
   const animated = motion !== undefined;
@@ -190,15 +203,15 @@ export function MotionPicture({
     );
     return () => cancelAnimation(progress);
   }, [animated, progress, duration, reportComplete]);
-  const finalOpacity = useDerivedValue(() => (progress.get() >= 1 ? 1 : 0));
-  const motionOpacity = useDerivedValue(() => (progress.get() >= 1 ? 0 : 1));
+  const finalVisible = useDerivedValue(() => progress.get() >= 1);
+  const motionVisible = useDerivedValue(() => progress.get() < 1);
   if (!motion || duration === 0) return <Picture picture={picture} />;
   return (
     <>
-      <Group layer={<Paint opacity={finalOpacity} />}>
+      <Group clip={EMPTY_CLIP} invertClip={finalVisible}>
         <Picture picture={picture} />
       </Group>
-      <Group layer={<Paint opacity={motionOpacity} />}>
+      <Group clip={EMPTY_CLIP} invertClip={motionVisible}>
         <Scaffold picture={motion.staticPicture} progress={progress} />
         {motion.layers.map((layer, i) => (
           <MotionLayer key={i} layer={layer} progress={progress} />

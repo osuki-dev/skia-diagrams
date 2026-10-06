@@ -1,6 +1,29 @@
 import { expect, test } from "bun:test";
 import { scheduleDiagramWork } from "../src/react/idle-scheduler.ts";
 import { requestSceneAsync } from "../src/layout/request.ts";
+test("diagram instances yield between preparations and canceled rows never start", async () => {
+  const calls: string[] = [];
+  await new Promise<void>((resolve, reject) => {
+    scheduleDiagramWork(() => {
+      calls.push("first");
+      queueMicrotask(() => {
+        try {
+          expect(calls).toEqual(["first"]);
+        } catch (error) {
+          reject(error);
+        }
+      });
+    });
+    const offscreen = scheduleDiagramWork(() => calls.push("offscreen"));
+    offscreen.cancel();
+    scheduleDiagramWork(() => {
+      calls.push("second");
+      resolve();
+    });
+  });
+  expect(calls).toEqual(["first", "second"]);
+});
+
 test("idle scheduling has a bounded timeout and suppresses a late canceled callback", () => {
   let queued!: () => void,
     timeout = 0,

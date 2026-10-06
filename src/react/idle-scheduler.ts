@@ -19,10 +19,44 @@ function nativeDriver(): DeferredDriver {
   };
 }
 /** A bounded idle timeout prevents starvation; cancellation guards even late host callbacks. */
-export function scheduleDiagramWork(
-  work: () => void,
-  driver: DeferredDriver = nativeDriver(),
-): { cancel(): void } {
+const queue = new Set<() => void>();
+let queuedTask: { cancel(): void } | undefined;
+function scheduleNext() {
+  if (queuedTask || queue.size === 0) return;
+  const timer = setTimeout(() => {
+    queuedTask = scheduleDiagramWork(() => {
+      queuedTask = undefined;
+      const job = queue.values().next().value;
+      if (job) {
+        queue.delete(job);
+        try {
+          job();
+        } finally {
+          scheduleNext();
+        }
+      }
+    }, nativeDriver());
+  }, 16);
+  queuedTask = { cancel: () => clearTimeout(timer) };
+}
+
+export function scheduleDiagramWork(work: () => void, driver?: DeferredDriver): { cancel(): void } {
+  if (!driver) {
+    // All diagram instances share admission: mounting a page cannot run every
+    // layout/recording in one idle callback burst. Cancel removes queued closures.
+    const job = () => work();
+    queue.add(job);
+    scheduleNext();
+    return {
+      cancel() {
+        queue.delete(job);
+        if (queue.size === 0) {
+          queuedTask?.cancel();
+          queuedTask = undefined;
+        }
+      },
+    };
+  }
   let cancelled = false,
     started = false;
   const run = () => {
