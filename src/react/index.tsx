@@ -47,7 +47,6 @@ import {
 import {
   Canvas,
   Group,
-  Paint,
   Skia,
   type SkPicture,
   type SkTypefaceFontProvider,
@@ -219,7 +218,14 @@ export function useDiagram(
       setRecording(invalidSourceResult);
       return;
     }
-    if (options?.enabled === false || recordedKey.current === key) return;
+    if (options?.enabled === false) {
+      recordedKey.current = undefined;
+      pendingPictures.current.clear();
+      committedRecording.current = undefined;
+      setRecording((current) => (current.status === "idle" ? current : { status: "idle" }));
+      return;
+    }
+    if (recordedKey.current === key) return;
     return requestSceneAsync(
       () =>
         sceneCache.prepareAsync(layoutKey, source, textMeasurer, {
@@ -269,6 +275,7 @@ export function useDiagram(
             motion,
             onMotionComplete: motion
               ? () => {
+                  if (recordedKey.current !== key) return;
                   for (const resource of motion.resources) pendingPictures.current.delete(resource);
                   setRecording((current) =>
                     current.status === "ready" && current.motion === motion
@@ -386,6 +393,7 @@ function DiagramExpandButton({
   const reduced = useReducedDiagramMotion();
   const motionMode = motion === false || reduced ? ReduceMotion.Always : ReduceMotion.System;
   const scale = useSharedValue(1);
+  useEffect(() => () => cancelAnimation(scale), [scale]);
   const style = useAnimatedStyle(() => ({ transform: [{ scale: scale.get() }] }));
   return (
     <Pressable
@@ -532,6 +540,8 @@ function DiagramDetail({
 }
 
 export interface DiagramProps {
+  /** The host viewport owns visibility. Inactive diagrams release native recordings. */
+  active?: boolean;
   source: string;
   theme?: Partial<DiagramTheme>;
   fontProvider?: SkTypefaceFontProvider;
@@ -581,6 +591,7 @@ function DiagramInteractionTarget({
   const reduced = useReducedDiagramMotion();
   const motionMode = motion === false || reduced ? ReduceMotion.Always : ReduceMotion.System;
   const pulse = useSharedValue(0);
+  useEffect(() => () => cancelAnimation(pulse), [pulse]);
   const feedback = useAnimatedStyle(() => ({ opacity: pulse.get() }));
   return (
     <Pressable
@@ -679,7 +690,7 @@ export function Diagram(props: DiagramProps) {
     animate: true,
     replayToken: props.replayToken,
     viewportWidth: layoutWidth,
-    enabled: contentWidth !== undefined,
+    enabled: contentWidth !== undefined && props.active !== false,
   });
   const window = useWindowDimensions();
   const scrollX = useSharedValue(0),
@@ -759,9 +770,6 @@ export function Diagram(props: DiagramProps) {
     { scale: viewport.scale },
   ];
   const committedViewport = useRef<{ height: number } | undefined>(undefined);
-  useLayoutEffect(() => {
-    if (scene) committedViewport.current = { height: viewport.height };
-  }, [scene, viewport.height]);
   const previousInlineGeometry = useRef<{ scene: Scene; scale: number } | undefined>(undefined);
   useLayoutEffect(() => {
     if (!scene) return;
@@ -794,7 +802,11 @@ export function Diagram(props: DiagramProps) {
       </>
     );
   const measureWidth = (event: import("react-native").LayoutChangeEvent) => {
-    const width = event.nativeEvent.layout.width;
+    const { width, height } = event.nativeEvent.layout;
+    // Preserve the whole row, including controls and selected-data detail, when
+    // its Canvas is suspended. Using only canvas height shifts virtualized rows.
+    if (result.status === "ready" && Number.isFinite(height) && height > 0)
+      committedViewport.current = { height };
     if (Number.isFinite(width) && width > 0)
       setAvailableWidth((previous) =>
         previous !== undefined && Math.abs(previous - width) < 0.5 ? previous : width,
@@ -809,8 +821,8 @@ export function Diagram(props: DiagramProps) {
           maxWidth: props.maxWidth,
           backgroundColor: theme.background,
           height:
-            (committedViewport.current?.height ?? Math.min(props.maxHeight ?? 240, window.height)) +
-            (onExpand ? 44 : 0),
+            committedViewport.current?.height ??
+            Math.min(props.maxHeight ?? 240, window.height) + (onExpand ? 44 : 0),
         }}
         accessibilityLabel="Preparing diagram"
         accessibilityState={{ busy: true }}
@@ -863,37 +875,35 @@ export function Diagram(props: DiagramProps) {
           }}
         >
           <Group clip={{ x: 0, y: 0, width: viewport.width, height: viewport.height }}>
-            <Group layer={<Paint />}>
-              <Group transform={transform}>
-                <Group transform={zoomTransform}>
-                  <Group transform={sceneTransform}>
-                    <DataSelectionScene
+            <Group transform={transform}>
+              <Group transform={zoomTransform}>
+                <Group transform={sceneTransform}>
+                  <DataSelectionScene
+                    scene={result.scene}
+                    theme={result.theme}
+                    fontProvider={result.fontProvider}
+                    assets={result.assets}
+                    selection={selection}
+                    onTakeOver={result.onMotionComplete}
+                  >
+                    <MotionPicture
+                      key={result.motionSession}
+                      picture={result.picture}
+                      motion={result.motion}
+                      kind={result.scene.kind}
+                      onComplete={result.onMotionComplete}
+                    />
+                  </DataSelectionScene>
+                  {props.execution && (
+                    <ExecutionOverlay
                       scene={result.scene}
-                      theme={result.theme}
+                      execution={props.execution}
+                      theme={theme}
                       fontProvider={result.fontProvider}
                       assets={result.assets}
-                      selection={selection}
-                      onTakeOver={result.onMotionComplete}
-                    >
-                      <MotionPicture
-                        key={result.motionSession}
-                        picture={result.picture}
-                        motion={result.motion}
-                        kind={result.scene.kind}
-                        onComplete={result.onMotionComplete}
-                      />
-                    </DataSelectionScene>
-                    {props.execution && (
-                      <ExecutionOverlay
-                        scene={result.scene}
-                        execution={props.execution}
-                        theme={theme}
-                        fontProvider={result.fontProvider}
-                        assets={result.assets}
-                        onError={result.onRenderError}
-                      />
-                    )}
-                  </Group>
+                      onError={result.onRenderError}
+                    />
+                  )}
                 </Group>
               </Group>
             </Group>
@@ -1053,6 +1063,9 @@ export function Diagram(props: DiagramProps) {
   );
 }
 export interface DiagramViewerProps {
+  /** Suspend native recordings while the host screen is inactive. Defaults to true. */
+  active?: boolean;
+  labels?: Partial<{ close: string; fit: string; actualSize: string; copy: string }>;
   execution?: DiagramExecutionState;
   /** Change this token to replay entrance motion without changing diagram geometry. */
   replayToken?: string | number;
@@ -1079,6 +1092,7 @@ export function DiagramViewer(props: DiagramViewerProps) {
   const theme = useResolvedTheme(props.theme, props.source);
   const result = useDiagram(props.source, theme, undefined, props.fontProvider, props.assets, {
     animate: true,
+    enabled: props.active !== false,
     replayToken: props.replayToken,
   });
   const exportDiagram = async (kind: "png" | "svg") => {
@@ -1115,6 +1129,15 @@ export function DiagramViewer(props: DiagramViewerProps) {
     y = useSharedValue(0),
     savedX = useSharedValue(0),
     savedY = useSharedValue(0);
+  useEffect(() => {
+    const stop = () => {
+      cancelAnimation(zoom);
+      cancelAnimation(x);
+      cancelAnimation(y);
+    };
+    if (props.active === false) stop();
+    return stop;
+  }, [props.active, zoom, x, y]);
   const scene = result.status === "ready" ? result.scene : undefined;
   useEffect(() => setSelection(undefined), [scene]);
   const selectAt = useCallback(
@@ -1299,11 +1322,13 @@ export function DiagramViewer(props: DiagramViewerProps) {
         <Pressable
           style={controlStyle}
           accessibilityRole="button"
-          accessibilityLabel="Close diagram"
+          accessibilityLabel={props.labels?.close ?? "Close diagram"}
           testID="diagram-close"
           onPress={props.onClose}
         >
-          <Text style={{ color: theme.nodeText, fontSize: 14, fontWeight: "500" }}>Close</Text>
+          <Text style={{ color: theme.nodeText, fontSize: 14, fontWeight: "500" }}>
+            {props.labels?.close ?? "Close"}
+          </Text>
         </Pressable>
         {result.status === "ready"
           ? [
@@ -1314,7 +1339,11 @@ export function DiagramViewer(props: DiagramViewerProps) {
                 key={label}
                 testID={label === "Fit" ? "diagram-fit" : "diagram-actual-size"}
                 accessibilityRole="button"
-                accessibilityLabel={label === "Fit" ? "Fit diagram" : "Diagram actual size"}
+                accessibilityLabel={
+                  label === "Fit"
+                    ? (props.labels?.fit ?? "Fit diagram")
+                    : (props.labels?.actualSize ?? "Diagram actual size")
+                }
                 style={controlStyle}
                 onPress={() => {
                   zoom.set(withTiming(Number(scale), { duration: 260, reduceMotion: motionMode }));
@@ -1326,7 +1355,7 @@ export function DiagramViewer(props: DiagramViewerProps) {
                 }}
               >
                 <Text style={{ color: theme.nodeText, fontSize: 14, fontWeight: "500" }}>
-                  {label}
+                  {label === "Fit" ? (props.labels?.fit ?? label) : label}
                 </Text>
               </Pressable>
             ))
@@ -1335,10 +1364,10 @@ export function DiagramViewer(props: DiagramViewerProps) {
           <Pressable
             style={controlStyle}
             accessibilityRole="button"
-            accessibilityLabel="Copy source"
+            accessibilityLabel={props.labels?.copy ?? "Copy source"}
             onPress={props.onCopySource}
           >
-            <Text style={{ color: theme.nodeText }}>Copy</Text>
+            <Text style={{ color: theme.nodeText }}>{props.labels?.copy ?? "Copy"}</Text>
           </Pressable>
         ) : null}
         {result.status === "ready" && props.onExport ? (
@@ -1509,9 +1538,7 @@ function ViewerSceneTransform({
   ]);
   return (
     <Group clip={{ x: 0, y: 0, width, height }}>
-      <Group layer={<Paint />}>
-        <Group transform={transform}>{children}</Group>
-      </Group>
+      <Group transform={transform}>{children}</Group>
     </Group>
   );
 }

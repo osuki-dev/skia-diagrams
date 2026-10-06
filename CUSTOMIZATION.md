@@ -15,6 +15,8 @@
 | Process state | Component `execution` maps authored node/edge IDs to `idle`, `active`, `completed` or `error`; the host controls transitions |
 | Interactions | `onInteraction` receives authored links/callbacks and data selections; `renderDataDetail` replaces selected-data detail content |
 | Viewer | `onExpand(source)` controls presentation; `renderExpandIcon({ color, size })` replaces the magnifier and `expandButtonStyle` customizes its visible button |
+| Visibility | `Diagram` and `DiagramViewer` accept `active={false}` to cancel pending preparation and release native recordings while offscreen; inline diagrams retain their measured height |
+| Viewer localization | `DiagramViewer` accepts `labels={{ close, fit, actualSize, copy }}` for host translations |
 
 The remaining eighteen categories share the common theme and layout options. Their supported source configuration remains available through Mermaid front matter. There is no general typed host `typeStyles` object for those eighteen categories yet. A custom color token cannot change an explicitly authored literal color; edit that source style when changing its appearance.
 
