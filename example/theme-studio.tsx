@@ -182,6 +182,8 @@ function ColorField({
         value={draft}
         autoCapitalize="none"
         autoCorrect={false}
+        returnKeyType="done"
+        onSubmitEditing={() => input.current?.blur()}
         onChangeText={(text) => {
           setDraft(text);
           if (text.trim() && processColor(text.trim()) != null) onChange(text.trim());
@@ -449,6 +451,8 @@ export function ThemeStudio({
           <ScrollView
             contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 24 }}
             keyboardShouldPersistTaps="handled"
+            automaticallyAdjustKeyboardInsets
+            keyboardDismissMode="on-drag"
           >
             <View
               style={{
@@ -844,32 +848,34 @@ export function ThemeStudio({
             style={{
               flex: 1,
               backgroundColor: theme.background,
-              paddingTop: StatusBar.currentHeight,
-              paddingBottom: 32,
+              paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+              paddingBottom: Platform.OS === "android" ? 32 : 0,
             }}
           >
-            {fonts && viewer && (
-              <DiagramViewer
-                source={designFixtures[selected]}
-                theme={previewTheme}
-                fontProvider={fonts}
-                onClose={() => setViewer(false)}
-                onCopySource={() => {
-                  void Clipboard.setStringAsync(designFixtures[selected])
-                    .then(() => Alert.alert("Copied", "Diagram source copied to clipboard."))
-                    .catch((error) => Alert.alert("Copy failed", String(error)));
-                }}
-                onExport={async (format, data) => {
-                  const file = new File(Paths.cache, "diagram." + format);
-                  file.write(data);
-                  if (await Sharing.isAvailableAsync())
-                    await Sharing.shareAsync(file.uri, {
-                      mimeType: format === "png" ? "image/png" : "image/svg+xml",
-                    });
-                  else Alert.alert("Diagram saved", file.uri);
-                }}
-              />
-            )}
+            <SafeAreaView style={{ flex: 1, backgroundColor: theme.background }}>
+              {fonts && viewer && (
+                <DiagramViewer
+                  source={designFixtures[selected]}
+                  theme={previewTheme}
+                  fontProvider={fonts}
+                  onClose={() => setViewer(false)}
+                  onCopySource={() => {
+                    void Clipboard.setStringAsync(designFixtures[selected])
+                      .then(() => Alert.alert("Copied", "Diagram source copied to clipboard."))
+                      .catch((error) => Alert.alert("Copy failed", String(error)));
+                  }}
+                  onExport={async (format, data) => {
+                    const file = new File(Paths.cache, "diagram." + format);
+                    file.write(data);
+                    if (await Sharing.isAvailableAsync())
+                      await Sharing.shareAsync(file.uri, {
+                        mimeType: format === "png" ? "image/png" : "image/svg+xml",
+                      });
+                    else Alert.alert("Diagram saved", file.uri);
+                  }}
+                />
+              )}
+            </SafeAreaView>
           </GestureHandlerRootView>
         </Modal>
         <Modal

@@ -32,6 +32,7 @@ import {
 } from "react";
 import {
   Modal,
+  SafeAreaView,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -1024,16 +1025,18 @@ export function Diagram(props: DiagramProps) {
         </Pressable>
       )}
       <Modal visible={showFull} onRequestClose={() => setShowFull(false)} animationType="fade">
-        <DiagramViewer
-          source={props.source}
-          theme={props.theme}
-          fontProvider={props.fontProvider}
-          assets={props.assets}
-          execution={props.execution}
-          onInteraction={onInteraction}
-          renderDataDetail={renderDataDetail}
-          onClose={() => setShowFull(false)}
-        />
+        <SafeAreaView style={{ flex: 1, backgroundColor: theme.background }}>
+          <DiagramViewer
+            source={props.source}
+            theme={props.theme}
+            fontProvider={props.fontProvider}
+            assets={props.assets}
+            execution={props.execution}
+            onInteraction={onInteraction}
+            renderDataDetail={renderDataDetail}
+            onClose={() => setShowFull(false)}
+          />
+        </SafeAreaView>
       </Modal>
       {selection &&
         (renderDataDetail ? (

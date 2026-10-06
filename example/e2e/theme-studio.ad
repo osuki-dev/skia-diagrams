@@ -3,8 +3,12 @@ open "dev.osuki.skiadiagrams.example" --relaunch
 wait id="gallery-home"
 press id="home-theme-editor"
 wait id="theme-preview-canvas"
+scroll down 0.3
+scroll down 0.3 --until id="token-accent"
 fill id="token-accent" "#3E63FF"
+keyboard enter
 press id="studio-reset"
+scroll top
 press id="studio-type"
 wait stable 500
 press id="studio-select-Flowchart"

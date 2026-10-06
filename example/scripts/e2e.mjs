@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { spawnSync } from "node:child_process";
@@ -14,8 +14,17 @@ const commands = new Set([
   "close",
   "back",
   "fill",
+  "keyboard",
   "screenshot",
 ]);
+// Keep selector quotes (label="multi word") while decoding standalone string
+// arguments. Commands are spawned directly, never passed through a shell.
+function argumentsFor(line) {
+  const tokens = line.match(/(?:"(?:\\.|[^"\\])*"|[^\s"]+)+/g) ?? [];
+  if (tokens.join(" ") !== line.trim().replace(/\s+(?=(?:[^"]*"[^"]*")*[^"]*$)/g, " "))
+    throw new Error(`Invalid quoted action: ${line}`);
+  return tokens.map((token) => (token.startsWith('"') ? JSON.parse(token) : token));
+}
 if (suite.version !== 1 || !Array.isArray(suite.flows)) throw new Error("Invalid suite manifest");
 for (const flow of suite.flows) {
   if (!flow.tags.includes("full") || !/^[\w-]+\.ad$/.test(flow.program))
@@ -23,6 +32,7 @@ for (const flow of suite.flows) {
   const script = readFileSync(path.join(root, "e2e", flow.program), "utf8");
   for (const line of script.split("\n")) {
     if (!line.trim() || line.startsWith("#")) continue;
+    argumentsFor(line);
     if (!commands.has(line.split(" ")[0]) || line.includes("${"))
       throw new Error(`Invalid authored action: ${line}`);
   }
@@ -69,17 +79,85 @@ if (!apps.data.apps.some((app) => JSON.stringify(app).includes("dev.osuki.skiadi
   throw new Error(
     "Native gallery is not installed on the selected QA device; build/install is required before E2E",
   );
-console.log(
-  call([
-    "test",
-    "--device",
-    id,
-    ...selectedFlows.map((flow) => path.join(root, "e2e", flow.program)),
-    "--reporter",
-    "default",
-    "--artifacts-dir",
-    path.join(root, "dist/native-qa"),
-    "--reporter",
-    `junit:${path.join(root, "dist/e2e.xml")}`,
-  ]),
+// Native replay 0.21.12 does not decode CLI flags such as scroll --until: it
+// forwards them as unused positional arguments. Execute the authored commands
+// through the CLI parser so target-directed scrolling really reaches its target,
+// and bind every action to the exact device rather than a display name.
+const artifactRoot = path.join(root, "dist/native-qa", id, String(Date.now()));
+const results = [];
+for (const flow of selectedFlows) {
+  const session = `skia-qa-${id}-${flow.name}`;
+  const directory = path.join(artifactRoot, flow.name);
+  mkdirSync(directory, { recursive: true });
+  const program = readFileSync(path.join(root, "e2e", flow.program), "utf8");
+  writeFileSync(path.join(directory, "replay.ad"), program);
+  const actions = program.split("\n").filter((line) => line.trim() && !line.startsWith("#"));
+  const start = Date.now();
+  const output = [];
+  let step = 0;
+  let failure;
+  console.log(`RUN ${flow.name} on ${device.name}`);
+  try {
+    for (const action of actions) {
+      step++;
+      output.push(
+        `${step}: ${action}`,
+        call([...argumentsFor(action), ...binding, "--session", session]),
+      );
+    }
+  } catch (error) {
+    failure = `Step ${step}: ${actions[step - 1]}\n${error instanceof Error ? error.message : String(error)}`;
+    for (const args of [
+      ["snapshot", "--json"],
+      ["screenshot", "--out", path.join(directory, "failure.png")],
+    ]) {
+      try {
+        output.push(call([...args, ...binding, "--session", session]));
+      } catch (diagnostic) {
+        output.push(String(diagnostic));
+      }
+    }
+  } finally {
+    if (failure || actions.at(-1) !== "close") {
+      try {
+        call(["close", ...binding, "--session", session]);
+      } catch (cleanup) {
+        failure ??= String(cleanup);
+      }
+    }
+  }
+  const seconds = (Date.now() - start) / 1000;
+  writeFileSync(path.join(directory, "result.txt"), failure ?? `Passed ${step} authored actions`);
+  writeFileSync(path.join(directory, "commands.log"), output.join("\n"));
+  results.push({ name: flow.name, seconds, failure });
+  console.log(`${failure ? "FAIL" : "PASS"} ${flow.name} (${seconds.toFixed(1)}s)`);
+  if (failure) console.log(failure);
+}
+const xml = (text) =>
+  String(text).replace(
+    /[&<>"']/g,
+    (char) =>
+      ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&apos;",
+      })[char],
+  );
+const failures = results.filter((result) => result.failure).length;
+writeFileSync(
+  path.join(root, "dist", `e2e-${id}.xml`),
+  `<?xml version="1.0" encoding="UTF-8"?>\n<testsuites><testsuite name="${xml(device.name)}" tests="${results.length}" failures="${failures}">\n` +
+    results
+      .map(
+        (result) =>
+          `<testcase name="${xml(result.name)}" time="${result.seconds}">${result.failure ? `<failure message="${xml(result.failure)}"/>` : ""}</testcase>`,
+      )
+      .join("\n") +
+    "\n</testsuite></testsuites>\n",
 );
+console.log(
+  `${results.length - failures}/${results.length} passed on ${device.name}. Artifacts: ${artifactRoot}`,
+);
+process.exitCode = failures ? 1 : 0;

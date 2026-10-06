@@ -1,6 +1,7 @@
 import dagre from "@dagrejs/dagre";
 import type { Graph, GraphLabel, NodeLabel, EdgeLabel } from "@dagrejs/dagre";
 import type { DiagramIR, LayoutOptions, TextMeasurer, Point } from "../types.ts";
+import { layoutLinearGraph } from "./linear-graph.ts";
 
 export interface LayoutGraphNode {
   width: number;
@@ -141,7 +142,9 @@ function layoutInternal(
         String(index),
       );
     }
-    dagre.layout(inputGraph);
+    // Keep existing small-graph coordinates bit-for-bit (including Dagre's
+    // floating-point accumulation); only long paths need the stack-safe pass.
+    if (inputGraph.nodeCount() < 64 || !layoutLinearGraph(inputGraph)) dagre.layout(inputGraph);
     // Dagre mutates input labels into positioned nodes and routed edges. Keep
     // that postcondition at this boundary rather than relying on default labels.
     const graph = inputGraph as PositionedGraph;

@@ -198,11 +198,18 @@ export function OfficialExamples({
             </ScrollView>
             <Modal visible={viewer} onRequestClose={() => setViewer(false)}>
               <GestureHandlerRootView
-                style={{ flex: 1, paddingTop: StatusBar.currentHeight, paddingBottom: 32 }}
+                style={{
+                  flex: 1,
+                  backgroundColor: theme.background,
+                  paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+                  paddingBottom: Platform.OS === "android" ? 32 : 0,
+                }}
               >
-                {viewer && selected && (
-                  <DiagramViewer source={selected.source} onClose={() => setViewer(false)} />
-                )}
+                <SafeAreaView style={{ flex: 1, backgroundColor: theme.background }}>
+                  {viewer && selected && (
+                    <DiagramViewer source={selected.source} onClose={() => setViewer(false)} />
+                  )}
+                </SafeAreaView>
               </GestureHandlerRootView>
             </Modal>
           </SafeAreaView>

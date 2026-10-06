@@ -324,7 +324,11 @@ function DiagramDetail({
                 <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 8 }}>
                   <Button title="Open native QA" onPress={() => setNativeQa(true)} />
                   <Button title="Open pan control" onPress={() => setPanControl(true)} />
-                  <Button title="Open inline QA" onPress={() => setInlineQa(true)} />
+                  <Button
+                    testID="open-inline-qa"
+                    title="Open inline QA"
+                    onPress={() => setInlineQa(true)}
+                  />
                 </View>
                 <TextInput
                   accessibilityLabel="Accent hex color"
@@ -424,7 +428,7 @@ function DiagramDetail({
                     onError={onRenderError}
                     onLongPress={() => copy(fence.closed ? fence.source : source)}
                     fallback={(value, error) => (
-                      <View>
+                      <View testID="gallery-fallback">
                         <Text style={{ color: theme.nodeText }}>
                           {error?.message ?? "Unsupported diagram type"}
                         </Text>
@@ -462,29 +466,31 @@ function DiagramDetail({
                   backgroundColor: theme.background,
                 }}
               >
-                {(viewer === detailedFixtures.Flowchart || viewer === requestStateFixture) && (
-                  <RequestControls request={request} dispatch={dispatch} theme={theme} />
-                )}
-                <DiagramViewer
-                  source={viewer ?? ""}
-                  theme={theme}
-                  fontProvider={fonts ?? undefined}
-                  onClose={() => setViewer(undefined)}
-                  onInteraction={handleInteraction}
-                  execution={
-                    viewer === detailedFixtures.Flowchart || viewer === requestStateFixture
-                      ? viewer === requestStateFixture
-                        ? stateExecution
-                        : execution
-                      : undefined
-                  }
-                  onCopySource={() => copy(viewer ?? "")}
-                  onExport={(kind, data) => {
-                    void exportDiagram(kind, data).catch((error) =>
-                      Alert.alert("Export failed", String(error)),
-                    );
-                  }}
-                />
+                <SafeAreaView style={{ flex: 1, backgroundColor: theme.background }}>
+                  {(viewer === detailedFixtures.Flowchart || viewer === requestStateFixture) && (
+                    <RequestControls request={request} dispatch={dispatch} theme={theme} />
+                  )}
+                  <DiagramViewer
+                    source={viewer ?? ""}
+                    theme={theme}
+                    fontProvider={fonts ?? undefined}
+                    onClose={() => setViewer(undefined)}
+                    onInteraction={handleInteraction}
+                    execution={
+                      viewer === detailedFixtures.Flowchart || viewer === requestStateFixture
+                        ? viewer === requestStateFixture
+                          ? stateExecution
+                          : execution
+                        : undefined
+                    }
+                    onCopySource={() => copy(viewer ?? "")}
+                    onExport={(kind, data) => {
+                      void exportDiagram(kind, data).catch((error) =>
+                        Alert.alert("Export failed", String(error)),
+                      );
+                    }}
+                  />
+                </SafeAreaView>
               </GestureHandlerRootView>
             </Modal>
           )}

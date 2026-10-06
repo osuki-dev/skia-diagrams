@@ -34,7 +34,7 @@ export function NativeInlineQa({ onClose }: { onClose: () => void }) {
   const width = Math.min(requestedWidth, window.width - 32);
   return (
     <View style={{ flex: 1, backgroundColor: theme.background }}>
-      <Button title="Close inline QA" onPress={onClose} />
+      <Button testID="inline-close" title="Close inline QA" onPress={onClose} />
       <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
         {Object.keys(extremeFixtures).map((value) => (
           <Button
@@ -69,6 +69,7 @@ export function NativeInlineQa({ onClose }: { onClose: () => void }) {
           : "Fonts loading"}
       </Text>
       <Button
+        testID="inline-check-png"
         title="Check extreme PNG limit"
         onPress={() => {
           if (!scene || !fonts) return;
