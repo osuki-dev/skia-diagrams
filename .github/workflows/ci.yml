@@ -30,17 +30,19 @@ jobs:
           node-version: 24
       - name: Install locked dependencies
         run: bun install --frozen-lockfile
+      - run: bun run build
+      - name: Install the linked example
+        run: |
+          bun link
+          bun install --cwd example --frozen-lockfile
       - run: bun run typecheck
       - run: bun run typecheck:test
       - run: bun run lint
       - run: bun run format:check
       - run: bun run test
-      - run: bun run build
       - name: Verify the example
         run: |
-          bun link
           cd example
-          bun install --frozen-lockfile
           bun run typecheck
           bun run test:navigation
           bun run e2e:check
