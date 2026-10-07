@@ -1,5 +1,13 @@
 # @osuki-dev/skia-diagrams
 
+## 0.1.2
+
+### Patch Changes
+
+- [#8](https://github.com/osuki-dev/skia-diagrams/pull/8) [`ba2bfcf`](https://github.com/osuki-dev/skia-diagrams/commit/ba2bfcf5ce4f9de1d556eab8d58a3d89886b92d5) Thanks [@ryuhzk](https://github.com/ryuhzk)! - Improve Git graph connection and commit timing, use continuous pie reveals, and reduce per-frame clipping allocations. Correct Gantt marker reveals, pie outlines around highlighted slices, and short trailing title lines.
+  
+  Keep inline horizontal dragging and inertia on the UI thread, give diagonal gestures back to the enclosing page, and hide horizontal scroll indicators. Restore picture compositing for reliable visibility during entrance animations.
+
 ## 0.1.1
 
 ### Patch Changes
