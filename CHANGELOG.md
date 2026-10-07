@@ -1,5 +1,13 @@
 # @osuki-dev/skia-diagrams
 
+## 0.1.3
+
+### Patch Changes
+
+- [#10](https://github.com/osuki-dev/skia-diagrams/pull/10) [`db3d95a`](https://github.com/osuki-dev/skia-diagrams/commit/db3d95acd44d3dba265d86d7e97458a1cb7e7182) Thanks [@ryuhzk](https://github.com/ryuhzk)! - Keep Wardley component labels clear of arrow endpoints, measure axis and stage labels, and bound relation captions. Correct reverse-arrow detection without treating angle brackets inside quoted labels as arrow markers.
+  
+  Reserve measured C4 boundary headers and relation-caption spacing, and separate ZenUML fragment headings from their conditions.
+
 ## 0.1.2
 
 ### Patch Changes
