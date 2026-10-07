@@ -48,6 +48,8 @@ export interface PrimitiveMotionLayer {
   delay: number;
   /** Fraction of the shared timeline reserved for this semantic phase. */
   span?: number;
+  /** Continuous sweeps avoid restarting an ease-out curve at each semantic phase. */
+  easing?: "linear" | "ease-out";
   bounds: Rect;
   circle?: { cx: number; cy: number; radius: number; startAngle: number; sweepAngle: number };
   baseline?: number;

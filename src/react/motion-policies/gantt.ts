@@ -8,13 +8,17 @@ export const ganttMotion: DiagramMotionPolicy = (scene) => {
     Math.min(3, Math.floor((index * 4) / Math.max(1, tasks.length)));
   const rectKey = (rect: { x: number; y: number; width: number; height: number }) =>
     `${rect.x}:${rect.y}:${rect.width}:${rect.height}`;
-  const barRects = new Set(
+  const barRects = new Map(
     scene.primitives.flatMap((p) =>
-      p.type === "shape" && p.motion?.axis === "x" ? [rectKey(p)] : [],
+      p.type === "shape" && p.motion ? [[rectKey(p), p.motion.axis] as const] : [],
     ),
   );
   const tasksByPosition = new Map<string, number[]>();
   const regions = Array.from(
+    { length: 4 },
+    () => [] as { x: number; y: number; width: number; height: number }[],
+  );
+  const markerRegions = Array.from(
     { length: 4 },
     () => [] as { x: number; y: number; width: number; height: number }[],
   );
@@ -24,8 +28,9 @@ export const ganttMotion: DiagramMotionPolicy = (scene) => {
     const bucket = tasksByPosition.get(key) ?? [];
     bucket.push(index);
     tasksByPosition.set(key, bucket);
-    if (tasks.length <= 128 && barRects.has(rectKey(task)))
-      regions[groupFor(index)].push({
+    const axis = barRects.get(rectKey(task));
+    if (tasks.length <= 128 && axis)
+      (axis === "y" ? markerRegions : regions)[groupFor(index)].push({
         x: task.x - 2,
         y: task.y - 2,
         width: task.width + 4,
@@ -63,9 +68,9 @@ export const ganttMotion: DiagramMotionPolicy = (scene) => {
       motion.layer(p, `milestones:${group}`, { mode: "fade", delay: group * 0.12 + 0.15 });
     else if (p.motion?.axis === "y")
       motion.layer(p, `markers:${group}`, {
-        mode: "draw-y",
+        mode: tasks.length > 128 ? "fade" : "draw-y",
         delay: group * 0.12,
-        regions: [{ x: p.x - 2, y: p.y - 2, width: p.width + 4, height: p.height + 4 }],
+        ...(tasks.length <= 128 ? { regions: markerRegions[group] } : {}),
       });
     else
       motion.layer(p, `tasks:${group}`, {

@@ -16,10 +16,6 @@ import { useDiagramConfiguration } from "./provider.tsx";
 import type { RecordedMotion } from "./record-motion.ts";
 import { useReducedDiagramMotion } from "./motion-preference.ts";
 
-// Intersecting an empty clip hides a branch; subtracting it preserves the
-// existing clip. Binary visibility needs no offscreen alpha-compositing target.
-const EMPTY_CLIP = { x: 0, y: 0, width: 0, height: 0 };
-
 function MotionLayer({
   layer,
   progress,
@@ -27,17 +23,16 @@ function MotionLayer({
   layer: RecordedMotion["layers"][number];
   progress: SharedValue<number>;
 }) {
-  const { mode, delay, span, bounds, baseline, center } = layer;
+  const { mode, delay, span, bounds, baseline, center, easing } = layer;
   const local = useDerivedValue(() =>
     Math.max(0, Math.min(1, (progress.get() - delay) / (span ?? 1 - delay))),
   );
   const opacity = useDerivedValue(() => {
-    const value = Math.max(0, Math.min(1, (progress.get() - delay) / (span ?? 1 - delay)));
+    const value = local.get();
     return mode === "fade" || mode === "lift" ? 1 - (1 - value) ** 3 : value > 0 ? 1 : 0;
   });
   const transform = useDerivedValue(() => {
-    const local = Math.max(0, Math.min(1, (progress.get() - delay) / (span ?? 1 - delay)));
-    const value = 1 - (1 - local) ** 3;
+    const value = 1 - (1 - local.get()) ** 3;
     const b = bounds;
     if (mode === "lift") return [{ translateY: (1 - value) * 12 }];
     const cx = center?.x ?? b.x + b.width / 2;
@@ -56,17 +51,16 @@ function MotionLayer({
       return [{ translateY: baseline }, { scaleY: value }, { translateY: -baseline }];
     return [];
   });
-  const visible = useDerivedValue(() => local.get() > 0);
-  const markerVisible = useDerivedValue(() => local.get() >= 1);
+  const markerOpacity = useDerivedValue(() => (local.get() >= 1 ? 1 : 0));
   const clipping = mode === "radial" || mode === "draw-x" || mode === "draw-y";
+  // Native paths inherit paint opacity; recorded Pictures need group compositing.
   return (
     <Group
       transform={transform}
-      clip={EMPTY_CLIP}
-      invertClip={visible}
-      layer={mode === "fade" || mode === "lift" ? <Paint opacity={opacity} /> : undefined}
+      opacity={layer.picture ? undefined : opacity}
+      layer={layer.picture ? <Paint opacity={opacity} /> : undefined}
     >
-      {layer.traces && <NativeTraces traces={layer.traces} progress={local} />}
+      {layer.traces && <NativeTraces traces={layer.traces} progress={local} easing={easing} />}
       {layer.picture &&
         (clipping ? (
           <ClippedPicture layer={layer} progress={local} />
@@ -74,7 +68,7 @@ function MotionLayer({
           <Picture picture={layer.picture} />
         ))}
       {layer.markerPicture && (
-        <Group clip={EMPTY_CLIP} invertClip={markerVisible}>
+        <Group layer={<Paint opacity={markerOpacity} />}>
           <Picture picture={layer.markerPicture} />
         </Group>
       )}
@@ -88,10 +82,20 @@ function ClippedPicture({
   layer: RecordedMotion["layers"][number];
   progress: SharedValue<number>;
 }) {
-  const { mode, bounds: b, circle, regions } = layer;
+  const { mode, bounds: b, circle, regions, easing } = layer;
   const clip = useDerivedValue(() => {
     const value = progress.get();
-    const eased = 1 - (1 - value) ** 3;
+    const eased = easing === "linear" ? value : 1 - (1 - value) ** 3;
+    // Axis reveals need only a rect; avoid allocating native paths every frame.
+    if ((mode === "draw-x" || mode === "draw-y") && (!regions || regions.length === 1)) {
+      const rect = regions?.[0] ?? b;
+      return {
+        ...rect,
+        width: rect.width * (mode === "draw-x" ? eased : 1),
+        height: rect.height * (mode === "draw-y" ? eased : 1),
+      };
+    }
+    if (value >= 1) return b;
     const builder = Skia.PathBuilder.Make();
     if (mode === "radial" && circle && value < 1) {
       const c = circle;
@@ -111,11 +115,14 @@ function ClippedPicture({
           false,
         )
         .close();
-    } else if (mode === "draw-x" && regions) {
-      for (const region of regions) builder.addRect({ ...region, width: region.width * eased });
-    } else if (mode === "draw-x") builder.addRect({ ...b, width: b.width * eased });
-    else if (mode === "draw-y") builder.addRect({ ...b, height: b.height * eased });
-    else builder.addRect(b);
+    } else if (regions) {
+      for (const region of regions)
+        builder.addRect({
+          ...region,
+          width: region.width * (mode === "draw-x" ? eased : 1),
+          height: region.height * (mode === "draw-y" ? eased : 1),
+        });
+    } else builder.addRect(b);
     const path = builder.detach();
     builder.dispose();
     return path;
@@ -203,15 +210,15 @@ export function MotionPicture({
     );
     return () => cancelAnimation(progress);
   }, [animated, progress, duration, reportComplete]);
-  const finalVisible = useDerivedValue(() => progress.get() >= 1);
-  const motionVisible = useDerivedValue(() => progress.get() < 1);
+  const finalOpacity = useDerivedValue(() => (progress.get() >= 1 ? 1 : 0));
+  const motionOpacity = useDerivedValue(() => (progress.get() >= 1 ? 0 : 1));
   if (!motion || duration === 0) return <Picture picture={picture} />;
   return (
     <>
-      <Group clip={EMPTY_CLIP} invertClip={finalVisible}>
+      <Group layer={<Paint opacity={finalOpacity} />}>
         <Picture picture={picture} />
       </Group>
-      <Group clip={EMPTY_CLIP} invertClip={motionVisible}>
+      <Group layer={<Paint opacity={motionOpacity} />}>
         <Scaffold picture={motion.staticPicture} progress={progress} />
         {motion.layers.map((layer, i) => (
           <MotionLayer key={i} layer={layer} progress={progress} />

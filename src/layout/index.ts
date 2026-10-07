@@ -1808,11 +1808,27 @@ export function layoutDiagram(
     const titleWidth = options.viewportWidth
       ? Math.max(48, options.viewportWidth - padding * 3)
       : undefined;
-    const title = originalMeasure(ir.title, {
+    let title = originalMeasure(ir.title, {
       fontSize: titleSize,
       fontWeight: 600,
       ...(titleWidth ? { maxWidth: titleWidth } : {}),
     });
+    // Keep short trailing words with their context without shrinking the font.
+    if (titleWidth && title.lines.length > 1) {
+      const last = originalMeasure(title.lines.at(-1)!, { fontSize: titleSize, fontWeight: 600 });
+      if (last.width < titleWidth * 0.3) {
+        const lines = title.lines.length;
+        for (let attempt = 1; attempt <= 4; attempt++) {
+          const balanced = originalMeasure(ir.title, {
+            fontSize: titleSize,
+            fontWeight: 600,
+            maxWidth: titleWidth * (1 - attempt * 0.08),
+          });
+          if (balanced.lines.length > lines) break;
+          title = balanced;
+        }
+      }
+    }
     const band = title.height + 16;
     for (let index = 0; index < interactions.length; index++)
       interactions[index] = translateInteraction(interactions[index], 0, band);
@@ -2099,6 +2115,13 @@ function layoutChart(
         dash: [3, 4],
         stroke: color,
         strokeRole: "edge",
+        semantic: {
+          kind: "edge",
+          id: `git-cherry-pick-${event.label}`,
+          from: event.to,
+          to: event.label,
+          row: ir.events.indexOf(event),
+        },
       });
     }
     if (config?.showBranches !== false) {

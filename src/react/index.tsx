@@ -47,6 +47,7 @@ import {
 import {
   Canvas,
   Group,
+  Paint,
   Skia,
   type SkPicture,
   type SkTypefaceFontProvider,
@@ -54,6 +55,9 @@ import {
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
   useAnimatedScrollHandler,
+  useAnimatedRef,
+  useAnimatedReaction,
+  scrollTo,
   useAnimatedStyle,
   withSequence,
   useDerivedValue,
@@ -695,7 +699,7 @@ export function Diagram(props: DiagramProps) {
   const window = useWindowDimensions();
   const scrollX = useSharedValue(0),
     scrollY = useSharedValue(0);
-  const horizontal = useRef<ScrollView>(null),
+  const horizontal = useAnimatedRef<ScrollView>(),
     vertical = useRef<ScrollView>(null);
   const scene = result.status === "ready" ? result.scene : undefined;
   const [selection, setSelection] = useState<DiagramInteraction>();
@@ -750,11 +754,12 @@ export function Diagram(props: DiagramProps) {
     return () => cancelAnimationFrame(frame);
   }, [zoomCommit, scrollY]);
   const zoomTransform = useDerivedValue(() => [{ scale: relativeZoom.get() }]);
-  const onHorizontalScroll = useAnimatedScrollHandler({
-    onScroll(event: NativeScrollEvent) {
-      if (!inlinePinching.get()) scrollX.set(event.contentOffset.x);
+  useAnimatedReaction(
+    () => scrollX.get(),
+    (x: number) => {
+      scrollTo(horizontal, x, 0, false);
     },
-  });
+  );
   const onVerticalScroll = useAnimatedScrollHandler({
     onScroll(event: NativeScrollEvent) {
       if (!inlinePinching.get()) scrollY.set(event.contentOffset.y);
@@ -875,35 +880,37 @@ export function Diagram(props: DiagramProps) {
           }}
         >
           <Group clip={{ x: 0, y: 0, width: viewport.width, height: viewport.height }}>
-            <Group transform={transform}>
-              <Group transform={zoomTransform}>
-                <Group transform={sceneTransform}>
-                  <DataSelectionScene
-                    scene={result.scene}
-                    theme={result.theme}
-                    fontProvider={result.fontProvider}
-                    assets={result.assets}
-                    selection={selection}
-                    onTakeOver={result.onMotionComplete}
-                  >
-                    <MotionPicture
-                      key={result.motionSession}
-                      picture={result.picture}
-                      motion={result.motion}
-                      kind={result.scene.kind}
-                      onComplete={result.onMotionComplete}
-                    />
-                  </DataSelectionScene>
-                  {props.execution && (
-                    <ExecutionOverlay
+            <Group layer={<Paint />}>
+              <Group transform={transform}>
+                <Group transform={zoomTransform}>
+                  <Group transform={sceneTransform}>
+                    <DataSelectionScene
                       scene={result.scene}
-                      execution={props.execution}
-                      theme={theme}
+                      theme={result.theme}
                       fontProvider={result.fontProvider}
                       assets={result.assets}
-                      onError={result.onRenderError}
-                    />
-                  )}
+                      selection={selection}
+                      onTakeOver={result.onMotionComplete}
+                    >
+                      <MotionPicture
+                        key={result.motionSession}
+                        picture={result.picture}
+                        motion={result.motion}
+                        kind={result.scene.kind}
+                        onComplete={result.onMotionComplete}
+                      />
+                    </DataSelectionScene>
+                    {props.execution && (
+                      <ExecutionOverlay
+                        scene={result.scene}
+                        execution={props.execution}
+                        theme={theme}
+                        fontProvider={result.fontProvider}
+                        assets={result.assets}
+                        onError={result.onRenderError}
+                      />
+                    )}
+                  </Group>
                 </Group>
               </Group>
             </Group>
@@ -927,10 +934,12 @@ export function Diagram(props: DiagramProps) {
               ref={horizontal}
               testID={props.testID ? `${props.testID}-horizontal` : undefined}
               horizontal
+              showsHorizontalScrollIndicator={false}
+              directionalLockEnabled
+              scrollEnabled={false}
               style={{ width: viewport.width, height: viewport.height }}
               disableScrollViewPanResponder
               nestedScrollEnabled
-              onScroll={onHorizontalScroll}
               scrollEventThrottle={16}
             >
               <Pressable
@@ -1538,7 +1547,9 @@ function ViewerSceneTransform({
   ]);
   return (
     <Group clip={{ x: 0, y: 0, width, height }}>
-      <Group transform={transform}>{children}</Group>
+      <Group layer={<Paint />}>
+        <Group transform={transform}>{children}</Group>
+      </Group>
     </Group>
   );
 }
