@@ -34,9 +34,13 @@ export function wardley(scene: OfficialScene, data: WardleyData): void {
   const viewport = scene.options.viewportWidth;
   const narrow = viewport !== undefined;
   const right = narrow ? viewport - scene.padding : Infinity;
-  const margin = narrow
-    ? scene.measure("Invisible", { fontSize: scene.fontSize * 0.8 }).width + 12
-    : 85;
+  const axisFontSize = scene.fontSize * (narrow ? 0.8 : 1);
+  const margin =
+    Math.max(
+      ...["Visible", "Invisible", "Visibility"].map(
+        (label) => scene.measure(label, { fontSize: axisFontSize }).width,
+      ),
+    ) + 16;
   const x = scene.padding + margin,
     y = scene.top + (narrow ? scene.fontSize * 2 + 16 : 20),
     w = narrow ? Math.max(80, right - x) : clamp(data.size?.width ?? 640, 240, 2400),
@@ -57,6 +61,7 @@ export function wardley(scene: OfficialScene, data: WardleyData): void {
     data.evolution?.stages ??
     ["Genesis", "Custom Built", "Product", "Commodity"].map((name) => ({ name }));
   let previousBoundary = 0;
+  let stageLabelBottom = y + h;
   stages.forEach((stage, i) => {
     const boundary = stage.boundary !== undefined ? clamp(stage.boundary) : (i + 1) / stages.length;
     if (i > 0)
@@ -69,14 +74,17 @@ export function wardley(scene: OfficialScene, data: WardleyData): void {
         false,
         [4, 5],
       );
-    const stageWidth = narrow ? Math.max(16, w * (boundary - previousBoundary) - 8) : undefined;
+    const stageWidth = Math.max(16, w * (boundary - previousBoundary) - (narrow ? 8 : 24));
     scene.text(
       narrow ? String(i + 1) : stage.name,
       x + w * previousBoundary + (narrow ? 4 : 12),
       y + h + 12,
       stageWidth,
     );
-    if (stage.secondName && !narrow)
+    const stageText = scene.primitives.at(-1)!;
+    if (stageText.type === "text")
+      stageLabelBottom = Math.max(stageLabelBottom, stageText.y + stageText.height);
+    if (stage.secondName && !narrow) {
       scene.text(
         stage.secondName,
         x + w * previousBoundary + 12,
@@ -87,9 +95,13 @@ export function wardley(scene: OfficialScene, data: WardleyData): void {
         stageWidth,
         "mutedText",
       );
+      const secondText = scene.primitives.at(-1)!;
+      if (secondText.type === "text")
+        stageLabelBottom = Math.max(stageLabelBottom, secondText.y + secondText.height);
+    }
     previousBoundary = boundary;
   });
-  let footer = y + h + (narrow ? scene.fontSize * 2 + 28 : 65);
+  let footer = narrow ? y + h + scene.fontSize * 2 + 28 : stageLabelBottom + scene.fontSize + 16;
   if (narrow)
     for (const [i, stage] of stages.entries()) {
       const label = `${i + 1}. ${stage.name}${stage.secondName ? ` · ${stage.secondName}` : ""}`;
@@ -117,8 +129,11 @@ export function wardley(scene: OfficialScene, data: WardleyData): void {
   );
   scene.text(
     "Evolution",
-    boundedX(x + w / 2 - 35, scene.measure("Evolution", { fontSize: scene.fontSize }).width),
-    narrow ? footer : y + h + 42,
+    boundedX(
+      x + (w - scene.measure("Evolution", { fontSize: scene.fontSize }).width) / 2,
+      scene.measure("Evolution", { fontSize: scene.fontSize }).width,
+    ),
+    narrow ? footer : stageLabelBottom + 12,
     undefined,
     "mutedText",
   );
@@ -126,8 +141,10 @@ export function wardley(scene: OfficialScene, data: WardleyData): void {
   scene.text(
     "Visibility",
     scene.padding,
-    narrow ? scene.top : y + h / 2,
-    narrow ? undefined : 70,
+    narrow
+      ? scene.top
+      : y + (h - scene.measure("Visibility", { fontSize: scene.fontSize }).height) / 2,
+    undefined,
     "mutedText",
   );
   const nodes = new Map(
@@ -144,6 +161,8 @@ export function wardley(scene: OfficialScene, data: WardleyData): void {
     if (distance < 16) continue;
     const dx = ((to.x - from.x) / distance) * 8,
       dy = ((to.y - from.y) / distance) * 8;
+    // The parser retains quoted link labels inside the arrow token.
+    const arrow = link.arrow?.replace(/"[^"]*"|'[^']*'/g, "");
     scene.primitives.push({
       type: "path",
       points: [
@@ -159,23 +178,28 @@ export function wardley(scene: OfficialScene, data: WardleyData): void {
         to: `wardley:${link.to}`,
         role: "dependency",
       },
-      start: link.fromPort?.includes("<") || link.arrow?.startsWith("<") ? "arrow" : "none",
+      start:
+        link.fromPort?.includes("<") || link.toPort?.includes("<") || arrow?.includes("<")
+          ? "arrow"
+          : "none",
       end:
-        link.arrow?.includes(">") || link.fromPort?.includes(">") || link.toPort?.includes(">")
+        arrow?.includes(">") || link.fromPort?.includes(">") || link.toPort?.includes(">")
           ? "arrow"
           : "none",
     });
     const quotedLabel = link.arrow?.match(/['"]([^'"]+)['"]/)?.[1];
-    if (quotedLabel)
-      scene.text(quotedLabel, (from.x + to.x) / 2 + 4, (from.y + to.y) / 2 - 18, 160, "mutedText");
-    if (link.linkLabel)
+    const text = link.linkLabel ?? quotedLabel;
+    if (text) {
+      const width =
+        scene.measure(text, { fontSize: scene.fontSize, maxWidth: labelBudget }).width + 2;
       scene.text(
-        link.linkLabel,
-        (from.x + to.x) / 2 + 4,
+        text,
+        boundedX((from.x + to.x) / 2 + 4, width),
         (from.y + to.y) / 2 - 18,
-        160,
+        width,
         "mutedText",
       );
+    }
   }
   for (const pipeline of data.pipelines) {
     const parent = nodes.get(pipeline.parent);
@@ -220,17 +244,30 @@ export function wardley(scene: OfficialScene, data: WardleyData): void {
         role: "movement",
       };
   }
-  const occupied: Rect[] = narrow
-    ? Array.from(nodes.values(), (p) => ({ x: p.x - 12, y: p.y - 12, width: 24, height: 24 }))
-    : data.notes.map((note) => {
-        const m = scene.measure(note.text, { fontSize: scene.fontSize, maxWidth: labelBudget });
-        return {
-          x: boundedX(x + clamp(note.evolution) * w, labelBudget),
-          y: y + (1 - clamp(note.visibility)) * h,
-          width: m.width + 4,
-          height: m.height + 4,
-        };
+  const occupied: Rect[] = [
+    ...Array.from(nodes.values(), (p) => ({ x: p.x - 12, y: p.y - 12, width: 24, height: 24 })),
+    ...(narrow
+      ? []
+      : data.notes.map((note) => {
+          const m = scene.measure(note.text, { fontSize: scene.fontSize, maxWidth: labelBudget });
+          return {
+            x: boundedX(x + clamp(note.evolution) * w, labelBudget),
+            y: y + (1 - clamp(note.visibility)) * h,
+            width: m.width + 4,
+            height: m.height + 4,
+          };
+        })),
+  ];
+  for (const evolution of data.evolves) {
+    const start = nodes.get(evolution.component);
+    if (start)
+      occupied.push({
+        x: x + clamp(evolution.target) * w - 12,
+        y: start.y - 12,
+        width: 24,
+        height: 24,
       });
+  }
   const overlaps = (a: Rect, b: Rect): boolean =>
     a.x < b.x + b.width + 4 &&
     a.x + a.width + 4 > b.x &&
@@ -308,6 +345,10 @@ export function wardley(scene: OfficialScene, data: WardleyData): void {
     };
     const candidates = [
       preferred,
+      { ...preferred, x: p.x + 18, y: p.y - labelHeight - 16 },
+      { ...preferred, x: p.x + 18, y: p.y + 18 },
+      { ...preferred, x: p.x - labelWidth - 18, y: p.y - labelHeight - 16 },
+      { ...preferred, x: p.x - labelWidth - 18, y: p.y + 18 },
       { ...preferred, y: p.y - labelHeight - 12 },
       { ...preferred, y: p.y + 16 },
       { ...preferred, x: p.x - labelWidth - 12 },
@@ -326,9 +367,20 @@ export function wardley(scene: OfficialScene, data: WardleyData): void {
       });
     if (narrow)
       for (let py = y + 24; py + labelHeight < y + h - 24; py += scene.fontSize + 8) {
-        for (const px of [scene.padding, boundedX(right - labelWidth, labelWidth)])
+        for (const px of [
+          boundedX(p.x + 18, Math.max(80, labelWidth)),
+          boundedX(p.x - labelWidth - 18, Math.max(80, labelWidth)),
+          boundedX(p.x - labelWidth - 48, Math.max(80, labelWidth)),
+          scene.padding,
+          boundedX(right - labelWidth, Math.max(80, labelWidth)),
+        ])
           candidates.push({ ...preferred, x: px, y: py });
       }
+    candidates.sort(
+      (a, b) =>
+        Math.hypot(a.x - preferred.x, a.y - preferred.y) -
+        Math.hypot(b.x - preferred.x, b.y - preferred.y),
+    );
     const placed =
       label && !narrow
         ? preferred
