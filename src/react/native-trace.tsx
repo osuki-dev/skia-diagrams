@@ -16,13 +16,15 @@ export function recordNativeTraces(primitives: readonly TracePrimitive[], theme:
 export function NativeTraces({
   traces,
   progress,
+  easing = "ease-out",
 }: {
   traces: readonly NativeTraceRecord[];
   progress: SharedValue<number>;
+  easing?: "linear" | "ease-out";
 }) {
   const end = useDerivedValue(() => {
     const value = Math.max(0, Math.min(1, progress.get()));
-    return 1 - (1 - value) ** 3;
+    return easing === "linear" ? value : 1 - (1 - value) ** 3;
   });
   return (
     <>

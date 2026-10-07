@@ -113,7 +113,10 @@ test("actual Skia pie PNGs at 10/14/18/24px preserve the open center and literal
             .flatMap((p) => [...p.points, ...(p.curves?.map((curve) => curve.end) ?? [])])
             .map((p) => Math.hypot(p.x - slice.cx, p.y - slice.cy)),
         ),
-      ).toBeCloseTo(97, 5);
+      ).toBeCloseTo(92.5, 5);
+      expect(scene.primitives.indexOf(outline[0])).toBeLessThan(
+        scene.primitives.findIndex((p) => p.type === "sector"),
+      );
       const png = renderToPng(api, scene, theme, 1, fonts.provider),
         decoded = kit.MakeImageFromEncoded(png);
       if (!decoded) throw new Error("Pie PNG unavailable");

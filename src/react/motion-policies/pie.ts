@@ -49,6 +49,7 @@ export const pieMotion: DiagramMotionPolicy = (scene) => {
     if (p.type === "sector" && phase) {
       collector.layer(p, `pie-wedge:${groups.indexOf(phase)}`, {
         mode: "radial",
+        easing: "linear",
         delay: phase.delay,
         span: phase.span,
         circle: phase.circle,

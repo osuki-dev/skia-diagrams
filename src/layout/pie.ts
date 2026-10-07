@@ -216,6 +216,38 @@ export function layoutPie(
     });
     return metrics;
   };
+  // The outer circle is independent of highlight scaling, as in Mermaid.
+  // Paint it behind the wedges so an enlarged slice never acquires a bulging rim.
+  if (outerStroke > 0) {
+    const r = radius + outerStroke / 2;
+    const at = (angle: number): Point => ({
+      x: cx + r * Math.cos(angle),
+      y: cy + r * Math.sin(angle),
+    });
+    const start = at(-Math.PI / 2);
+    const k = (4 / 3) * Math.tan(Math.PI / 8);
+    const curves = Array.from({ length: 4 }, (_, index) => {
+      const a = -Math.PI / 2 + (index * Math.PI) / 2;
+      const b = a + Math.PI / 2;
+      const from = at(a),
+        end = at(b);
+      return {
+        control1: { x: from.x - k * r * Math.sin(a), y: from.y + k * r * Math.cos(a) },
+        control2: { x: end.x + k * r * Math.sin(b), y: end.y - k * r * Math.cos(b) },
+        end,
+      };
+    });
+    primitives.push({
+      type: "path",
+      points: [start, curves[3].end],
+      curves,
+      closed: true,
+      fill: "none",
+      stroke: "nodeStroke",
+      strokeWidth: outerStroke,
+      semantic: { kind: "frame", id: "pie:rim", role: "rim" },
+    });
+  }
   for (const slice of slices) {
     const rect = { x: cx - slice.r, y: cy - slice.r, width: slice.r * 2, height: slice.r * 2 };
     interactions.push({
@@ -261,72 +293,6 @@ export function layoutPie(
         slice.percent,
         semantic(slice.index, "percentage", "label"),
       );
-  }
-  // A single closed contour follows each sector's radius. Short tangent bridges
-  // blend the highlighted rim into its neighbours without doubled caps or spikes.
-  if (outerStroke > 0) {
-    const at = (r: number, a: number): Point => ({
-      x: cx + r * Math.cos(a),
-      y: cy + r * Math.sin(a),
-    });
-    const joins = slices.map((slice, index) => {
-      const next = slices[(index + 1) % slices.length];
-      return Math.abs(slice.r - next.r) > 1e-8
-        ? Math.min(0.04, slice.sweep / 4, next.sweep / 4)
-        : 0;
-    });
-    const curves: { control1: Point; control2: Point; end: Point }[] = [];
-    const start = at(slices[0].r + outerStroke / 2, slices[0].startAngle + joins.at(-1)!);
-    let previous = start;
-    for (const [index, slice] of slices.entries()) {
-      const r = slice.r + outerStroke / 2;
-      const firstAngle = slice.startAngle + joins[(index + slices.length - 1) % slices.length];
-      const lastAngle = slice.startAngle + slice.sweep - joins[index];
-      const sweep = lastAngle - firstAngle,
-        count = Math.max(1, Math.ceil(sweep / (Math.PI / 2))),
-        step = sweep / count;
-      for (let i = 0; i < count; i++) {
-        const a = firstAngle + i * step,
-          b = a + step,
-          k = (4 / 3) * Math.tan(step / 4),
-          from = at(r, a),
-          end = at(r, b);
-        curves.push({
-          control1: { x: from.x - k * r * Math.sin(a), y: from.y + k * r * Math.cos(a) },
-          control2: { x: end.x + k * r * Math.sin(b), y: end.y - k * r * Math.cos(b) },
-          end,
-        });
-        previous = end;
-      }
-      if (joins[index]) {
-        const next = slices[(index + 1) % slices.length],
-          endAngle = slice.startAngle + slice.sweep + joins[index];
-        const end = at(next.r + outerStroke / 2, endAngle),
-          distance = Math.hypot(end.x - previous.x, end.y - previous.y) / 3;
-        curves.push({
-          control1: {
-            x: previous.x - distance * Math.sin(lastAngle),
-            y: previous.y + distance * Math.cos(lastAngle),
-          },
-          control2: {
-            x: end.x + distance * Math.sin(endAngle),
-            y: end.y - distance * Math.cos(endAngle),
-          },
-          end,
-        });
-        previous = end;
-      }
-    }
-    primitives.push({
-      type: "path",
-      points: [start, previous],
-      curves,
-      closed: true,
-      fill: "none",
-      stroke: "nodeStroke",
-      strokeWidth: outerStroke,
-      semantic: { kind: "frame", id: "pie:rim", role: "rim" },
-    });
   }
   let calloutBottom = chartY + diameter;
   const clearance = Math.max(...slices.map((slice) => slice.r)) + outerStroke + 2;
