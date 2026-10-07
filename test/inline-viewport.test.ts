@@ -9,7 +9,8 @@ test("only Pie receives a natural inline width budget through official metadata"
   expect(inlineLayoutWidth(pie, 320, false)).toBe(320);
   for (const source of ["flowchart LR\nA-->B", "gantt\ntitle pie", "xychart-beta\nbar [1]"])
     expect(inlineLayoutWidth(source, 320, false)).toBeUndefined();
-  expect(inlineLayoutWidth("flowchart LR\nA-->B", 320, true)).toBe(320);
+  expect(inlineLayoutWidth("flowchart LR\nA-->B", 320, true)).toBeUndefined();
+  expect(inlineLayoutWidth(pie, 320, true)).toBeUndefined();
   expect(inlineLayoutWidth(pie, undefined, false)).toBeUndefined();
   expect(inlineLayoutWidth(pie, Number.NaN, false)).toBeUndefined();
 });

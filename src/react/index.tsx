@@ -31,6 +31,7 @@ import {
   type ReactNode,
 } from "react";
 import {
+  AccessibilityInfo,
   Modal,
   SafeAreaView,
   Pressable,
@@ -559,7 +560,7 @@ export interface DiagramProps {
   /** Explicit viewport height enables internal vertical scrolling. Defaults to
    * natural page height; scenes taller than 1200pt use a 420pt expandable preview. */
   maxHeight?: number;
-  /** Overview previews can fit both dimensions; normal inline labels retain minScale. */
+  /** Fit the natural layout uniformly in both dimensions without reflowing it. */
   fitToViewport?: boolean;
   onPress?: () => void;
   onInteraction?: (interaction: DiagramInteraction) => void;
@@ -569,6 +570,8 @@ export interface DiagramProps {
   onExpand?: () => void;
   renderExpandIcon?: DiagramConfiguration["renderExpandIcon"];
   expandButtonStyle?: StyleProp<ViewStyle>;
+  /** Reveal the expand button on a tap without reserving a toolbar row. */
+  expandControl?: "always" | "on-tap";
   onLongPress?: () => void;
   onError?: (error: DiagramError) => void;
   onReady?: (scene: Scene) => void;
@@ -683,6 +686,20 @@ export function Diagram(props: DiagramProps) {
   const theme = useResolvedTheme(props.theme, props.source);
   const [availableWidth, setAvailableWidth] = useState<number>();
   const [showFull, setShowFull] = useState(false);
+  const [expandVisible, setExpandVisible] = useState(false);
+  const toggleExpand = props.expandControl === "on-tap";
+  useEffect(() => setExpandVisible(false), [props.source, props.active]);
+  const expandOpacity = useSharedValue(toggleExpand ? 0 : 1);
+  useEffect(() => {
+    expandOpacity.set(
+      withTiming(!toggleExpand || expandVisible ? 1 : 0, {
+        duration: 160,
+        reduceMotion: ReduceMotion.System,
+      }),
+    );
+    return () => cancelAnimation(expandOpacity);
+  }, [toggleExpand, expandVisible, expandOpacity]);
+  const expandStyle = useAnimatedStyle(() => ({ opacity: expandOpacity.get() }));
   const contentWidth = availableWidth
     ? Math.min(availableWidth, props.maxWidth ?? availableWidth)
     : undefined;
@@ -827,7 +844,7 @@ export function Diagram(props: DiagramProps) {
           backgroundColor: theme.background,
           height:
             committedViewport.current?.height ??
-            Math.min(props.maxHeight ?? 240, window.height) + (onExpand ? 44 : 0),
+            Math.min(props.maxHeight ?? 240, window.height) + (onExpand && !toggleExpand ? 44 : 0),
         }}
         accessibilityLabel="Preparing diagram"
         accessibilityState={{ busy: true }}
@@ -842,9 +859,19 @@ export function Diagram(props: DiagramProps) {
       style={{ width: "100%", maxWidth: props.maxWidth }}
     >
       {onExpand && (
-        <View
+        <Animated.View
+          pointerEvents={!toggleExpand || expandVisible ? "auto" : "none"}
+          accessibilityElementsHidden={toggleExpand && !expandVisible}
+          importantForAccessibility={
+            toggleExpand && !expandVisible ? "no-hide-descendants" : "auto"
+          }
           testID={props.testID ? `${props.testID}-toolbar` : undefined}
-          style={{ height: 44, alignItems: "flex-end" }}
+          style={[
+            toggleExpand
+              ? { position: "absolute", top: 4, right: 4, zIndex: 2 }
+              : { height: 44, alignItems: "flex-end" },
+            expandStyle,
+          ]}
         >
           <DiagramExpandButton
             theme={theme}
@@ -853,7 +880,7 @@ export function Diagram(props: DiagramProps) {
             buttonStyle={props.expandButtonStyle ?? configuration.expandButtonStyle}
             testID={props.testID ? `${props.testID}-expand` : undefined}
           />
-        </View>
+        </Animated.View>
       )}
       <View
         testID={props.testID ? `${props.testID}-content` : undefined}
@@ -952,6 +979,7 @@ export function Diagram(props: DiagramProps) {
                     Date.now() - inlineZoom.lastEndedTimestamp.get() < 180
                   )
                     return;
+                  if (toggleExpand) setExpandVisible((visible) => !visible);
                   const hit =
                     scene &&
                     hitTestInteraction(scene, {
@@ -972,16 +1000,23 @@ export function Diagram(props: DiagramProps) {
                     ? "Select a data point to show details below the chart"
                     : undefined
                 }
-                accessibilityActions={scene?.interactions
-                  ?.filter((item) => item.kind === "data")
-                  .map((item) => ({
-                    name: item.id,
-                    label:
-                      selection?.id === item.id
-                        ? `Restore ${item.label}`
-                        : `Show ${item.label} detail`,
-                  }))}
+                accessibilityActions={[
+                  ...(onExpand ? [{ name: "expand", label: "Expand diagram" }] : []),
+                  ...(scene?.interactions
+                    ?.filter((item) => item.kind === "data")
+                    .map((item) => ({
+                      name: item.id,
+                      label:
+                        selection?.id === item.id
+                          ? `Restore ${item.label}`
+                          : `Show ${item.label} detail`,
+                    })) ?? []),
+                ]}
                 onAccessibilityAction={(event) => {
+                  if (event.nativeEvent.actionName === "expand") {
+                    onExpand?.();
+                    return;
+                  }
                   const item = scene?.interactions?.find(
                     (target) =>
                       target.kind === "data" && target.id === event.nativeEvent.actionName,
@@ -1074,7 +1109,16 @@ export function Diagram(props: DiagramProps) {
 export interface DiagramViewerProps {
   /** Suspend native recordings while the host screen is inactive. Defaults to true. */
   active?: boolean;
-  labels?: Partial<{ close: string; fit: string; actualSize: string; copy: string }>;
+  labels?: Partial<{
+    close: string;
+    fit: string;
+    actualSize: string;
+    copy: string;
+    svg: string;
+    png: string;
+  }>;
+  /** Idle delay before hiding controls. Set to 0 to keep them visible. */
+  toolbarAutoHideMs?: number;
   execution?: DiagramExecutionState;
   /** Change this token to replay entrance motion without changing diagram geometry. */
   replayToken?: string | number;
@@ -1095,6 +1139,23 @@ export function DiagramViewer(props: DiagramViewerProps) {
   const renderDataDetail = props.renderDataDetail ?? configuration.renderDataDetail;
   const [selection, setSelection] = useState<DiagramInteraction>();
   const [exportError, setExportError] = useState<string>();
+  const [toolbarVisible, setToolbarVisible] = useState(true);
+  const [toolbarActivity, setToolbarActivity] = useState(0);
+  const [screenReader, setScreenReader] = useState(true);
+  const [exporting, setExporting] = useState(false);
+  const exportPending = useRef(false);
+  const [exported, setExported] = useState<"svg" | "png">();
+  useEffect(() => {
+    let mounted = true;
+    void AccessibilityInfo.isScreenReaderEnabled().then((enabled) => {
+      if (mounted) setScreenReader(enabled);
+    });
+    const subscription = AccessibilityInfo.addEventListener("screenReaderChanged", setScreenReader);
+    return () => {
+      mounted = false;
+      subscription.remove();
+    };
+  }, []);
   const reduced = useReducedDiagramMotion();
   const motionMode =
     reduced || configuration.motion === false ? ReduceMotion.Always : ReduceMotion.System;
@@ -1104,8 +1165,51 @@ export function DiagramViewer(props: DiagramViewerProps) {
     enabled: props.active !== false,
     replayToken: props.replayToken,
   });
+  useEffect(() => {
+    if (!exported) return;
+    const timer = setTimeout(() => setExported(undefined), 1600);
+    return () => clearTimeout(timer);
+  }, [exported]);
+  const autoHideMs = props.toolbarAutoHideMs ?? 3000;
+  useEffect(() => {
+    if (
+      !toolbarVisible ||
+      screenReader ||
+      exporting ||
+      exportError ||
+      props.active === false ||
+      result.status !== "ready" ||
+      autoHideMs <= 0
+    )
+      return;
+    const timer = setTimeout(() => setToolbarVisible(false), autoHideMs);
+    return () => clearTimeout(timer);
+  }, [
+    toolbarVisible,
+    toolbarActivity,
+    screenReader,
+    exporting,
+    exportError,
+    props.active,
+    result.status,
+    autoHideMs,
+  ]);
+  const toolbarOpacity = useSharedValue(1);
+  useEffect(() => {
+    toolbarOpacity.set(
+      withTiming(toolbarVisible || screenReader ? 1 : 0, {
+        duration: 180,
+        reduceMotion: motionMode,
+      }),
+    );
+    return () => cancelAnimation(toolbarOpacity);
+  }, [toolbarVisible, screenReader, toolbarOpacity, motionMode]);
+  const toolbarStyle = useAnimatedStyle(() => ({ opacity: toolbarOpacity.get() }));
   const exportDiagram = async (kind: "png" | "svg") => {
-    if (result.status !== "ready" || !props.onExport) return;
+    if (result.status !== "ready" || !props.onExport || exportPending.current) return;
+    exportPending.current = true;
+    setExporting(true);
+    setExported(undefined);
     try {
       const data =
         kind === "svg"
@@ -1113,8 +1217,12 @@ export function DiagramViewer(props: DiagramViewerProps) {
           : renderToPng(Skia, result.scene, result.theme, 2, result.fontProvider, result.assets);
       await props.onExport(kind, data);
       setExportError(undefined);
+      setExported(kind);
     } catch (error) {
       setExportError(error instanceof Error ? error.message : "Diagram export failed");
+    } finally {
+      exportPending.current = false;
+      setExporting(false);
     }
   };
   const dimensions = useWindowDimensions();
@@ -1128,8 +1236,8 @@ export function DiagramViewer(props: DiagramViewerProps) {
     result.status === "ready"
       ? Math.min(
           1,
-          viewportWidth / result.scene.bounds.width,
-          viewportHeight / result.scene.bounds.height,
+          Math.max(1, viewportWidth - 24) / result.scene.bounds.width,
+          Math.max(1, viewportHeight - 128) / result.scene.bounds.height,
         )
       : 1;
   const zoom = useSharedValue(1),
@@ -1163,7 +1271,10 @@ export function DiagramViewer(props: DiagramViewerProps) {
           { x: x.get(), y: y.get() },
         ),
       );
-      if (!hit) return;
+      if (!hit) {
+        setToolbarVisible((visible) => !visible);
+        return;
+      }
       if (hit.kind === "data") setSelection((current) => nextDataSelection(current, hit));
       onInteraction?.(hit);
     },
@@ -1315,95 +1426,134 @@ export function DiagramViewer(props: DiagramViewerProps) {
       selectAtWindowPoint,
     ],
   );
-  const controlStyle = {
+  const controlStyle = ({ pressed }: { pressed: boolean }) => ({
     minWidth: 44,
     minHeight: 44,
-    paddingHorizontal: 10,
+    paddingHorizontal: 8,
+    alignItems: "center" as const,
     justifyContent: "center" as const,
-    borderRadius: Math.min(12, theme.radius),
-    borderWidth: theme.controlBorderWidth ?? StyleSheet.hairlineWidth,
-    borderColor: theme.gridStroke ?? theme.clusterStroke,
-    backgroundColor: theme.nodeFill,
-  };
+    borderRadius: Math.min(16, theme.radius),
+    backgroundColor: pressed ? theme.clusterFill : "transparent",
+  });
   return (
     <View style={{ flex: 1, backgroundColor: theme.background }}>
-      <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 6, padding: 12 }}>
-        <Pressable
-          style={controlStyle}
-          accessibilityRole="button"
-          accessibilityLabel={props.labels?.close ?? "Close diagram"}
-          testID="diagram-close"
-          onPress={props.onClose}
+      <Animated.View
+        pointerEvents={toolbarVisible || screenReader ? "box-none" : "none"}
+        accessibilityElementsHidden={!toolbarVisible && !screenReader}
+        importantForAccessibility={toolbarVisible || screenReader ? "auto" : "no-hide-descendants"}
+        style={[
+          { position: "absolute", top: 12, left: 12, right: 12, zIndex: 2, alignItems: "center" },
+          toolbarStyle,
+        ]}
+        onTouchStart={() => setToolbarActivity((value) => value + 1)}
+      >
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={{
+            maxWidth: "100%",
+            flexGrow: 0,
+            borderRadius: Math.min(28, theme.radius * 2),
+            backgroundColor: theme.nodeFill,
+            borderWidth: theme.controlBorderWidth ?? StyleSheet.hairlineWidth,
+            borderColor: theme.gridStroke ?? theme.clusterStroke,
+          }}
+          contentContainerStyle={{ flexDirection: "row", gap: 2, padding: 4 }}
         >
-          <Text style={{ color: theme.nodeText, fontSize: 14, fontWeight: "500" }}>
-            {props.labels?.close ?? "Close"}
-          </Text>
-        </Pressable>
-        {result.status === "ready"
-          ? [
-              ["Fit", fit],
-              ["100%", 1],
-            ].map(([label, scale]) => (
-              <Pressable
-                key={label}
-                testID={label === "Fit" ? "diagram-fit" : "diagram-actual-size"}
-                accessibilityRole="button"
-                accessibilityLabel={
-                  label === "Fit"
-                    ? (props.labels?.fit ?? "Fit diagram")
-                    : (props.labels?.actualSize ?? "Diagram actual size")
-                }
-                style={controlStyle}
-                onPress={() => {
-                  zoom.set(withTiming(Number(scale), { duration: 260, reduceMotion: motionMode }));
-                  savedZoom.set(Number(scale));
-                  x.set(withTiming(0, { duration: 260, reduceMotion: motionMode }));
-                  y.set(withTiming(0, { duration: 260, reduceMotion: motionMode }));
-                  savedX.set(0);
-                  savedY.set(0);
-                }}
-              >
-                <Text style={{ color: theme.nodeText, fontSize: 14, fontWeight: "500" }}>
-                  {label === "Fit" ? (props.labels?.fit ?? label) : label}
-                </Text>
-              </Pressable>
-            ))
-          : null}
-        {props.onCopySource ? (
           <Pressable
             style={controlStyle}
             accessibilityRole="button"
-            accessibilityLabel={props.labels?.copy ?? "Copy source"}
-            onPress={props.onCopySource}
+            accessibilityLabel={props.labels?.close ?? "Close diagram"}
+            testID="diagram-close"
+            onPress={props.onClose}
           >
-            <Text style={{ color: theme.nodeText }}>{props.labels?.copy ?? "Copy"}</Text>
+            <Text style={{ color: theme.nodeText, fontSize: 24, fontWeight: "400" }}>×</Text>
           </Pressable>
-        ) : null}
-        {result.status === "ready" && props.onExport ? (
-          <>
+          {result.status === "ready"
+            ? [
+                ["Fit", fit],
+                ["100%", 1],
+              ].map(([label, scale]) => (
+                <Pressable
+                  key={label}
+                  testID={label === "Fit" ? "diagram-fit" : "diagram-actual-size"}
+                  accessibilityRole="button"
+                  accessibilityLabel={
+                    label === "Fit"
+                      ? (props.labels?.fit ?? "Fit diagram")
+                      : (props.labels?.actualSize ?? "Diagram actual size")
+                  }
+                  style={controlStyle}
+                  onPress={() => {
+                    zoom.set(
+                      withTiming(Number(scale), { duration: 260, reduceMotion: motionMode }),
+                    );
+                    savedZoom.set(Number(scale));
+                    x.set(withTiming(0, { duration: 260, reduceMotion: motionMode }));
+                    y.set(withTiming(0, { duration: 260, reduceMotion: motionMode }));
+                    savedX.set(0);
+                    savedY.set(0);
+                  }}
+                >
+                  <Text
+                    numberOfLines={1}
+                    style={{
+                      color: theme.nodeText,
+                      fontSize: label === "Fit" ? 22 : 14,
+                      fontWeight: "500",
+                    }}
+                  >
+                    {label === "Fit" ? "⤢" : label}
+                  </Text>
+                </Pressable>
+              ))
+            : null}
+          {props.onCopySource ? (
             <Pressable
               style={controlStyle}
               accessibilityRole="button"
-              accessibilityLabel="Export SVG"
-              onPress={() => {
-                void exportDiagram("svg");
-              }}
+              accessibilityLabel={props.labels?.copy ?? "Copy source"}
+              onPress={props.onCopySource}
             >
-              <Text style={{ color: theme.nodeText }}>SVG</Text>
+              <Text numberOfLines={1} style={{ color: theme.nodeText, fontSize: 14 }}>
+                {"</>"}
+              </Text>
             </Pressable>
-            <Pressable
-              style={controlStyle}
-              accessibilityRole="button"
-              accessibilityLabel="Export PNG"
-              onPress={() => {
-                void exportDiagram("png");
-              }}
-            >
-              <Text style={{ color: theme.nodeText }}>PNG</Text>
-            </Pressable>
-          </>
-        ) : null}
-      </View>
+          ) : null}
+          {result.status === "ready" && props.onExport ? (
+            <>
+              <Pressable
+                style={controlStyle}
+                accessibilityRole="button"
+                accessibilityLabel={props.labels?.svg ?? "Export SVG"}
+                disabled={exporting}
+                testID="diagram-svg"
+                onPress={() => {
+                  void exportDiagram("svg");
+                }}
+              >
+                <Text numberOfLines={1} style={{ color: theme.nodeText, fontSize: 14 }}>
+                  {exported === "svg" ? "✓" : "SVG"}
+                </Text>
+              </Pressable>
+              <Pressable
+                style={controlStyle}
+                accessibilityRole="button"
+                accessibilityLabel={props.labels?.png ?? "Export PNG"}
+                disabled={exporting}
+                testID="diagram-png"
+                onPress={() => {
+                  void exportDiagram("png");
+                }}
+              >
+                <Text numberOfLines={1} style={{ color: theme.nodeText, fontSize: 14 }}>
+                  {exported === "png" ? "✓" : "PNG"}
+                </Text>
+              </Pressable>
+            </>
+          ) : null}
+        </ScrollView>
+      </Animated.View>
       {exportError ? (
         <Text accessibilityRole="alert" style={{ color: theme.nodeText }}>
           {exportError}

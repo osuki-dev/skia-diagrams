@@ -16,7 +16,9 @@
 | Interactions | `onInteraction` receives authored links/callbacks and data selections; `renderDataDetail` replaces selected-data detail content |
 | Viewer | `onExpand(source)` controls presentation; `renderExpandIcon({ color, size })` replaces the magnifier and `expandButtonStyle` customizes its visible button |
 | Visibility | `Diagram` and `DiagramViewer` accept `active={false}` to cancel pending preparation and release native recordings while offscreen; inline diagrams retain their measured height |
-| Viewer localization | `DiagramViewer` accepts `labels={{ close, fit, actualSize, copy }}` for host translations |
+| Viewer localization | `DiagramViewer` accepts `labels={{ close, fit, actualSize, copy, svg, png }}` for host translations |
+| Viewer controls | The floating toolbar fades after 3 seconds of inactivity; tap empty canvas to toggle it. Set `toolbarAutoHideMs={0}` to keep it visible. Screen readers always retain access |
+| Inline expand control | `expandControl="on-tap"` initially hides the magnifier and toggles it on diagram taps without changing the viewport height. The default is `"always"` |
 
 The remaining eighteen categories share the common theme and layout options. Their supported source configuration remains available through Mermaid front matter. There is no general typed host `typeStyles` object for those eighteen categories yet. A custom color token cannot change an explicitly authored literal color; edit that source style when changing its appearance.
 
@@ -52,7 +54,7 @@ Entrance animation follows each diagram's semantics: event order for Timeline, c
 
 Use authored edge IDs when available. Flowchart edges without an authored ID use `encodeURIComponent(from) + '->' + encodeURIComponent(to) + '#' + parallelOrdinal`, with the ordinal starting at zero. Changing `replayToken` replays entrance motion without invalidating layout.
 
-Inline diagrams keep natural geometry at 100% scale by default, with horizontal scrolling and pinch zoom. Ordinary content uses its natural height and scrolls with the page. Explicit `maxHeight` enables an internal vertical scroller; content above 1200 points defaults to a 420-point preview with a full-view action. `maxWidth` bounds the viewport rather than squeezing the diagram. Pie alone uses the available width to arrange its 180-point default circle and complete legend. Use `fitToViewport` only when an overview is wanted; `minScale` controls the initial scale floor.
+Inline diagrams keep natural geometry at 100% scale by default, with horizontal scrolling and pinch zoom. Ordinary content uses its natural height and scrolls with the page. Explicit `maxHeight` enables an internal vertical scroller; content above 1200 points defaults to a 420-point preview with a full-view action. `maxWidth` bounds the viewport rather than squeezing the diagram. Pie alone uses the available width to arrange its 180-point default circle and complete legend. `fitToViewport` fits the complete natural scene with a uniform scale, without reflowing its geometry; `minScale` controls the initial scale floor outside fit mode.
 
 Source theme variables are resolved before host overrides. Setting only a host font preserves the source palette; setting a host `palette` replaces it. Gantt frames and task bars use the shared `radius`, while milestones keep their diamond shape.
 

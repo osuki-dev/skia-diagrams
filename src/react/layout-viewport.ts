@@ -7,7 +7,8 @@ export function inlineLayoutWidth(
   fitToViewport: boolean | undefined,
 ): number | undefined {
   if (!availableWidth || !Number.isFinite(availableWidth)) return undefined;
-  if (fitToViewport) return availableWidth;
+  // Fit scales the natural scene; passing a width here would reflow its geometry.
+  if (fitToViewport) return undefined;
   try {
     const { source: cleaned } = readDiagramMetadata(source);
     const header = cleaned
