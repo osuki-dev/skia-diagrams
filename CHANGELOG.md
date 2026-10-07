@@ -1,5 +1,11 @@
 # @osuki-dev/skia-diagrams
 
+## 0.1.4
+
+### Patch Changes
+
+- [#12](https://github.com/osuki-dev/skia-diagrams/pull/12) [`a5f4f64`](https://github.com/osuki-dev/skia-diagrams/commit/a5f4f64424afd6752782ead658dd4ff9b4b8459b) Thanks [@ryuhzk](https://github.com/ryuhzk)! - Preserve natural diagram geometry in fit previews instead of reflowing wide charts into narrow layouts. Add a compact floating viewer toolbar with idle fade, tap-to-toggle visibility, screen-reader support, and configurable export labels. Support initially hidden inline expand controls without shifting content, and prevent overlapping exports with visible completion feedback.
+
 ## 0.1.3
 
 ### Patch Changes
