@@ -137,7 +137,9 @@ export function layoutZenuml(
         measure(event.label, { fontSize, maxWidth: 320 }).height + 24,
         event.type === "ref" ||
           (event.type === "fragmentStart" && fragmentHeading(event.label).condition)
-          ? fontSize * 1.6 +
+          ? (event.type === "ref"
+              ? fontSize * 1.6
+              : 6 + measure(fragmentHeading(event.label).name, { fontSize }).height + 6) +
               measure(
                 event.type === "ref"
                   ? `[ref(${event.label})]`
@@ -357,9 +359,13 @@ export function layoutZenuml(
           strokeRole: "frame",
         });
         const heading = fragmentHeading(frame.label);
-        text(heading.name, contentLeft + inset + 8, frame.y + 6);
+        const headingMetrics = text(heading.name, contentLeft + inset + 8, frame.y + 6);
         if (heading.condition)
-          text(`[${heading.condition}]`, contentLeft + inset + 8, frame.y + fontSize * 1.6);
+          text(
+            `[${heading.condition}]`,
+            contentLeft + inset + 8,
+            frame.y + 6 + headingMetrics.height + 6,
+          );
 
         const numberWidth = measure(frame.number, { fontSize }).width;
         text(frame.number, contentLeft + inset - numberWidth - 6, frame.y + 6);

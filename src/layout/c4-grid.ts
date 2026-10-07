@@ -9,8 +9,15 @@ export function c4Grid(
   configuration: Record<string, string> = {},
 ) {
   const graph = new dagre.graphlib.Graph({ multigraph: true }).setGraph({});
-  const pad = options.padding ?? 20,
-    gap = options.nodeSeparation ?? 36;
+  const pad = options.padding ?? 20;
+  // Relation captions need a clear gutter between cards and boundary headers.
+  let gap = options.nodeSeparation ?? 36;
+  for (const edge of ir.edges)
+    if (edge.label)
+      gap = Math.max(
+        gap,
+        measure(edge.label, { fontSize: options.fontSize ?? 14, literal: true }).height + 32,
+      );
   const columns = (key: string, fallback: number) => {
     const n = Number(configuration[key] ?? fallback);
     return Number.isFinite(n) && n >= 1 ? Math.min(300, Math.floor(n)) : fallback;

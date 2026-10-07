@@ -375,6 +375,7 @@ export function layoutExtendedUml(
   };
   const line = (points: Point[], stroke = "nodeStroke") =>
     emit({ type: "path", points, stroke, strokeRole: "node" });
+  const boundaryHeaders: Rect[] = [];
   for (const cluster of ir.clusters) {
     activeSemantic =
       kind === "c4" || kind === "usecase" || kind === "requirement"
@@ -412,6 +413,21 @@ export function layoutExtendedUml(
       fontSize,
       literalRoutingTexts.has(cluster.label),
     );
+    const header = primitives.at(-1);
+    if (kind === "c4" && header?.type === "text") {
+      const metrics = measure(header.text, {
+        fontSize: header.fontSize,
+        fontWeight: header.fontWeight,
+        maxWidth: header.width,
+        literal: true,
+      });
+      boundaryHeaders.push({
+        x: header.x,
+        y: header.y,
+        width: metrics.width,
+        height: header.height,
+      });
+    }
   }
   const labelRects: Rect[] = [];
   const nodeRects = ir.nodes.map((node) => {
@@ -426,7 +442,7 @@ export function layoutExtendedUml(
   // Reserve every connector, including routes whose labels are emitted later.
   // Short segment boxes approximate the actual shaft without blocking the large
   // empty triangle enclosed by a diagonal connector's full bounding box.
-  const relationObstacles: LabelObstacle[] = [...nodeRects];
+  const relationObstacles: LabelObstacle[] = [...nodeRects, ...boundaryHeaders];
   if (kind === "c4") {
     for (const [index, edge] of ir.edges.entries()) {
       const points = graph.edge({
