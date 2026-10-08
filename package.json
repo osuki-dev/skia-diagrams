@@ -1,6 +1,6 @@
 {
   "name": "@osuki-dev/skia-diagrams",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "DOM-free Mermaid parsing and layout with native Graphite Skia diagrams",
   "homepage": "https://github.com/osuki-dev/skia-diagrams#readme",
   "bugs": {

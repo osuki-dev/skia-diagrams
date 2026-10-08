@@ -1,5 +1,13 @@
 # @osuki-dev/skia-diagrams
 
+## 0.1.5
+
+### Patch Changes
+
+- [#14](https://github.com/osuki-dev/skia-diagrams/pull/14) [`60244a0`](https://github.com/osuki-dev/skia-diagrams/commit/60244a0c61ee332dc1281b9ac24fb91daef4ee26) Thanks [@ryuhzk](https://github.com/ryuhzk)! - Support Unicode subgraph IDs and complete multiword titles, including adjacent bracket labels. Report unquoted special characters without rendering malformed diagrams.
+  
+  Prevent diagram drags and pinch gestures from triggering taps, selection, or viewer controls on release.
+
 ## 0.1.4
 
 ### Patch Changes
