@@ -88,6 +88,7 @@ import {
 import { SceneCache } from "../layout/cache.ts";
 import { requestSceneAsync } from "../layout/request.ts";
 const sceneCache = new SceneCache();
+const TAP_MOVEMENT_LIMIT = 8;
 const identities = new WeakMap<object, number>();
 let nextIdentity = 1;
 function identity(value?: object): number {
@@ -762,6 +763,10 @@ export function Diagram(props: DiagramProps) {
     onCommit: commitZoom,
   });
   const { zoom: relativeZoom, pinching: inlinePinching } = inlineZoom;
+  // Pressable's retention area is not a drag threshold. Latch movement even if
+  // the horizontal recognizer fails (vertical scrolling, edges, or a short drag)
+  // and even if the finger comes back to its starting position before release.
+  const touchIntent = useRef({ x: 0, y: 0, dragged: false });
   useEffect(() => {
     const frame = requestAnimationFrame(() => {
       scrollY.set(zoomCommit.y);
@@ -973,8 +978,31 @@ export function Diagram(props: DiagramProps) {
                 testID={props.testID}
                 accessibilityRole="image"
                 accessibilityLabel={props.accessibilityLabel ?? result.scene.accessibilityLabel}
+                onTouchStart={(event) => {
+                  const { pageX, pageY, touches } = event.nativeEvent;
+                  touchIntent.current = { x: pageX, y: pageY, dragged: touches.length !== 1 };
+                }}
+                onTouchMove={(event) => {
+                  const { pageX, pageY, touches } = event.nativeEvent;
+                  const intent = touchIntent.current;
+                  if (
+                    touches.length !== 1 ||
+                    Math.hypot(pageX - intent.x, pageY - intent.y) > TAP_MOVEMENT_LIMIT
+                  )
+                    intent.dragged = true;
+                }}
+                onTouchEnd={(event) => {
+                  const { pageX, pageY } = event.nativeEvent;
+                  const intent = touchIntent.current;
+                  if (Math.hypot(pageX - intent.x, pageY - intent.y) > TAP_MOVEMENT_LIMIT)
+                    intent.dragged = true;
+                }}
+                onTouchCancel={() => {
+                  touchIntent.current.dragged = true;
+                }}
                 onPress={(event) => {
                   if (
+                    touchIntent.current.dragged ||
                     inlineZoom.pinching.get() ||
                     Date.now() - inlineZoom.lastEndedTimestamp.get() < 180
                   )
@@ -1054,6 +1082,7 @@ export function Diagram(props: DiagramProps) {
                         theme={theme}
                         onPress={() => {
                           if (
+                            !touchIntent.current.dragged &&
                             !inlineZoom.pinching.get() &&
                             Date.now() - inlineZoom.lastEndedTimestamp.get() >= 180
                           )
@@ -1355,47 +1384,52 @@ export function DiagramViewer(props: DiagramViewerProps) {
   ]);
   const gesture = useMemo(
     () =>
-      Gesture.Simultaneous(
-        Gesture.Pinch()
-          .onBegin(() => {
-            savedZoom.set(zoom.get());
-          })
-          .onUpdate((e) => {
-            zoom.set(clampViewerZoom(savedZoom.get() * e.scale, fit));
-            const maxX = panLimit(bounds.width, viewportWidth, zoom.get()),
-              maxY = panLimit(bounds.height, viewportHeight, zoom.get());
-            x.set(Math.max(-maxX, Math.min(maxX, x.get())));
-            y.set(Math.max(-maxY, Math.min(maxY, y.get())));
-          })
-          .onEnd(() => {
-            savedZoom.set(zoom.get());
-          }),
-        Gesture.Pan()
-          .maxPointers(1)
-          .onBegin(() => {
-            savedX.set(x.get());
-            savedY.set(y.get());
-          })
-          .onUpdate((e) => {
-            const maxX = panLimit(bounds.width, viewportWidth, zoom.get()) + 24;
-            const maxY = panLimit(bounds.height, viewportHeight, zoom.get()) + 24;
-            x.set(Math.max(-maxX, Math.min(maxX, savedX.get() + e.translationX)));
-            y.set(Math.max(-maxY, Math.min(maxY, savedY.get() + e.translationY)));
-          })
-          .onEnd(() => {
-            const maxX = panLimit(bounds.width, viewportWidth, zoom.get()),
-              maxY = panLimit(bounds.height, viewportHeight, zoom.get());
-            const targetX = Math.max(-maxX, Math.min(maxX, x.get())),
-              targetY = Math.max(-maxY, Math.min(maxY, y.get()));
-            x.set(withSpring(targetX, { reduceMotion: motionMode }));
-            y.set(withSpring(targetY, { reduceMotion: motionMode }));
-            savedX.set(targetX);
-            savedY.set(targetY);
-          }),
+      Gesture.Race(
+        Gesture.Simultaneous(
+          Gesture.Pinch()
+            .onBegin(() => {
+              savedZoom.set(zoom.get());
+            })
+            .onUpdate((e) => {
+              zoom.set(clampViewerZoom(savedZoom.get() * e.scale, fit));
+              const maxX = panLimit(bounds.width, viewportWidth, zoom.get()),
+                maxY = panLimit(bounds.height, viewportHeight, zoom.get());
+              x.set(Math.max(-maxX, Math.min(maxX, x.get())));
+              y.set(Math.max(-maxY, Math.min(maxY, y.get())));
+            })
+            .onEnd(() => {
+              savedZoom.set(zoom.get());
+            }),
+          Gesture.Pan()
+            .maxPointers(1)
+            .minDistance(TAP_MOVEMENT_LIMIT)
+            .onBegin(() => {
+              savedX.set(x.get());
+              savedY.set(y.get());
+            })
+            .onUpdate((e) => {
+              const maxX = panLimit(bounds.width, viewportWidth, zoom.get()) + 24;
+              const maxY = panLimit(bounds.height, viewportHeight, zoom.get()) + 24;
+              x.set(Math.max(-maxX, Math.min(maxX, savedX.get() + e.translationX)));
+              y.set(Math.max(-maxY, Math.min(maxY, savedY.get() + e.translationY)));
+            })
+            .onEnd(() => {
+              const maxX = panLimit(bounds.width, viewportWidth, zoom.get()),
+                maxY = panLimit(bounds.height, viewportHeight, zoom.get());
+              const targetX = Math.max(-maxX, Math.min(maxX, x.get())),
+                targetY = Math.max(-maxY, Math.min(maxY, y.get()));
+              x.set(withSpring(targetX, { reduceMotion: motionMode }));
+              y.set(withSpring(targetY, { reduceMotion: motionMode }));
+              savedX.set(targetX);
+              savedY.set(targetY);
+            }),
+        ),
         Gesture.Exclusive(
           Gesture.Tap()
             .numberOfTaps(2)
-            .onEnd(() => {
+            .maxDistance(TAP_MOVEMENT_LIMIT)
+            .onEnd((_event, success) => {
+              if (!success) return;
               zoom.set(Math.abs(zoom.get() - fit) < 0.001 ? 1 : fit);
               savedZoom.set(zoom.get());
               x.set(0);
@@ -1404,6 +1438,7 @@ export function DiagramViewer(props: DiagramViewerProps) {
               savedY.set(0);
             }),
           Gesture.Tap()
+            .maxDistance(TAP_MOVEMENT_LIMIT)
             .runOnJS(true)
             .onEnd((event, success) => {
               if (success) selectAtWindowPoint(event.absoluteX, event.absoluteY);

@@ -263,10 +263,17 @@ export function parseFlowchart(ir: DiagramIR, source: string): void {
         stack.push(id);
         continue;
       }
-      const m = /^subgraph\s+([\w-]+)(?:\s+\[(.*)\]|\s+(.*))?$/.exec(text);
-      if (!m) fail(line, "Invalid subgraph");
-      ir.clusters.push({ id: m[1], label: label(m[2] ?? m[3] ?? m[1]), parent });
-      stack.push(m[1]);
+      const title = text.replace(/^subgraph\s+/, "");
+      const explicit = /^([\p{L}\p{M}\p{N}_-]+)\s*\[(.*)\]$/u.exec(title);
+      const content = explicit?.[2] ?? title;
+      const quotedTitle = /^"[^"\n]*"$/.test(content.trim());
+      if (!content.trim() || (!quotedTitle && /[[\](){}"<>]/.test(content)))
+        fail(line, 'Invalid subgraph title; quote special characters: subgraph id ["Title"]');
+      const id =
+        explicit?.[1] ??
+        (/^[\p{L}\p{M}\p{N}_-]+$/u.test(title) ? title : `subgraph-${ir.clusters.length}`);
+      ir.clusters.push({ id, label: label(content), parent });
+      stack.push(id);
       continue;
     }
     if (text === "end") {
