@@ -10,6 +10,30 @@ function parse(source: string) {
 }
 
 describe("official flowchart syntax", () => {
+  test("Unicode and multiword subgraph titles retain their full text and nesting", () => {
+    const ir = parse(`graph TD
+subgraph 方案2: 插件自治归属
+subgraph 组一["标题 (推荐)"]
+A --> B
+end
+end
+subgraph My group
+C --> D
+end
+组一 --> C`);
+    expect(ir.clusters.map((group) => group.label)).toEqual([
+      "方案2: 插件自治归属",
+      "标题 (推荐)",
+      "My group",
+    ]);
+    expect(ir.clusters[1].parent).toBe(ir.clusters[0].id);
+    expect(ir.nodes.find((node) => node.id === "A")?.parent).toBe("组一");
+    expect(ir.edges.at(-1)?.from).toBe("组一");
+    expect(() => parse("graph TD\nsubgraph 方案1: 资源(推荐)\nA-->B\nend")).toThrow(
+      "quote special characters",
+    );
+  });
+
   test("all archived official examples are accepted by the flowchart grammar", () => {
     const cases = catalog.types.find((type) => type.type === "flowchart")!.cases;
     expect(cases).toHaveLength(114);

@@ -96,9 +96,11 @@ export function useInlineZoom(options: InlineZoomOptions) {
     onActivate: () => {
       "worklet";
       startScrollX.set(scrollX.get());
+      lastEndedTimestamp.set(Date.now());
     },
     onUpdate: (event) => {
       "worklet";
+      lastEndedTimestamp.set(Date.now());
       if (pinching.get()) return;
       scrollX.set(
         Math.max(
@@ -112,6 +114,7 @@ export function useInlineZoom(options: InlineZoomOptions) {
     },
     onDeactivate: (event) => {
       "worklet";
+      lastEndedTimestamp.set(Date.now());
       if (!event.canceled && !pinching.get())
         scrollX.set(
           withDecay({
