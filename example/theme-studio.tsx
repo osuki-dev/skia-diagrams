@@ -16,7 +16,7 @@ import {
 import Animated from "react-native-reanimated";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import * as Clipboard from "expo-clipboard";
-import { pageEntrance, sectionEntrance } from "./motion.tsx";
+import { pageEntrance } from "./motion.tsx";
 import { useFonts } from "react-native-skia";
 import { Diagram, DiagramProvider, DiagramViewer } from "@osuki-dev/skia-diagrams/react";
 import {
@@ -580,7 +580,7 @@ export function ThemeStudio({
                 </Pressable>
               ))}
             </View>
-            <Animated.View key={tab} entering={sectionEntrance}>
+            <View key={tab}>
               {tab === "Colors" && (
                 <>
                   {colors.slice(0, more ? colors.length : 4).map(([key, label]) => (
@@ -809,7 +809,7 @@ export function ThemeStudio({
                   </Text>
                 </>
               )}
-            </Animated.View>
+            </View>
           </ScrollView>
         </Animated.View>
         <View

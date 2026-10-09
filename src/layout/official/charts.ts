@@ -250,7 +250,7 @@ export function radar(scene: OfficialScene, data: RadarData): void {
   );
   const legendTop =
     Math.max(cy + radius, ...axisLabels.map((label) => label.y + label.height)) + 24;
-  let legendY = legendTop;
+  let legendY = usable === undefined ? scene.top + 20 : legendTop;
   data.axes.forEach((axis, i) => {
     scene.line(
       [
@@ -333,7 +333,7 @@ export function radar(scene: OfficialScene, data: RadarData): void {
     if (settings.get("showLegend") !== false) {
       const label = curve.label ?? curve.name;
       const lx = usable === undefined ? legendX : scene.padding;
-      const ly = usable === undefined ? scene.top + 20 + index * 28 : legendY;
+      const ly = legendY;
       const lm = scene.measure(label, {
         fontSize: scene.fontSize,
         maxWidth: usable === undefined ? undefined : usable - 24,
@@ -351,7 +351,12 @@ export function radar(scene: OfficialScene, data: RadarData): void {
         undefined,
         `${curve.label ?? curve.name}: ${curve.entries.map((e) => e.value).join(", ")}`,
       );
-      scene.box({ x: lx, y: ly + 4, width: 12, height: 12 }, curveColor, curveColor, "circle");
+      scene.box(
+        { x: lx, y: ly + lm.height / 2 - 6, width: 12, height: 12 },
+        curveColor,
+        curveColor,
+        "circle",
+      );
       scene.primitives.at(-1)!.semantic = {
         kind: "node",
         id: `radar:curve:${curve.name}`,

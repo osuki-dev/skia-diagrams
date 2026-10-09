@@ -1,6 +1,6 @@
 # @osuki-dev/skia-diagrams
 
-TypeScript Mermaid parsing and layout with native React Native Skia 3.0.3 rendering. The library uses no DOM or WebView and bundles no fonts. Native parsers and layouts cover 31 official documentation categories; the 511 pinned examples have paired official and Skia captures. This verifies those examples, not every possible Mermaid program or identical placement.
+TypeScript Mermaid parsing and layout with native React Native Skia 3.3.0 rendering. The library uses no DOM or WebView and bundles no fonts. Native parsers and layouts cover 31 official documentation categories; the 511 pinned examples have paired official and Skia captures. This verifies those examples, not every possible Mermaid program or identical placement.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/osuki-dev/skia-diagrams/main/.github/assets/diagrams-dark.png">
@@ -15,7 +15,7 @@ Representative examples rendered by the library, with light and dark themes.
 bun add @osuki-dev/skia-diagrams
 ```
 
-Core parsing, layout and SVG export need no native UI packages. Native hosts additionally install the optional peers: React, React Native, unscoped `react-native-skia`, Reanimated and Gesture Handler 3.3 or newer. Use a native development build rather than Expo Go. Android requires API 26 or newer.
+Core parsing, layout and SVG export need no native UI packages. Native hosts additionally install the optional peers: React, React Native, unscoped `react-native-skia` 3.3.0 or newer, Reanimated and Gesture Handler 3.3 or newer. Use a native development build rather than Expo Go. Android requires API 26 or newer. Rebuild the native app after upgrading Skia; a JavaScript reload cannot update its native renderer.
 
 The three required runtime dependencies are `@dagrejs/dagre` for graph placement, `@mermaid-js/parser` for official asynchronous AST grammars, and `js-yaml` for shared Mermaid metadata parsing. Fonts, icons and decoded images belong to the host.
 
@@ -102,9 +102,3 @@ The [example app](example/README.md) includes the approved thirteen-type visual 
 [Official fixture provenance](test/fixtures/official-mermaid/README.md) records unchanged sources and hashes. `bun scripts/sync-official-fixtures.ts` refreshes that pinned catalog. After generating official reference captures, `bun scripts/compare-official.ts --all --skia-only` regenerates Skia images under `design/theme-studio/official/comparison/` for comparison with the pinned official examples. Generated image artifacts are excluded from Git. Official browser rendering runs only as an offline reference tool. `scripts/generate-block-parser.ts` reproduces the vendored official Block grammar without a runtime generator dependency.
 
 Reference regeneration requires Mermaid CLI (`mmdc`) on `PATH`, or an explicit `--cli <mmdc-path>`. Run `bun scripts/compare-official.ts --all` to create both reference and Skia captures. Optional `--puppeteer <puppeteer-json>` and `--config <mermaid-json>` supply browser and Mermaid settings. The report records the actual CLI and Mermaid versions; use the pinned fixture renderer version when comparing references. `--skia-only` requires the existing reference images and their manifest in the same output directory, and then needs no Mermaid CLI installation. These tools are for offline verification and are not runtime dependencies.
-
-## Release workflow
-
-CI checks types, lint, formatting, tests, the example and the npm package on pull requests and pushes to `main`. Releases use the same Changesets v2 workflow as `osuki-dev/opencode-osuki-agent`: select a release mode, open a version PR, then verify, pack and publish the exact packed artifact through npm trusted publishing.
-
-Run `bun run changeset` for a package change and commit the generated entry. The initial minor changeset promotes the unpublished `0.0.0` placeholder to `0.1.0`; merge the version PR after native validation. GitHub Actions must be allowed to create pull requests. Configure the npm trusted publisher for organization `osuki-dev`, repository `skia-diagrams`, workflow `release.yml`. npm account/package setup and first-publication authorization are managed by the package owner; the workflow contains no npm token.
