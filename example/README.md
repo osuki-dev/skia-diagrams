@@ -1,6 +1,6 @@
 # Native example
 
-The Expo example uses the local library with Skia 3.0.3. It includes the approved thirteen-type gallery, theme-token editor, complex diagrams, CJK fixtures and a 31-category official Mermaid catalog. Only the selected inline diagram or viewer is mounted; gallery thumbnails are static Skia captures.
+The Expo example uses the local library with Skia 3.3.0. It includes the approved thirteen-type gallery, theme-token editor, complex diagrams, CJK fixtures and a 31-category official Mermaid catalog. Only the selected inline diagram or viewer is mounted; gallery thumbnails are static Skia captures.
 
 From the repository root, install and build the library, then register its Bun link before installing the example:
 

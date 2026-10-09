@@ -12,7 +12,8 @@ press id="choose-type"
 wait id="select-Flowchart"
 back --system
 wait id="diagram-Sequence"
-press id="diagram-Sequence"
+scroll down 0.5 --until id="diagram-Sequence-expand"
+press id="diagram-Sequence-expand"
 wait id="diagram-viewer-canvas"
 back --system
 wait id="diagram-Sequence"

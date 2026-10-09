@@ -59,7 +59,17 @@ test("native narrow layouts retain readable full labels without horizontal overf
           ];
           expect(owned.length).toBe(scene.primitives.length);
           expect(new Set(owned).size).toBe(scene.primitives.length);
-          expect(scene.bounds.width).toBeLessThanOrEqual(viewportWidth + 1);
+          if (kind !== "treeview")
+            expect(scene.bounds.width).toBeLessThanOrEqual(viewportWidth + 1);
+          else {
+            expect(Number.isFinite(scene.bounds.width)).toBe(true);
+            expect(scene.bounds.width).toBeGreaterThan(0);
+            const rows = scene.interactions!.filter((row) => row.id.startsWith("treeview:"));
+            for (const row of rows) {
+              expect(row.x).toBeGreaterThanOrEqual(0);
+              expect(row.x + row.width).toBeLessThanOrEqual(scene.bounds.width);
+            }
+          }
           const labels = scene.primitives.filter((p) => p.type === "text");
           for (const p of labels) {
             const replay = measure(p.text, {

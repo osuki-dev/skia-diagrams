@@ -1,6 +1,6 @@
 # Production bounded inline Canvas, legal 300-node sources and export guard.
 open "dev.osuki.skiadiagrams.example" --relaunch
-wait text "Skia Diagrams Gallery"
+wait id="gallery-home"
 press id="home-type-Flowchart"
 press id="theme-settings"
 scroll down 0.5 --until id="open-inline-qa"

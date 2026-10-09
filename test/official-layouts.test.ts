@@ -109,7 +109,8 @@ test("hosts supply native icon primitives and retain ownership of them", async (
   expect(owned.x).toBe(-10);
   const tree = await parseOfficialAst("treeView-beta\n    App.tsx icon(logos:react)");
   const fallback = layoutOfficial(tree!)!;
-  expect(fallback.accessibilityLabel).toContain("icon:logos:react");
+  expect(fallback.accessibilityLabel).not.toContain("icon:logos:react");
+  expect(fallback.interactions?.[0]?.tooltip).toContain("logos:react");
   const resolved = layoutOfficial(tree!, undefined, {
     resolveIcon: (name, r) =>
       name === "logos:react"
@@ -196,6 +197,27 @@ test("large host fonts retain chart headers, data regions and authored radar col
     );
     if (title?.type === "text")
       expect(scene.interactions!.every((hit) => hit.y >= title.y + title.height)).toBe(true);
+    if (kind === "radar") {
+      const legends = scene.primitives.filter(
+        (p) => p.type === "text" && p.semantic?.role === "legend",
+      );
+      for (let index = 1; index < legends.length; index++) {
+        const previous = legends[index - 1]!,
+          current = legends[index]!;
+        if (previous.type === "text" && current.type === "text")
+          expect(previous.y + previous.height + 8).toBeLessThanOrEqual(current.y);
+      }
+      for (const label of legends) {
+        const marker = scene.primitives.find(
+          (p) =>
+            p.type === "shape" &&
+            p.semantic?.role === "legend" &&
+            p.semantic.id === label.semantic?.id,
+        );
+        if (marker?.type === "shape" && label.type === "text")
+          expect(marker.y + marker.height / 2).toBeCloseTo(label.y + label.height / 2);
+      }
+    }
   }
   const radar = officialCatalog.types.find((g) => g.type === "radar")!;
   const scene = layoutOfficial((await parseOfficialAst(radar.cases[2]!.source))!)!;
