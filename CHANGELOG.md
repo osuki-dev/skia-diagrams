@@ -1,5 +1,13 @@
 # @osuki-dev/skia-diagrams
 
+## 0.1.6
+
+### Patch Changes
+
+- [#16](https://github.com/osuki-dev/skia-diagrams/pull/16) [`a4e1979`](https://github.com/osuki-dev/skia-diagrams/commit/a4e1979697744058ffb8f2b6ef1e4a91095828f5) Thanks [@ryuhzk](https://github.com/ryuhzk)! - Improve tree folder and file icons, preserve indentation and label alignment, and keep icon entrance motion synchronized with each row. Prevent radar legends from overlapping at large font sizes.
+  
+  Update the native Skia requirement and example to react-native-skia 3.3.0. Native hosts must upgrade Skia and rebuild their app.
+
 ## 0.1.5
 
 ### Patch Changes
