@@ -33,7 +33,7 @@ export interface DiagramConfiguration {
   onExpand?: (source: string) => void;
   /** Replace the default magnifier; button interaction and accessibility remain built in. */
   renderExpandIcon?: (props: DiagramExpandIconProps) => ReactNode;
-  /** Replace viewer action icons; null/undefined retain the default for that action. */
+  /** Render decorative viewer icons. Null/undefined results retain the built-in glyph. */
   renderViewerIcon?: (props: DiagramViewerIconProps) => ReactNode;
   /** Style the visible expand button without changing its native touch target. */
   expandButtonStyle?: StyleProp<ViewStyle>;

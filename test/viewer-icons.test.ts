@@ -9,12 +9,26 @@ import { mergeThemeOverrides } from "../src/render/theme.ts";
 // Native presentation is deliberately outside these configuration/action tests.
 const providerSource = readFileSync(new URL("../src/react/provider.tsx", import.meta.url), "utf8");
 const viewerSource = readFileSync(new URL("../src/react/index.tsx", import.meta.url), "utf8");
+const iconSource = readFileSync(new URL("../src/react/viewer-icon.tsx", import.meta.url), "utf8");
 const transpiler = new Bun.Transpiler({
   loader: "tsx",
   tsconfig: {
     compilerOptions: { jsx: "react", jsxFactory: "createElement", jsxFragmentFactory: "Fragment" },
   },
 });
+const ViewerIcon = runInNewContext(
+  transpiler.transformSync(
+    iconSource
+      .slice(iconSource.indexOf("export function ViewerIcon"))
+      .replace("export function", "function"),
+  ) + "\nViewerIcon",
+  { createElement, View: "icon-container" },
+) as (
+  props: DiagramViewerIconProps & {
+    renderIcon?: DiagramConfiguration["renderViewerIcon"];
+    children: ReactNode;
+  },
+) => ReactNode;
 
 function provider(parent: DiagramConfiguration, configuration: DiagramConfiguration) {
   const source = providerSource.slice(providerSource.indexOf("export function DiagramProvider"));
@@ -36,6 +50,8 @@ type ButtonProps = { accessibilityLabel: string; onPress: () => void; children?:
 function nodes(node: ReactNode): { type: unknown; props: Record<string, unknown> }[] {
   if (Array.isArray(node)) return node.flatMap(nodes);
   if (!isValidElement<Record<string, unknown>>(node)) return [];
+  if (node.type === ViewerIcon && isValidElement<Parameters<typeof ViewerIcon>[0]>(node))
+    return nodes(ViewerIcon(node.props));
   return [node, ...nodes(node.props.children as ReactNode)];
 }
 
@@ -44,6 +60,11 @@ function toolbar(
     configuration?: DiagramConfiguration;
     renderViewerIcon?: DiagramConfiguration["renderViewerIcon"];
     exported?: "svg" | "png";
+    labels?: Record<string, string>;
+    ready?: boolean;
+    exporting?: boolean;
+    copy?: boolean;
+    export?: boolean;
   } = {},
 ) {
   const actions: unknown[] = [];
@@ -64,20 +85,22 @@ function toolbar(
       ScrollView: "scroll",
       Pressable: "button",
       Text: "text",
+      ViewerIcon,
       configuration: options.configuration ?? {},
       props: {
         renderViewerIcon: options.renderViewerIcon,
         onClose: () => actions.push("close"),
-        onCopySource: () => actions.push("copy"),
-        onExport: () => {},
+        onCopySource: options.copy === false ? undefined : () => actions.push("copy"),
+        onExport: options.export === false ? undefined : () => {},
+        labels: options.labels,
       },
       theme: { nodeText: "#456789", radius: 8 },
       StyleSheet: { hairlineWidth: 0.5 },
       controlStyle: {},
-      result: { status: "ready" },
+      result: { status: options.ready === false ? "loading" : "ready" },
       fit: 0.42,
       motionMode: "system",
-      exporting: false,
+      exporting: options.exporting ?? false,
       exported: options.exported,
       exportDiagram: (kind: string) => actions.push(kind),
       withTiming: (value: number) => value,
@@ -94,6 +117,8 @@ function toolbar(
     actions,
     icons: all.filter((node) => node.type === "host-icon").map((node) => node.props),
     text: all.filter((node) => node.type === "text").map((node) => node.props.children),
+    containers: all.filter((node) => node.type === "icon-container").map((node) => node.props),
+    buttons: all.filter((node) => node.type === "button").map((node) => node.props),
     press(label: string) {
       const button = all.find(
         (node) => node.type === "button" && node.props.accessibilityLabel === label,
@@ -156,4 +181,40 @@ test("custom graphics preserve actual toolbar callbacks and both zoom operations
       ["savedY", 0],
     ]);
   }
+});
+
+test("decorative icons cannot intercept touches or duplicate accessible toolbar actions", () => {
+  const view = toolbar({
+    renderViewerIcon: icon,
+    exported: "svg",
+    labels: { close: "Dismiss", svg: "Save vector" },
+  });
+  expect(view.containers).toHaveLength(4);
+  for (const container of view.containers)
+    expect(container).toMatchObject({
+      pointerEvents: "none",
+      accessible: false,
+      accessibilityElementsHidden: true,
+      importantForAccessibility: "no-hide-descendants",
+    });
+  for (const button of view.buttons) expect(button.accessibilityRole).toBe("button");
+  view.press("Dismiss");
+  view.press("Save vector");
+  expect(view.actions).toEqual(["close", "svg"]);
+});
+
+test("partial icon sets fall back per action and obey existing action availability", () => {
+  const render = (props: DiagramViewerIconProps) => (props.action === "close" ? icon(props) : null);
+  const view = toolbar({ renderViewerIcon: render });
+  expect(view.icons.map((item) => item.action)).toEqual(["close"]);
+  expect(view.text).toEqual(["⤢", "100%", "</>", "SVG", "PNG"]);
+  const loading = toolbar({ renderViewerIcon: icon, ready: false, copy: false });
+  expect(loading.icons.map((item) => item.action)).toEqual(["close"]);
+  expect(loading.buttons).toHaveLength(1);
+  const unavailable = toolbar({ renderViewerIcon: icon, export: false });
+  expect(unavailable.text).toEqual(["100%"]);
+  const busy = toolbar({ renderViewerIcon: icon, exporting: true });
+  expect(
+    busy.buttons.filter((button) => button.disabled).map((button) => button.accessibilityLabel),
+  ).toEqual(["Export SVG", "Export PNG"]);
 });

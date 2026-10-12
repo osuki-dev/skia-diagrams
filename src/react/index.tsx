@@ -14,6 +14,7 @@ import { useReducedDiagramMotion } from "./motion-preference.ts";
 import { recordDiagramMotion, type RecordedMotion } from "./record-motion.ts";
 import { hitTestInteraction, viewerPointToScene } from "./hit-test.ts";
 import { useDiagramConfiguration, type DiagramConfiguration } from "./provider.tsx";
+import { ViewerIcon } from "./viewer-icon.tsx";
 export {
   DiagramProvider,
   useDiagramConfiguration,
@@ -1138,7 +1139,7 @@ export function Diagram(props: DiagramProps) {
   );
 }
 export interface DiagramViewerProps {
-  /** Override the provider's viewer icon renderer; null/undefined retain default icons. */
+  /** Override the provider renderer. Nullish render results retain the built-in glyph. */
   renderViewerIcon?: DiagramConfiguration["renderViewerIcon"];
   /** Suspend native recordings while the host screen is inactive. Defaults to true. */
   active?: boolean;
@@ -1507,9 +1508,14 @@ export function DiagramViewer(props: DiagramViewerProps) {
             testID="diagram-close"
             onPress={props.onClose}
           >
-            {renderViewerIcon?.({ action: "close", color: theme.nodeText, size: 24 }) ?? (
+            <ViewerIcon
+              renderIcon={renderViewerIcon}
+              action="close"
+              color={theme.nodeText}
+              size={24}
+            >
               <Text style={{ color: theme.nodeText, fontSize: 24, fontWeight: "400" }}>×</Text>
-            )}
+            </ViewerIcon>
           </Pressable>
           {result.status === "ready"
             ? [
@@ -1537,18 +1543,30 @@ export function DiagramViewer(props: DiagramViewerProps) {
                     savedY.set(0);
                   }}
                 >
-                  {(label === "Fit"
-                    ? renderViewerIcon?.({ action: "fit", color: theme.nodeText, size: 22 })
-                    : undefined) ?? (
+                  {label === "Fit" ? (
+                    <ViewerIcon
+                      renderIcon={renderViewerIcon}
+                      action="fit"
+                      color={theme.nodeText}
+                      size={22}
+                    >
+                      <Text
+                        numberOfLines={1}
+                        style={{ color: theme.nodeText, fontSize: 22, fontWeight: "500" }}
+                      >
+                        ⤢
+                      </Text>
+                    </ViewerIcon>
+                  ) : (
                     <Text
                       numberOfLines={1}
                       style={{
                         color: theme.nodeText,
-                        fontSize: label === "Fit" ? 22 : 14,
+                        fontSize: 14,
                         fontWeight: "500",
                       }}
                     >
-                      {label === "Fit" ? "⤢" : label}
+                      {label}
                     </Text>
                   )}
                 </Pressable>
@@ -1561,11 +1579,16 @@ export function DiagramViewer(props: DiagramViewerProps) {
               accessibilityLabel={props.labels?.copy ?? "Copy source"}
               onPress={props.onCopySource}
             >
-              {renderViewerIcon?.({ action: "copy", color: theme.nodeText, size: 18 }) ?? (
+              <ViewerIcon
+                renderIcon={renderViewerIcon}
+                action="copy"
+                color={theme.nodeText}
+                size={18}
+              >
                 <Text numberOfLines={1} style={{ color: theme.nodeText, fontSize: 14 }}>
                   {"</>"}
                 </Text>
-              )}
+              </ViewerIcon>
             </Pressable>
           ) : null}
           {result.status === "ready" && props.onExport ? (
@@ -1580,11 +1603,20 @@ export function DiagramViewer(props: DiagramViewerProps) {
                   void exportDiagram("svg");
                 }}
               >
-                {(exported === "svg"
-                  ? renderViewerIcon?.({ action: "success", color: theme.nodeText, size: 18 })
-                  : undefined) ?? (
+                {exported === "svg" ? (
+                  <ViewerIcon
+                    renderIcon={renderViewerIcon}
+                    action="success"
+                    color={theme.nodeText}
+                    size={18}
+                  >
+                    <Text numberOfLines={1} style={{ color: theme.nodeText, fontSize: 14 }}>
+                      ✓
+                    </Text>
+                  </ViewerIcon>
+                ) : (
                   <Text numberOfLines={1} style={{ color: theme.nodeText, fontSize: 14 }}>
-                    {exported === "svg" ? "✓" : "SVG"}
+                    SVG
                   </Text>
                 )}
               </Pressable>
@@ -1598,11 +1630,20 @@ export function DiagramViewer(props: DiagramViewerProps) {
                   void exportDiagram("png");
                 }}
               >
-                {(exported === "png"
-                  ? renderViewerIcon?.({ action: "success", color: theme.nodeText, size: 18 })
-                  : undefined) ?? (
+                {exported === "png" ? (
+                  <ViewerIcon
+                    renderIcon={renderViewerIcon}
+                    action="success"
+                    color={theme.nodeText}
+                    size={18}
+                  >
+                    <Text numberOfLines={1} style={{ color: theme.nodeText, fontSize: 14 }}>
+                      ✓
+                    </Text>
+                  </ViewerIcon>
+                ) : (
                   <Text numberOfLines={1} style={{ color: theme.nodeText, fontSize: 14 }}>
-                    {exported === "png" ? "✓" : "PNG"}
+                    PNG
                   </Text>
                 )}
               </Pressable>

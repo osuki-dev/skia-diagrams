@@ -78,7 +78,10 @@ const viewerIcons = { close: CloseIcon, fit: FitIcon, copy: CopyIcon, success: C
 Nested providers inherit this renderer; an explicitly supplied renderer replaces
 the inherited function. A `DiagramViewer` local renderer likewise takes precedence
 over the provider, with nullish results falling back to built-in glyphs rather
-than calling the parent renderer. The library still owns buttons, accessibility
+than calling the parent renderer. Omit the prop to inherit the provider's renderer.
+Return decorative content, not buttons: icon content is excluded from touch
+handling and the accessibility tree to avoid duplicate actions and announcements.
+The library still owns buttons, accessibility
 labels, touch targets, callbacks, auto-hide, and zoom behavior. `100%`, `SVG`, and
 `PNG` remain text so scale and export formats stay recognizable. Icon rendering
 does not replace or intercept those actions.
