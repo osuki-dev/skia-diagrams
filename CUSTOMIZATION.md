@@ -17,6 +17,7 @@
 | Viewer | `onExpand(source)` controls presentation; `renderExpandIcon({ color, size })` replaces the magnifier and `expandButtonStyle` customizes its visible button |
 | Visibility | `Diagram` and `DiagramViewer` accept `active={false}` to cancel pending preparation and release native recordings while offscreen; inline diagrams retain their measured height |
 | Viewer localization | `DiagramViewer` accepts `labels={{ close, fit, actualSize, copy, svg, png }}` for host translations |
+| Viewer icons | Provider `renderViewerIcon({ action, color, size })` replaces `close`, `fit`, `copy` and export `success` graphics. `DiagramViewer` accepts the same prop as a local override |
 | Viewer controls | The floating toolbar fades after 3 seconds of inactivity; tap empty canvas to toggle it. Set `toolbarAutoHideMs={0}` to keep it visible. Screen readers always retain access |
 | Inline expand control | `expandControl="on-tap"` initially hides the magnifier and toggles it on diagram taps without changing the viewport height. The default is `"always"` |
 
@@ -49,6 +50,41 @@ import { Diagram, DiagramProvider } from '@osuki-dev/skia-diagrams/react';
 ```
 
 Register aliases matching `fontFamily` on the supplied font provider. Replace the provider or asset-map identity when those registrations or decoded images change, so cached measurements/recordings invalidate. The renderer borrows supplied images and never fetches or disposes them. Fonts exist only in the example; the npm package contains none.
+
+## Viewer action icons
+
+`renderExpandIcon` controls the inline diagram's expand button only.
+`renderViewerIcon` controls the full-screen viewer's toolbar graphics. Its `action`
+is `close` (dismiss), `fit` (fit the scene), `copy` (copy Mermaid source), or
+`success` (brief feedback after an SVG/PNG export). The renderer receives the
+resolved theme's `nodeText` color and a suggested size in points. It returns
+host-owned React content, so the library does not depend on a particular icon
+package. Return `null` or `undefined` for an action to retain its original glyph.
+
+```tsx
+const viewerIcons = { close: CloseIcon, fit: FitIcon, copy: CopyIcon, success: CheckIcon };
+
+<DiagramProvider
+  renderExpandIcon={({ color, size }) => <ExpandIcon color={color} size={size} />}
+  renderViewerIcon={({ action, color, size }) => {
+    const Icon = viewerIcons[action];
+    return <Icon color={color} size={size} />;
+  }}
+>
+  <DiagramViewer source={source} onClose={closeViewer} onCopySource={copySource} />
+</DiagramProvider>;
+```
+
+Nested providers inherit this renderer; an explicitly supplied renderer replaces
+the inherited function. A `DiagramViewer` local renderer likewise takes precedence
+over the provider, with nullish results falling back to built-in glyphs rather
+than calling the parent renderer. Omit the prop to inherit the provider's renderer.
+Return decorative content, not buttons: icon content is excluded from touch
+handling and the accessibility tree to avoid duplicate actions and announcements.
+The library still owns buttons, accessibility
+labels, touch targets, callbacks, auto-hide, and zoom behavior. `100%`, `SVG`, and
+`PNG` remain text so scale and export formats stay recognizable. Icon rendering
+does not replace or intercept those actions.
 
 Entrance animation follows each diagram's semantics: event order for Timeline, call and reply order for Sequence, dependencies for Flowchart, time direction for Gantt, and data geometry for charts. Pie selection gently offsets the chosen slice and dims the other slices, while its legend and hit coordinates remain fixed. Tapping the same data item again or dismissing the detail reverses the transition; tapping a different item switches selection. It does not simulate process execution. Pass actual process state through `execution` to highlight active nodes and connections; omitted or `idle` IDs retain their authored appearance. `revision` can identify a new state transition without changing the diagram source.
 

@@ -10,6 +10,14 @@ export interface DiagramExpandIconProps {
   size: number;
 }
 
+export type DiagramViewerIconAction = "close" | "fit" | "copy" | "success";
+
+export interface DiagramViewerIconProps {
+  action: DiagramViewerIconAction;
+  color: string;
+  size: number;
+}
+
 export interface DiagramConfiguration {
   theme?: Partial<DiagramTheme>;
   mode?: "light" | "dark";
@@ -25,6 +33,8 @@ export interface DiagramConfiguration {
   onExpand?: (source: string) => void;
   /** Replace the default magnifier; button interaction and accessibility remain built in. */
   renderExpandIcon?: (props: DiagramExpandIconProps) => ReactNode;
+  /** Render decorative viewer icons. Null/undefined results retain the built-in glyph. */
+  renderViewerIcon?: (props: DiagramViewerIconProps) => ReactNode;
   /** Style the visible expand button without changing its native touch target. */
   expandButtonStyle?: StyleProp<ViewStyle>;
   /** Host owns navigation and callback execution for authored Mermaid click targets. */
@@ -52,6 +62,7 @@ export function DiagramProvider({
       motion: configuration.motion ?? parent.motion,
       onExpand: configuration.onExpand ?? parent.onExpand,
       renderExpandIcon: configuration.renderExpandIcon ?? parent.renderExpandIcon,
+      renderViewerIcon: configuration.renderViewerIcon ?? parent.renderViewerIcon,
       expandButtonStyle: configuration.expandButtonStyle ?? parent.expandButtonStyle,
       onInteraction: configuration.onInteraction ?? parent.onInteraction,
       renderDataDetail: configuration.renderDataDetail ?? parent.renderDataDetail,
@@ -68,6 +79,7 @@ export function DiagramProvider({
       configuration.motion,
       configuration.onExpand,
       configuration.renderExpandIcon,
+      configuration.renderViewerIcon,
       configuration.expandButtonStyle,
       configuration.onInteraction,
       configuration.renderDataDetail,

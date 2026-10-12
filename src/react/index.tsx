@@ -14,11 +14,14 @@ import { useReducedDiagramMotion } from "./motion-preference.ts";
 import { recordDiagramMotion, type RecordedMotion } from "./record-motion.ts";
 import { hitTestInteraction, viewerPointToScene } from "./hit-test.ts";
 import { useDiagramConfiguration, type DiagramConfiguration } from "./provider.tsx";
+import { ViewerIcon } from "./viewer-icon.tsx";
 export {
   DiagramProvider,
   useDiagramConfiguration,
   type DiagramConfiguration,
   type DiagramExpandIconProps,
+  type DiagramViewerIconAction,
+  type DiagramViewerIconProps,
 } from "./provider.tsx";
 import {
   Fragment,
@@ -1136,6 +1139,8 @@ export function Diagram(props: DiagramProps) {
   );
 }
 export interface DiagramViewerProps {
+  /** Override the provider renderer. Nullish render results retain the built-in glyph. */
+  renderViewerIcon?: DiagramConfiguration["renderViewerIcon"];
   /** Suspend native recordings while the host screen is inactive. Defaults to true. */
   active?: boolean;
   labels?: Partial<{
@@ -1164,6 +1169,7 @@ export interface DiagramViewerProps {
 }
 export function DiagramViewer(props: DiagramViewerProps) {
   const configuration = useDiagramConfiguration();
+  const renderViewerIcon = props.renderViewerIcon ?? configuration.renderViewerIcon;
   const onInteraction = props.onInteraction ?? configuration.onInteraction;
   const renderDataDetail = props.renderDataDetail ?? configuration.renderDataDetail;
   const [selection, setSelection] = useState<DiagramInteraction>();
@@ -1502,7 +1508,14 @@ export function DiagramViewer(props: DiagramViewerProps) {
             testID="diagram-close"
             onPress={props.onClose}
           >
-            <Text style={{ color: theme.nodeText, fontSize: 24, fontWeight: "400" }}>×</Text>
+            <ViewerIcon
+              renderIcon={renderViewerIcon}
+              action="close"
+              color={theme.nodeText}
+              size={24}
+            >
+              <Text style={{ color: theme.nodeText, fontSize: 24, fontWeight: "400" }}>×</Text>
+            </ViewerIcon>
           </Pressable>
           {result.status === "ready"
             ? [
@@ -1530,16 +1543,32 @@ export function DiagramViewer(props: DiagramViewerProps) {
                     savedY.set(0);
                   }}
                 >
-                  <Text
-                    numberOfLines={1}
-                    style={{
-                      color: theme.nodeText,
-                      fontSize: label === "Fit" ? 22 : 14,
-                      fontWeight: "500",
-                    }}
-                  >
-                    {label === "Fit" ? "⤢" : label}
-                  </Text>
+                  {label === "Fit" ? (
+                    <ViewerIcon
+                      renderIcon={renderViewerIcon}
+                      action="fit"
+                      color={theme.nodeText}
+                      size={22}
+                    >
+                      <Text
+                        numberOfLines={1}
+                        style={{ color: theme.nodeText, fontSize: 22, fontWeight: "500" }}
+                      >
+                        ⤢
+                      </Text>
+                    </ViewerIcon>
+                  ) : (
+                    <Text
+                      numberOfLines={1}
+                      style={{
+                        color: theme.nodeText,
+                        fontSize: 14,
+                        fontWeight: "500",
+                      }}
+                    >
+                      {label}
+                    </Text>
+                  )}
                 </Pressable>
               ))
             : null}
@@ -1550,9 +1579,16 @@ export function DiagramViewer(props: DiagramViewerProps) {
               accessibilityLabel={props.labels?.copy ?? "Copy source"}
               onPress={props.onCopySource}
             >
-              <Text numberOfLines={1} style={{ color: theme.nodeText, fontSize: 14 }}>
-                {"</>"}
-              </Text>
+              <ViewerIcon
+                renderIcon={renderViewerIcon}
+                action="copy"
+                color={theme.nodeText}
+                size={18}
+              >
+                <Text numberOfLines={1} style={{ color: theme.nodeText, fontSize: 14 }}>
+                  {"</>"}
+                </Text>
+              </ViewerIcon>
             </Pressable>
           ) : null}
           {result.status === "ready" && props.onExport ? (
@@ -1567,9 +1603,22 @@ export function DiagramViewer(props: DiagramViewerProps) {
                   void exportDiagram("svg");
                 }}
               >
-                <Text numberOfLines={1} style={{ color: theme.nodeText, fontSize: 14 }}>
-                  {exported === "svg" ? "✓" : "SVG"}
-                </Text>
+                {exported === "svg" ? (
+                  <ViewerIcon
+                    renderIcon={renderViewerIcon}
+                    action="success"
+                    color={theme.nodeText}
+                    size={18}
+                  >
+                    <Text numberOfLines={1} style={{ color: theme.nodeText, fontSize: 14 }}>
+                      ✓
+                    </Text>
+                  </ViewerIcon>
+                ) : (
+                  <Text numberOfLines={1} style={{ color: theme.nodeText, fontSize: 14 }}>
+                    SVG
+                  </Text>
+                )}
               </Pressable>
               <Pressable
                 style={controlStyle}
@@ -1581,9 +1630,22 @@ export function DiagramViewer(props: DiagramViewerProps) {
                   void exportDiagram("png");
                 }}
               >
-                <Text numberOfLines={1} style={{ color: theme.nodeText, fontSize: 14 }}>
-                  {exported === "png" ? "✓" : "PNG"}
-                </Text>
+                {exported === "png" ? (
+                  <ViewerIcon
+                    renderIcon={renderViewerIcon}
+                    action="success"
+                    color={theme.nodeText}
+                    size={18}
+                  >
+                    <Text numberOfLines={1} style={{ color: theme.nodeText, fontSize: 14 }}>
+                      ✓
+                    </Text>
+                  </ViewerIcon>
+                ) : (
+                  <Text numberOfLines={1} style={{ color: theme.nodeText, fontSize: 14 }}>
+                    PNG
+                  </Text>
+                )}
               </Pressable>
             </>
           ) : null}
